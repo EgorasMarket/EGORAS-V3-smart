@@ -1,0 +1,173 @@
+1_initial_migration.js
+======================
+
+   Deploying 'Migrations'
+   ----------------------
+   > transaction hash:    0x1a242ebaa3c3b8da2922cce8e6464f011bb07a0e0a1d795f30ade9c8590cd4a7
+   > Blocks: 6            Seconds: 18
+   > contract address:    0xe27d083f8c1432Db346F4527F66487c05c0278bf
+   > block number:        16722926
+   > block timestamp:     1649290233
+   > account:             0x2ec5E9470f25F6CA0A1A2fd7Ee1b8bE4E9a805A7
+   > balance:             0.27840298
+   > gas used:            284440 (0x45718)
+   > gas price:           5 gwei
+   > value sent:          0 ETH
+   > total cost:          0.0014222 ETH
+
+   Pausing for 1 confirmations...
+
+   -------------------------------
+   > confirmation number: 2 (block: 16722930)
+   ✓ Saving migration to chain.
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:           0.0014222 ETH
+
+
+2_egorasLoanDaoDiamond.js
+=========================
+
+   Deploying 'EgorasLoanFacet'
+   ---------------------------
+   > transaction hash:    0xaa23a7d1408536a92a4e9c2ddfcb36a1e08f26c56f055da0506b6c2a1236e1e6
+   > Blocks: 9            Seconds: 31
+   > contract address:    0x09A2CA805d28Af5e307a309c3a7b78916C9E4af1
+   > block number:        16722947
+   > block timestamp:     1649290296
+   > account:             0x2ec5E9470f25F6CA0A1A2fd7Ee1b8bE4E9a805A7
+   > balance:             0.25236136
+   > gas used:            5165784 (0x4ed2d8)
+   > gas price:           5 gwei
+   > value sent:          0 ETH
+   > total cost:          0.02582892 ETH
+
+   Pausing for 1 confirmations...
+
+   -------------------------------
+   > confirmation number: 2 (block: 16722952)
+
+   Deploying 'EgorasPriceOracleFacet'
+   ----------------------------------
+   > transaction hash:    0x02b4bc29e9d0afa98a4d1a11f7b43769d5574dbe09d5b7da385056fad19d09de
+   > Blocks: 11           Seconds: 33
+   > contract address:    0x21344b2383a9D7E1571524E628dc1037fF77767a
+   > block number:        16722959
+   > block timestamp:     1649290332
+   > account:             0x2ec5E9470f25F6CA0A1A2fd7Ee1b8bE4E9a805A7
+   > balance:             0.24684977
+   > gas used:            1102318 (0x10d1ee)
+   > gas price:           5 gwei
+   > value sent:          0 ETH
+   > total cost:          0.00551159 ETH
+
+   Pausing for 1 confirmations...
+
+   -------------------------------
+   > confirmation number: 2 (block: 16722969)
+
+   Deploying 'EgorasSwapFacet'
+   ---------------------------
+   > transaction hash:    0xd5112e5adecca563f428e926cbdf53f1b2881b7706a53abeee44b723c26a3225
+   > Blocks: 4            Seconds: 14
+   > contract address:    0x54Cfe0e6E2F80aa14B63cd85A2eDEDcB3FE92fE5
+   > block number:        16722974
+   > block timestamp:     1649290377
+   > account:             0x2ec5E9470f25F6CA0A1A2fd7Ee1b8bE4E9a805A7
+   > balance:             0.23846764
+   > gas used:            1676426 (0x19948a)
+   > gas price:           5 gwei
+   > value sent:          0 ETH
+   > total cost:          0.00838213 ETH
+
+   Pausing for 1 confirmations...
+
+   -------------------------------
+   > confirmation number: 2 (block: 16722978)
+
+   Deploying 'DiamondCutFacet'
+   ---------------------------
+   > transaction hash:    0x97135bd91bd0f10e6c3fc0b86e2af7e6b8aa9897de3d262f471af44c7e136c79
+   > Blocks: 5            Seconds: 15
+   > contract address:    0xe7d84011Ea287cB28D42001e58f658026678b24a
+   > block number:        16722985
+   > block timestamp:     1649290410
+   > account:             0x2ec5E9470f25F6CA0A1A2fd7Ee1b8bE4E9a805A7
+   > balance:             0.227893015
+   > gas used:            2114925 (0x20456d)
+   > gas price:           5 gwei
+   > value sent:          0 ETH
+   > total cost:          0.010574625 ETH
+
+   Pausing for 1 confirmations...
+
+   -------------------------------
+   > confirmation number: 2 (block: 16722990)
+
+   Deploying 'DiamondLoupeFacet'
+   -----------------------------
+   > transaction hash:    0x388aa78f179e883b8283aa0916566ebea9bd331757522b04328fe572e585bd2e
+   > Blocks: 6            Seconds: 17
+   > contract address:    0x72CfE4455f01A5C810b3742870AF09321eDbf885
+   > block number:        16722998
+   > block timestamp:     1649290449
+   > account:             0x2ec5E9470f25F6CA0A1A2fd7Ee1b8bE4E9a805A7
+   > balance:             0.222626695
+   > gas used:            1053264 (0x101250)
+   > gas price:           5 gwei
+   > value sent:          0 ETH
+   > total cost:          0.00526632 ETH
+
+   Pausing for 1 confirmations...
+
+   -------------------------------
+   > confirmation number: 2 (block: 16723003)
+
+   Deploying 'OwnershipFacet'
+   --------------------------
+   > transaction hash:    0x9cc3f3c8e71475da23ee9b44ae6a4a693cdf1fd1d37710c75d8e045496f63127
+   > Blocks: 6            Seconds: 20
+   > contract address:    0xB65a4E4Da411c77cf72D8D094c1588cD9fDA28f4
+   > block number:        16723007
+   > block timestamp:     1649290476
+   > account:             0x2ec5E9470f25F6CA0A1A2fd7Ee1b8bE4E9a805A7
+   > balance:             0.22123234
+   > gas used:            278871 (0x44157)
+   > gas price:           5 gwei
+   > value sent:          0 ETH
+   > total cost:          0.001394355 ETH
+
+   Pausing for 1 confirmations...
+
+   -------------------------------
+   > confirmation number: 1 (block: 16723014)
+
+   Deploying 'EgorasLoanDao'
+   -------------------------
+   > transaction hash:    0xcf75d899b9c7850d2e9c205ea30174052c7ccd88591fe0d8ebc9becc881cf883
+   > Blocks: 4            Seconds: 12
+   > contract address:    0x52205dE5D70FaCC1878d4F39Fbf8d9a6Fd7f103c
+   > block number:        16723023
+   > block timestamp:     1649290524
+   > account:             0x2ec5E9470f25F6CA0A1A2fd7Ee1b8bE4E9a805A7
+   > balance:             0.20474439
+   > gas used:            3297590 (0x325136)
+   > gas price:           5 gwei
+   > value sent:          0 ETH
+   > total cost:          0.01648795 ETH
+
+   Pausing for 1 confirmations...
+
+   -------------------------------
+   > confirmation number: 2 (block: 16723027)
+   ✓ Saving migration to chain.
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:          0.07344589 ETH
+
+Summary
+=======
+> Total deployments:   8
+> Final cost:          0.07486809 ETH

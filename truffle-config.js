@@ -51,17 +51,25 @@ module.exports = {
     bscMainNet: {
       provider: () => new HDWalletProvider(
         privateKeys,
-        'https://bsc-dataseed.binance.org/'
+        `wss://bsc-ws-node.nariox.org:443`
       ),
       network_id: 56,
+      confirmations: 1,
+      timeoutBlocks: 200,
+      
+      networkCheckTimeout: 1000000000,
       skipDryRun: true
     },
     bscTestNet: {
       provider: () => new HDWalletProvider(
         privateKeys,
-        'https://data-seed-prebsc-2-s3.binance.org:8545'
+        'https://data-seed-prebsc-1-s1.binance.org:8545'
       ),
       network_id: 97,
+      confirmations: 1,
+      timeoutBlocks: 200,
+      
+      networkCheckTimeout: 1000000000,
       skipDryRun: true
     }
 

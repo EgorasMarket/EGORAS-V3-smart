@@ -22,6 +22,7 @@ function getSelectors (contract) {
   const selectors = contract.abi.reduce((acc, val) => {
     if (val.type === 'function') {
       acc.push(val.signature)
+      console.log(val.signature);
       return acc
     } else {
       return acc
@@ -31,23 +32,24 @@ function getSelectors (contract) {
 }
 
 module.exports = function (deployer, network, accounts) {
- deployer.deploy(EgorasLoanFacet);
+//  deployer.deploy(EgorasLoanFacet);
 
- deployer.deploy(EgorasPriceOracleFacet);
+//  deployer.deploy(EgorasPriceOracleFacet);
  deployer.deploy(EgorasSwapFacet);
 
-  deployer.deploy(DiamondCutFacet)
-  deployer.deploy(DiamondLoupeFacet)
-  deployer.deploy(OwnershipFacet).then(() => {
-    const diamondCut = [
-      [DiamondCutFacet.address, FacetCutAction.Add, getSelectors(DiamondCutFacet)],
-      [DiamondLoupeFacet.address, FacetCutAction.Add, getSelectors(DiamondLoupeFacet)],
-      [EgorasPriceOracleFacet.address, FacetCutAction.Add, getSelectors(EgorasPriceOracleFacet)],
-      [EgorasLoanFacet.address, FacetCutAction.Add, getSelectors(EgorasLoanFacet)],
-      [EgorasSwapFacet.address, FacetCutAction.Add, getSelectors(EgorasSwapFacet)],
-      [OwnershipFacet.address, FacetCutAction.Add, getSelectors(OwnershipFacet)],
-    ]
-    return deployer.deploy(EgorasLoanDao, diamondCut, [accounts[0]])
-  })
+  // deployer.deploy(DiamondCutFacet)
+  //0x5925CDAeA54B5D6545e99868A4dB8fd1A034A806
+  // deployer.deploy(DiamondLoupeFacet)
+  // deployer.deploy(OwnershipFacet).then(() => {
+  //   const diamondCut = [
+  //     [DiamondCutFacet.address, FacetCutAction.Add, getSelectors(DiamondCutFacet)],
+  //     [DiamondLoupeFacet.address, FacetCutAction.Add, getSelectors(DiamondLoupeFacet)],
+  //     //[EgorasPriceOracleFacet.address, FacetCutAction.Add, getSelectors(EgorasPriceOracleFacet)],
+  //     // [EgorasLoanFacet.address, FacetCutAction.Add, getSelectors(EgorasLoanFacet)],
+  //     // [EgorasSwapFacet.address, FacetCutAction.Add, getSelectors(EgorasSwapFacet)],
+  //     [OwnershipFacet.address, FacetCutAction.Add, getSelectors(OwnershipFacet)],
+  //   ]
+  //   return deployer.deploy(EgorasLoanDao, diamondCut, [accounts[0]])
+  // })
 }
  

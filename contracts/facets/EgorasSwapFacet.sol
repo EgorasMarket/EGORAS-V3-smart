@@ -87,6 +87,8 @@ contract EgorasSwapFacet{
         _isBase ? _getBase(_amount) : _getToken(_amount);
     }
 
+    
+
     function _getBase(uint _amount) internal {
         require(_amount > 0, "Zero value provided!");
         _tFrom(_tokenAddress, _amount, address(this));
@@ -98,9 +100,20 @@ contract EgorasSwapFacet{
         emit Swaped( _msgSender(), _amount, getAmount, false, block.timestamp);
     }
 
+     function getToken(uint _amount) external{
+        require(_amount > 0, "Zero value provided!");
+        _tFrom(_baseAddress, _amount, address(this));
+        uint _marketPrice = _getPr();
+        uint getAmount = _getAmount(_marketPrice, _amount, true);
+        userTotalSwap[_msgSender()][true] = userTotalSwap[_msgSender()][true].add(_amount);
+        totalSwap[true] = totalSwap[true].add(_amount);
+        _tr(getAmount, _msgSender(), _tokenAddress);
+          emit Swaped( _msgSender(), _amount, getAmount, true, block.timestamp);
+    }
+
     function _getToken(uint _amount) internal{
         require(_amount > 0, "Zero value provided!");
-        _bFrom(_baseAddress, _amount, address(this));
+        _tFrom(_baseAddress, _amount, address(this));
         uint _marketPrice = _getPr();
         uint getAmount = _getAmount(_marketPrice, _amount, true);
         userTotalSwap[_msgSender()][true] = userTotalSwap[_msgSender()][true].add(_amount);

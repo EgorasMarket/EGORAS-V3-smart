@@ -22,7 +22,7 @@ interface ERC20I {
 interface PRICEORACLE {
     /// @notice Gets price of a ticker ie ETH-EUSD.
     /// @return current price of a ticker
-    function price(string memory _ticker) external view returns (uint256);
+    function price(string memory _ticker) external view returns (uint);
 }
 
 contract EgorasSwapFacet{
@@ -76,6 +76,10 @@ contract EgorasSwapFacet{
         PRICEORACLE p = PRICEORACLE(address(this));
         return p.price(_price);
     }
+
+
+
+
     function _getAmount(uint _marketPrice, uint _amount, bool _isBase) internal pure returns (uint) {
         return _isBase ? _amount.divideDecimal(_marketPrice) : _amount.multiplyDecimal(_marketPrice);
     }

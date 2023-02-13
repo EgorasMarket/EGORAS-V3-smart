@@ -15,14 +15,14 @@ import "./interfaces/IDiamondCut.sol";
 import "./interfaces/IERC173.sol";
 import "./interfaces/IERC165.sol";
 
-contract EgorasLoanDaoV2 {
-    struct EgorasLoanDaoV2Args {
+contract EgorasV3 {
+    struct EgorasV3Args {
         address owner;
     }
 
     constructor(
         IDiamondCut.FacetCut[] memory _diamondCut,
-        EgorasLoanDaoV2Args memory _args
+        EgorasV3Args memory _args
     ) payable {
         LibDiamond.diamondCut(_diamondCut, address(0), new bytes(0));
         LibDiamond.setContractOwner(_args.owner);

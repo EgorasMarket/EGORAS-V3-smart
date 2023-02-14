@@ -1,7 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.4.22 <0.9.0;
+pragma experimental ABIEncoderV2;
 import "./AppStorage.sol";
-
+import "../libraries/LibDiamond.sol";
+import "../libraries/SafeDecimalMath.sol";
+import "../libraries/SafeMath.sol";
 contract ReferralFacet {
 
 AppStorage internal s;
@@ -11,13 +14,6 @@ modifier onlyRPythia{
         _;
     }
 
-// Start of referral system
- function kycUsers(address[] calldata _users, address[] calldata _upline) external onlyRPythia{
-    require(_users.length == _upline.length, "Users and Upline must be of equal length");
-    for (uint256 i; i < _users.length; i++) {
-    
-   
-        }
-  }
+
 
 }

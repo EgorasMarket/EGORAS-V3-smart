@@ -40,6 +40,7 @@ struct Staffs{
     address account,
     uint nextPayDate,
     uint time);
+  event StaffRemoved(address staff, uint time);
   function AddStaffs(string[] calldata _name, address[] calldata _account, uint[] calldata _salary) external onlyOwner{
     require(_name.length == _account.length, "Invalid parameters");
     require(_salary.length == _account.length, "Invalid parameters");
@@ -71,6 +72,16 @@ struct Staffs{
 
   }
 
+  function removeStaffs (address[] calldata _staffs) external onlyOwner{
+      for (uint256 index = 0; index < _staffs.length; index++) {
+        delete staffs[s.staffId[_staffs[index]]];
+        emit StaffRemoved(_staffs[index], block.timestamp);
+      } 
+  }
+
+  
+
+
 
 
 modifier onlyOwner{
@@ -82,11 +93,7 @@ modifier onlyOwner{
         return msg.sender;
     }
 
-// Start of referral system
- function PaySalary() external onlyOwner{
-    
-    
-  }
+
 
 
 }

@@ -24,6 +24,7 @@ contract StakingFacet {
     using SafeDecimalMath for uint;
     enum Stakinglan{ MONTHLY, ANNUALLY } 
     event Stake(address user, uint amount, uint plan, uint dailyRoyalty, uint totalRoyalty, uint time);
+    event Royalty(address user, uint amount, uint time);
     modifier onlyOwner{
         require(_msgSender() == LibDiamond.contractOwner(), "Access denied, Only owner is allowed!");
         _;
@@ -34,6 +35,7 @@ contract StakingFacet {
     }
 
     function monthly(uint amount) external{
+     require(s.member[_msgSender()], "You're not a member, please subscribe to any membership plan and try again");
      require(amount > 0, "invalid amount");
      uint inusd = s.ticker[s.egcusd].multiplyDecimal(amount);
      require(inusd >= s.stakingPlan[uint(Stakinglan.MONTHLY)] , "Please increase your staking amount." );
@@ -55,6 +57,7 @@ contract StakingFacet {
 
 
      function annually(uint amount) external{
+     require(s.member[_msgSender()], "You're not a member, please subscribe to any membership plan and try again");
      require(amount > 0, "invalid amount");
      uint inusd = s.ticker[s.egcusd].multiplyDecimal(amount);
      require(inusd >= s.stakingPlan[uint(Stakinglan.ANNUALLY)] , "Please increase your staking amount." );
@@ -74,7 +77,23 @@ contract StakingFacet {
      emit Stake(_msgSender(), amount, uint(Stakinglan.ANNUALLY), dailyInterest, yearlyRoyalty, block.timestamp);
     }
 
+ 
+   
+   function takeRoyalty() external{
+    require(block.timestamp >= s.nextRoyaltyTakePeriod[_msgSender()], "Not yet due!");
+    uint getNumDays = DateTime.getDiff(s.nextRoyaltyTakePeriod[_msgSender()], block.timestamp);
+    uint rolyalty =  uint(uint(s.dailyRoyalty[_msgSender()]).divideDecimal(uint(DateTime.DIVISOR_A)).multiplyDecimal(uint(getNumDays)));
+    IERC20 eusd = IERC20(s.eusdAddr);
+    require(eusd.mint(_msgSender(), rolyalty), "Fail to transfer fund");
+    s.totalRoyaltyTaken[_msgSender()] = s.totalRoyaltyTaken[_msgSender()].add(rolyalty);
+    s.nextRoyaltyTakePeriod[_msgSender()] = block.timestamp.add(1 days);
+    emit Royalty(_msgSender(), rolyalty, block.timestamp);
+   }
 
-    
+
+   function royaltyStats(address user) external view returns(uint _dailyRoyalty, uint _totalStake, uint _nextRoyaltyTakePeriod, uint _lockPeriod, uint _totalRoyaltyTaken){
+    return (s.dailyRoyalty[user], s.userTotalStake[user], s.nextRoyaltyTakePeriod[user], s.lockPeriod[user], s.totalRoyaltyTaken[user]);
+   }
+
 
 }

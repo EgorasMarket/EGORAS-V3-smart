@@ -18,6 +18,7 @@ struct AppStorage {
   mapping(address => uint) dailyRoyalty;
   mapping(address => uint) lockPeriod;
   mapping(address => uint) nextRoyaltyTakePeriod;
+  mapping(address => uint) totalRoyaltyTaken;
 
   
 

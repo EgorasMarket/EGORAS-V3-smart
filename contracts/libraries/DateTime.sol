@@ -28,7 +28,7 @@ library DateTime {
         uint16 constant ORIGIN_YEAR = 1970;
         uint constant YEARLY_INTEREST_RATE = 120000000000000000;
         uint constant DAYS_IN_A_YEAR = 365000000000000000000;
-        
+        uint constant DIVISOR_A = 1;
         function getDiff(uint start,uint end)  public pure returns(uint){
             uint daysDiff = (end - start) / MINUTE_IN_SECONDS / MINUTE_IN_SECONDS / HOUR_IN_DAYS; 
             return daysDiff;

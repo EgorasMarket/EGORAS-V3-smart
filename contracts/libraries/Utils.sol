@@ -2,13 +2,13 @@
 // OpenZeppelin Contracts v4.3.2 (utils/math/SafeMath.sol)
 
 pragma solidity >=0.4.22 <0.9.0;
-library DateTime {
+library Utils {
 
       /*
          *  Date and Time utilities for ethereum contracts
          *
          */
-        struct _DateTime {
+        struct _Utils {
                 uint16 year;
                 uint8 month;
                 uint8 day;
@@ -29,6 +29,7 @@ library DateTime {
         uint constant YEARLY_INTEREST_RATE = 120000000000000000;
         uint constant DAYS_IN_A_YEAR = 365000000000000000000;
         uint constant DIVISOR_A = 1;
+        uint constant SALE_PERCENTAGE = 200000000000000000;
         function getDiff(uint start,uint end)  public pure returns(uint){
             uint daysDiff = (end - start) / MINUTE_IN_SECONDS / MINUTE_IN_SECONDS / HOUR_IN_DAYS; 
             return daysDiff;
@@ -67,7 +68,7 @@ library DateTime {
                 }
         }
 
-        function parseTimestamp(uint timestamp) internal pure returns (_DateTime  memory dt) {
+        function parseTimestamp(uint timestamp) internal pure returns (_Utils  memory dt) {
                 uint secondsAccountedFor = 0;
                 uint buf;
                 uint8 i;

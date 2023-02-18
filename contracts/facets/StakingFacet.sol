@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.4.22 <0.9.0;
 pragma experimental ABIEncoderV2;
-import "../libraries/DateTime.sol";
+import "../libraries/Utils.sol";
 import "../libraries/LibDiamond.sol";
 import "../libraries/SafeDecimalMath.sol";
 import "../libraries/SafeMath.sol";
@@ -45,8 +45,8 @@ contract StakingFacet {
      uint userCurrentTotal = s.userTotalStakeUsd[_msgSender()].add(inusd);
      s.userTotalStake[_msgSender()] = s.userTotalStake[_msgSender()].add(amount);
      s.userTotalStakeUsd[_msgSender()] = userCurrentTotal;
-     uint yearlyRoyalty = userCurrentTotal.multiplyDecimal(DateTime.YEARLY_INTEREST_RATE);
-     uint dailyInterest = yearlyRoyalty.divideDecimal(DateTime.DAYS_IN_A_YEAR);
+     uint yearlyRoyalty = userCurrentTotal.multiplyDecimal(Utils.YEARLY_INTEREST_RATE);
+     uint dailyInterest = yearlyRoyalty.divideDecimal(Utils.DAYS_IN_A_YEAR);
      uint lockPeriod = block.timestamp.add(30 days);
      uint nextRoyaltyTakePeriod = block.timestamp.add(1 days);
      s.dailyRoyalty[_msgSender()] = dailyInterest;
@@ -67,8 +67,8 @@ contract StakingFacet {
      uint userCurrentTotal = s.userTotalStakeUsd[_msgSender()].add(inusd);
      s.userTotalStake[_msgSender()] = s.userTotalStake[_msgSender()].add(amount);
      s.userTotalStakeUsd[_msgSender()] = userCurrentTotal;
-     uint yearlyRoyalty = userCurrentTotal.multiplyDecimal(DateTime.YEARLY_INTEREST_RATE);
-     uint dailyInterest = yearlyRoyalty.divideDecimal(DateTime.DAYS_IN_A_YEAR);
+     uint yearlyRoyalty = userCurrentTotal.multiplyDecimal(Utils.YEARLY_INTEREST_RATE);
+     uint dailyInterest = yearlyRoyalty.divideDecimal(Utils.DAYS_IN_A_YEAR);
      uint lockPeriod = block.timestamp.add(365 days);
      uint nextRoyaltyTakePeriod = block.timestamp.add(1 days);
      s.dailyRoyalty[_msgSender()] = dailyInterest;
@@ -81,8 +81,8 @@ contract StakingFacet {
    
    function takeRoyalty() external{
     require(block.timestamp >= s.nextRoyaltyTakePeriod[_msgSender()], "Not yet due!");
-    uint getNumDays = DateTime.getDiff(s.nextRoyaltyTakePeriod[_msgSender()], block.timestamp);
-    uint rolyalty =  uint(uint(s.dailyRoyalty[_msgSender()]).divideDecimal(uint(DateTime.DIVISOR_A)).multiplyDecimal(uint(getNumDays)));
+    uint getNumDays = Utils.getDiff(s.nextRoyaltyTakePeriod[_msgSender()], block.timestamp);
+    uint rolyalty =  uint(uint(s.dailyRoyalty[_msgSender()]).divideDecimal(uint(Utils.DIVISOR_A)).multiplyDecimal(uint(getNumDays)));
     IERC20 eusd = IERC20(s.eusdAddr);
     require(eusd.mint(_msgSender(), rolyalty), "Fail to transfer fund");
     s.totalRoyaltyTaken[_msgSender()] = s.totalRoyaltyTaken[_msgSender()].add(rolyalty);

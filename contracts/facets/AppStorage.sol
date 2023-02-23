@@ -27,4 +27,12 @@ struct AppStorage {
     address _tokenAddress;
     bytes _price;
     // needed for swap to work
+
+    //Member ship
+    uint256 nextSpillIndex;
+    mapping(address => address) referredBy;
+    mapping(address => uint256) referralRewardBalance;
+    mapping(address => uint256) referralCount;
+    mapping(address => bool) alreadyMember;
+    uint256 referralBurnBalance;
 }

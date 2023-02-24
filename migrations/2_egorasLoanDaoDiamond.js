@@ -1,16 +1,16 @@
 /* eslint-disable prefer-const */
 /* global artifacts */
-
-const EgorasLoanDaoV2 = artifacts.require('EgorasLoanDaoV2')
 const DiamondCutFacet = artifacts.require('DiamondCutFacet')
 const DiamondLoupeFacet = artifacts.require('DiamondLoupeFacet')
 const OwnershipFacet = artifacts.require('OwnershipFacet')
-const EgorasLoanV2Facet = artifacts.require('EgorasLoanV2Facet')
-const EgorasLoanV2ReferralFacet = artifacts.require('EgorasLoanV2ReferralFacet')
-const EgorasPriceOracleFacet = artifacts.require('EgorasPriceOracleFacet')
-const ERC721 = artifacts.require('ERC721')
+const MembershipFacet = artifacts.require('MembershipFacet')
+const PriceOracleFacet = artifacts.require('PriceOracleFacet')
+const ProductFacet = artifacts.require('ProductFacet')
+const SalaryFacet = artifacts.require('SalaryFacet')
+const StakingFacet = artifacts.require('StakingFacet')
+const SwapFacet = artifacts.require('SwapFacet')
+const EgorasV3 = artifacts.require('EgorasV3')
 
-const EgorasSwapFacet = artifacts.require('EgorasSwapFacet')
 
 const FacetCutAction = {
   Add: 0,
@@ -34,24 +34,30 @@ function getSelectors (contract) {
   return selectors
 }
 
-module.exports = function (deployer, network, accounts) {
-  //getSelectors(EgorasLoanV2ReferralFacet)
+module.exports = function (deployer, network, accounts) { 
+  deployer.deploy(StakingFacet);
+deployer.deploy(MembershipFacet);
+ deployer.deploy(PriceOracleFacet);
+ deployer.deploy(ProductFacet);
+ deployer.deploy(SalaryFacet);
  
- return deployer.deploy(EgorasLoanV2Facet);
-// deployer.deploy(EgorasPriceOracleFacet);
-//  deployer.deploy(EgorasSwapFacet);
-//   deployer.deploy(DiamondCutFacet)
-//   deployer.deploy(DiamondLoupeFacet)
-//   deployer.deploy(OwnershipFacet).then(() => {
-//     const diamondCut = [
-//       [DiamondCutFacet.address, FacetCutAction.Add, getSelectors(DiamondCutFacet)],
-//       [DiamondLoupeFacet.address, FacetCutAction.Add, getSelectors(DiamondLoupeFacet)],
-//       [EgorasPriceOracleFacet.address, FacetCutAction.Add, getSelectors(EgorasPriceOracleFacet)],
-//       [EgorasLoanV2Facet.address, FacetCutAction.Add, getSelectors(EgorasLoanV2Facet)],
-//       [EgorasSwapFacet.address, FacetCutAction.Add, getSelectors(EgorasSwapFacet)],
-//       [OwnershipFacet.address, FacetCutAction.Add, getSelectors(OwnershipFacet)],
-//     ]
-//     return deployer.deploy(EgorasLoanDaoV2, diamondCut, [accounts[0]])
- // })
+ deployer.deploy(SwapFacet);
+  deployer.deploy(DiamondCutFacet)
+  deployer.deploy(DiamondLoupeFacet)
+
+  deployer.deploy(OwnershipFacet).then(() => {
+    const diamondCut = [
+      [DiamondCutFacet.address, FacetCutAction.Add, getSelectors(DiamondCutFacet)],
+      [DiamondLoupeFacet.address, FacetCutAction.Add, getSelectors(DiamondLoupeFacet)],
+      [PriceOracleFacet.address, FacetCutAction.Add, getSelectors(PriceOracleFacet)],
+      [MembershipFacet.address, FacetCutAction.Add, getSelectors(MembershipFacet)],
+      [ProductFacet.address, FacetCutAction.Add, getSelectors(ProductFacet)],
+      [SalaryFacet.address, FacetCutAction.Add, getSelectors(SalaryFacet)],
+      [StakingFacet.address, FacetCutAction.Add, getSelectors(StakingFacet)],
+      [SwapFacet.address, FacetCutAction.Add, getSelectors(SwapFacet)],
+      [OwnershipFacet.address, FacetCutAction.Add, getSelectors(OwnershipFacet)],
+    ]
+    return deployer.deploy(EgorasV3, diamondCut, [accounts[0]])
+ })
 }
  

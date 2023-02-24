@@ -32,6 +32,8 @@ interface IERC20 {
     function mint(address account, uint256 amount) external returns (bool);
 
     function burnFrom(address account, uint256 amount) external;
+
+    function burn(uint256 amount) external;
 }
 
 contract MembershipFacet {
@@ -59,6 +61,7 @@ contract MembershipFacet {
     );
 
     event Rewarded(address user, uint256 amount, uint256 time);
+    event Burn(address user, uint256 amount, uint256 time);
     struct Members {
         address user;
     }
@@ -382,6 +385,14 @@ contract MembershipFacet {
 
         require(iERC20.transfer(_msgSender(), amount), "Fail to transfer");
         emit Rewarded(_msgSender(), amount, block.timestamp);
+    }
+
+    function burn() external {
+        uint256 amount = s.referralBurnBalance;
+        IERC20 iERC20 = IERC20(s.egcAddr);
+
+        iERC20.burn(amount);
+        emit Burn(_msgSender(), amount, block.timestamp);
     }
 
     function referralStats(address user)

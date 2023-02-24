@@ -18,9 +18,8 @@
  *
  */
  const HDWalletProvider = require("@truffle/hdwallet-provider");
- const {PRIVATE_KEY, BSCSCAN_API_KEY, PYTHIA} = require("./env.json");
- const privateKeys = [PRIVATE_KEY, PYTHIA]
- const pythia = [PYTHIA]
+ const {PRIVATE_KEY, BSCSCAN_API_KEY} = require("./env.json");
+ const privateKeys = [PRIVATE_KEY]
 // const HDWalletProvider = require('@truffle/hdwallet-provider');
 //
 // const fs = require('fs');
@@ -76,9 +75,9 @@ module.exports = {
     bscTestNet: {
       provider: () => new HDWalletProvider(
         privateKeys,
-        //'https://data-seed-prebsc-1-s1.binance.org:8545'
-        
-        'https://data-seed-prebsc-1-s2.binance.org:8545/'
+      
+        'https://data-seed-prebsc-1-s1.binance.org:8545/'
+        // 'https://data-seed-prebsc-1-s2.binance.org:8545/'
       ),
       network_id: 97,
       skipDryRun: true

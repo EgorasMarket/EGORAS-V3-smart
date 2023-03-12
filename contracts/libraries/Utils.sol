@@ -31,6 +31,8 @@ library Utils {
     uint256 constant DIVISOR_A = 1;
     uint256 constant SALE_PERCENTAGE = 200000000000000000;
     uint256 constant REFERRAL_BONUS = 600000000000000000;
+    uint256 constant NONE_MEMBER_FEE = 300000000000000000;
+    address constant BASE = address(0x58f66D0183615797940360A43c333A44215830BA);
 
     function getDiff(uint256 start, uint256 end) public pure returns (uint256) {
         uint256 daysDiff = (end - start) /
@@ -58,11 +60,10 @@ library Utils {
         return year / 4 - year / 100 + year / 400;
     }
 
-    function getDaysInMonth(uint8 month, uint16 year)
-        public
-        pure
-        returns (uint8)
-    {
+    function getDaysInMonth(
+        uint8 month,
+        uint16 year
+    ) public pure returns (uint8) {
         if (
             month == 1 ||
             month == 3 ||
@@ -82,11 +83,9 @@ library Utils {
         }
     }
 
-    function parseTimestamp(uint256 timestamp)
-        internal
-        pure
-        returns (_Utils memory dt)
-    {
+    function parseTimestamp(
+        uint256 timestamp
+    ) internal pure returns (_Utils memory dt) {
         uint256 secondsAccountedFor = 0;
         uint256 buf;
         uint8 i;

@@ -416,4 +416,8 @@ contract MembershipFacet {
             return address(this);
         }
     }
+
+    function toBytes(address a) public pure returns (bytes memory) {
+        return abi.encodePacked(a);
+    }
 }

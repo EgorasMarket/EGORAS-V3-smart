@@ -23,8 +23,6 @@ struct AppStorage {
     mapping(bool => uint256) totalSwap;
     // needed for swap to work
     address _priceOracle;
-    address _baseAddress;
-    address _tokenAddress;
     bytes _price;
     // needed for swap to work
 
@@ -35,4 +33,10 @@ struct AppStorage {
     mapping(address => uint256) referralCount;
     mapping(address => bool) alreadyMember;
     uint256 referralBurnBalance;
+    mapping(address => bytes) referralLink;
+    mapping(bytes => address) referralAddress;
+    mapping(bytes => address) token_address;
+    mapping(bytes => uint) fee;
+    mapping(bytes => bool) isListed;
+    mapping(bytes => mapping(address => uint)) liquidity;
 }

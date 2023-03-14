@@ -123,14 +123,17 @@ contract MembershipFacet {
         uint256 amount = s.plan[uint256(MembershipPlan.MONTHLY)];
         require(amount > 0, "Invalid plan");
         uint256 expiryDate = block.timestamp.add(30 days);
-       subscribe(
+        require(
+            subscribe(
                 amount,
                 user,
                 expiryDate,
                 uint256(MembershipPlan.SEMIANNUALLY)
-            )
-          referralHelper(amount)
-        
+            ),
+            "Unable to subscribe"
+        );
+
+        require(referralHelper(amount), "Referral error");
     }
 
     function monthlyPlan(address _referral) external {
@@ -142,13 +145,16 @@ contract MembershipFacet {
         uint256 amount = s.plan[uint256(MembershipPlan.MONTHLY)];
         require(amount > 0, "Invalid plan");
         uint256 expiryDate = block.timestamp.add(30 days);
-       subscribe(
+        require(
+            subscribe(
                 amount,
                 user,
                 expiryDate,
                 uint256(MembershipPlan.SEMIANNUALLY)
-            )
-       // require(referralHelper(_referral, amount), "Referral error.");
+            ),
+            "Unable to subscribe"
+        );
+        require(referralHelper(_referral, amount), "Referral error.");
     }
 
     function semiAnnuallyPlan(address _referral) external {
@@ -160,14 +166,17 @@ contract MembershipFacet {
         uint256 amount = s.plan[uint256(MembershipPlan.SEMIANNUALLY)];
         require(amount > 0, "Invalid plan");
         uint256 expiryDate = block.timestamp.add(180 days);
-    //    subscribe(
-    //             amount,
-    //             user,
-    //             expiryDate,
-    //             uint256(MembershipPlan.SEMIANNUALLY)
-    //         )
+        require(
+            subscribe(
+                amount,
+                user,
+                expiryDate,
+                uint256(MembershipPlan.SEMIANNUALLY)
+            ),
+            "Unable to subscribe"
+        );
 
-        referralHelper(_referral, amount);
+        require(referralHelper(_referral, amount), "Referral error.");
     }
 
     function semiAnnuallyPlan() external {
@@ -179,17 +188,17 @@ contract MembershipFacet {
         uint256 amount = s.plan[uint256(MembershipPlan.SEMIANNUALLY)];
         require(amount > 0, "Invalid plan");
         uint256 expiryDate = block.timestamp.add(180 days);
-        // require(
-        //     subscribe(
-        //         amount,
-        //         user,
-        //         expiryDate,
-        //         uint256(MembershipPlan.SEMIANNUALLY)
-        //     ),
-        //     "Unable to subscribe"
-        // );
+        require(
+            subscribe(
+                amount,
+                user,
+                expiryDate,
+                uint256(MembershipPlan.SEMIANNUALLY)
+            ),
+            "Unable to subscribe"
+        );
 
-        // require(referralHelper(amount), "Referral error");
+        require(referralHelper(amount), "Referral error");
     }
 
     function annually(address _referral) external {

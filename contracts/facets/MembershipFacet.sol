@@ -123,14 +123,13 @@ contract MembershipFacet {
         uint256 amount = s.plan[uint256(MembershipPlan.MONTHLY)];
         require(amount > 0, "Invalid plan");
         uint256 expiryDate = block.timestamp.add(30 days);
-       subscribe(
-                amount,
-                user,
-                expiryDate,
-                uint256(MembershipPlan.SEMIANNUALLY)
-            )
-          referralHelper(amount)
-        
+        subscribe(
+            amount,
+            user,
+            expiryDate,
+            uint256(MembershipPlan.SEMIANNUALLY)
+        );
+        referralHelper(amount);
     }
 
     function monthlyPlan(address _referral) external {
@@ -142,13 +141,13 @@ contract MembershipFacet {
         uint256 amount = s.plan[uint256(MembershipPlan.MONTHLY)];
         require(amount > 0, "Invalid plan");
         uint256 expiryDate = block.timestamp.add(30 days);
-       subscribe(
-                amount,
-                user,
-                expiryDate,
-                uint256(MembershipPlan.SEMIANNUALLY)
-            )
-       // require(referralHelper(_referral, amount), "Referral error.");
+        subscribe(
+            amount,
+            user,
+            expiryDate,
+            uint256(MembershipPlan.SEMIANNUALLY)
+        );
+        // require(referralHelper(_referral, amount), "Referral error.");
     }
 
     function semiAnnuallyPlan(address _referral) external {
@@ -160,12 +159,12 @@ contract MembershipFacet {
         uint256 amount = s.plan[uint256(MembershipPlan.SEMIANNUALLY)];
         require(amount > 0, "Invalid plan");
         uint256 expiryDate = block.timestamp.add(180 days);
-    //    subscribe(
-    //             amount,
-    //             user,
-    //             expiryDate,
-    //             uint256(MembershipPlan.SEMIANNUALLY)
-    //         )
+        //    subscribe(
+        //             amount,
+        //             user,
+        //             expiryDate,
+        //             uint256(MembershipPlan.SEMIANNUALLY)
+        //         )
 
         referralHelper(_referral, amount);
     }

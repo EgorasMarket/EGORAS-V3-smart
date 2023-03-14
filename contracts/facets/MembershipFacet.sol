@@ -12,14 +12,15 @@ interface IERC20 {
 
     function balanceOf(address account) external view returns (uint256);
 
-    function transfer(address recipient, uint256 amount)
-        external
-        returns (bool);
+    function transfer(
+        address recipient,
+        uint256 amount
+    ) external returns (bool);
 
-    function allowance(address owner, address spender)
-        external
-        view
-        returns (uint256);
+    function allowance(
+        address owner,
+        address spender
+    ) external view returns (uint256);
 
     function approve(address spender, uint256 amount) external returns (bool);
 
@@ -83,11 +84,15 @@ contract MembershipFacet {
     function configurePlan(
         uint256 _monthlyPrice,
         uint256 _semiAnnuallyPlan,
-        uint256 _annuallyPlan
+        uint256 _annuallyPlan,
+        address _egc,
+        address _eusd
     ) external onlyOwner {
         s.plan[uint256(MembershipPlan.MONTHLY)] = _monthlyPrice;
         s.plan[uint256(MembershipPlan.SEMIANNUALLY)] = _semiAnnuallyPlan;
         s.plan[uint256(MembershipPlan.ANNUALLY)] = _annuallyPlan;
+        s.egcAddr = _egc;
+        s.eeusdAddr = _eusd;
         emit PlansEdited(
             _monthlyPrice,
             _semiAnnuallyPlan,
@@ -100,11 +105,7 @@ contract MembershipFacet {
     function getConfiguration()
         external
         view
-        returns (
-            uint256 _monthly,
-            uint256 _semiAnnually,
-            uint256 _annually
-        )
+        returns (uint256 _monthly, uint256 _semiAnnually, uint256 _annually)
     {
         return (
             s.plan[uint256(MembershipPlan.MONTHLY)],
@@ -283,10 +284,10 @@ contract MembershipFacet {
         return true;
     }
 
-    function referralHelper(address _referral, uint256 _amount)
-        internal
-        returns (bool)
-    {
+    function referralHelper(
+        address _referral,
+        uint256 _amount
+    ) internal returns (bool) {
         require(
             !s.alreadyMember[_msgSender()],
             "You can only renew your plan."
@@ -395,11 +396,9 @@ contract MembershipFacet {
         emit Burn(_msgSender(), amount, block.timestamp);
     }
 
-    function referralStats(address user)
-        external
-        view
-        returns (uint256 _count, uint256 _amount)
-    {
+    function referralStats(
+        address user
+    ) external view returns (uint256 _count, uint256 _amount) {
         return (s.referralRewardBalance[user], s.referralCount[user]);
     }
 

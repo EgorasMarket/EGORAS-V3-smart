@@ -241,3 +241,7 @@ contract PancakeSwapFacet {
         return pancakeRouter.getAmountsIn(amountOut, path);
     }
 }
+
+// 0.5% minus 0.02n,
+// token other than eusd should trasact direct and minus 0.5
+// either you bring eusd or collect eusd

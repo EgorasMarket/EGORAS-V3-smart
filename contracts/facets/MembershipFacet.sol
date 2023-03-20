@@ -114,7 +114,7 @@ contract MembershipFacet {
         );
     }
 
-    function membershipMonthlyPlan() external {
+    function monthlyPlan() external {
         address user = _msgSender();
         require(
             block.timestamp >= s.expiryDate[user],
@@ -136,7 +136,7 @@ contract MembershipFacet {
         require(referralHelper(amount), "Referral error");
     }
 
-    function monthlyPlanWithReferral(address _referral) external {
+    function monthlyPlan(address _referral) external {
         address user = _msgSender();
         require(
             block.timestamp >= s.expiryDate[user],
@@ -157,7 +157,7 @@ contract MembershipFacet {
         require(referralHelper(_referral, amount), "Referral error.");
     }
 
-    function semiAnnuallyPlanWithReferral(address _referral) external {
+    function semiAnnuallyPlan(address _referral) external {
         address user = _msgSender();
         require(
             block.timestamp >= s.expiryDate[user],
@@ -179,7 +179,7 @@ contract MembershipFacet {
         require(referralHelper(_referral, amount), "Referral error.");
     }
 
-    function membershipSemiAnnuallyPlan() external {
+    function semiAnnuallyPlan() external {
         address user = _msgSender();
         require(
             block.timestamp >= s.expiryDate[user],
@@ -201,7 +201,7 @@ contract MembershipFacet {
         require(referralHelper(amount), "Referral error");
     }
 
-    function annuallyWithReferral(address _referral) external {
+    function annually(address _referral) external {
         address user = _msgSender();
         require(
             block.timestamp >= s.expiryDate[user],
@@ -223,7 +223,7 @@ contract MembershipFacet {
         require(referralHelper(_referral, amount), "Referral error.");
     }
 
-    function membershipAnnually() external {
+    function annually() external {
         address user = _msgSender();
         require(
             block.timestamp >= s.expiryDate[user],

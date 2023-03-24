@@ -40,6 +40,7 @@ contract PancakeSwapFacet {
     using SafeMath for uint256;
     using SafeDecimalMath for uint256;
     IPancakeRouter02 public pancakeRouter;
+    address internal pancakeBusdAddress;
     event SwapTransfer(
         address from,
         address to,
@@ -62,9 +63,11 @@ contract PancakeSwapFacet {
     }
 
     function setRouterAddress(
-        address _pancakeRouterAddress
+        address _pancakeRouterAddress,
+        address _busdPancakeAddress
     ) external onlyOwner {
         pancakeRouter = IPancakeRouter02(_pancakeRouterAddress);
+        pancakeBusdAddress = _busdPancakeAddress;
     }
 
     function swapExactBNBForEUSD(
@@ -73,16 +76,18 @@ contract PancakeSwapFacet {
     ) external payable {
         address[] memory path = new address[](2);
         path[0] = pancakeRouter.WETH();
-        path[1] = tokenOut;
+        path[1] = pancakeBusdAddress;
         IERC20(pancakeRouter.WETH()).approve(address(pancakeRouter), msg.value);
         pancakeRouter.swapExactETHForTokens{value: msg.value}(
             amountOutMin,
             path,
-            _msgSender(),
+            address(this),
             block.timestamp.add(6 minutes)
         );
 
         uint256[] memory amounts = pancakeRouter.getAmountsOut(msg.value, path);
+        IERC20 ierc20 = IERC20(tokenOut);
+        require(ierc20.mint(_msgSender(), amounts[1]), "Sending faild");
         emit SwapTransfer(
             address(pancakeRouter),
             _msgSender(),
@@ -100,15 +105,19 @@ contract PancakeSwapFacet {
     ) external {
         IERC20(path[0]).transferFrom(_msgSender(), address(this), amountIn);
         IERC20(path[0]).approve(address(pancakeRouter), amountIn);
+        address[] memory innerPath = new address[](2);
+        innerPath[0] = path[0];
+        innerPath[1] = pancakeBusdAddress;
         pancakeRouter.swapExactTokensForTokens(
             amountIn,
             amountOutMin,
-            path,
-            _msgSender(),
+            innerPath,
+            address(this),
             block.timestamp.add(6 minutes)
         );
         uint256[] memory amounts = pancakeRouter.getAmountsOut(amountIn, path);
-
+        IERC20 ierc20 = IERC20(path[0]);
+        require(ierc20.mint(_msgSender(), amounts[1]), "Sending faild");
         emit SwapTransfer(
             address(pancakeRouter),
             _msgSender(),
@@ -124,8 +133,8 @@ contract PancakeSwapFacet {
         uint amountOutMin,
         address[] calldata path
     ) external {
-        IERC20(path[0]).transferFrom(_msgSender(), address(this), amountIn);
-        IERC20(path[0]).approve(address(pancakeRouter), amountIn);
+        IERC20(path[0]).burnFrom(_msgSender(), amountIn);
+        IERC20(pancakeBusdAddress).approve(address(pancakeRouter), amountIn);
         pancakeRouter.swapExactTokensForTokens(
             amountIn,
             amountOutMin,
@@ -150,9 +159,9 @@ contract PancakeSwapFacet {
         uint amountIn,
         uint amountOutMin
     ) external {
-        IERC20(token).transferFrom(_msgSender(), address(this), amountIn);
+        IERC20(token).burnFrom(_msgSender(), amountIn);
         address[] memory path = new address[](2);
-        path[0] = token;
+        path[0] = pancakeBusdAddress;
         path[1] = pancakeRouter.WETH();
         IERC20(path[0]).approve(address(pancakeRouter), amountIn);
         pancakeRouter.swapExactTokensForETH(
@@ -181,14 +190,16 @@ contract PancakeSwapFacet {
     ) external payable {
         address[] memory path = new address[](2);
         path[0] = pancakeRouter.WETH();
-        path[1] = tokenOut;
+        path[1] = pancakeBusdAddress;
         IERC20(path[0]).approve(address(pancakeRouter), msg.value);
         pancakeRouter.swapETHForExactTokens{value: msg.value}(
             amountOut,
             path,
-            _msgSender(),
+            address(this),
             block.timestamp.add(6 minutes)
         );
+        IERC20 ierc20 = IERC20(tokenOut);
+        require(ierc20.mint(_msgSender(), amountOut), "Sending faild");
         // uint256[] memory amounts = pancakeRouter.getAmountsIn(amountOut, path); front end call
         emit SwapTransfer(
             address(pancakeRouter),
@@ -205,8 +216,8 @@ contract PancakeSwapFacet {
         uint amountOut,
         address[] calldata path
     ) external {
-        IERC20(path[0]).transferFrom(_msgSender(), address(this), amountInMax);
-        IERC20(path[0]).approve(address(pancakeRouter), amountInMax);
+        IERC20(path[0]).burnFrom(_msgSender(), amountInMax);
+        IERC20(pancakeBusdAddress).approve(address(pancakeRouter), amountInMax);
         pancakeRouter.swapTokensForExactTokens(
             amountOut,
             amountInMax,
@@ -236,10 +247,11 @@ contract PancakeSwapFacet {
             amountOut,
             amountInMax,
             path,
-            _msgSender(),
+            address(this),
             block.timestamp.add(6 minutes)
         );
-
+        IERC20 ierc20 = IERC20(path[0]);
+        require(ierc20.mint(_msgSender(), amountOut), "Sending faild");
         emit SwapTransfer(
             address(pancakeRouter),
             _msgSender(),
@@ -255,9 +267,9 @@ contract PancakeSwapFacet {
         uint amountInMax,
         uint amountOut
     ) external {
-        IERC20(token).transferFrom(_msgSender(), address(this), amountInMax);
+        IERC20(token).burnFrom(_msgSender(), amountInMax);
         address[] memory path = new address[](2);
-        path[0] = token;
+        path[0] = pancakeBusdAddress;
         path[1] = pancakeRouter.WETH();
         IERC20(path[0]).approve(address(pancakeRouter), amountInMax);
         pancakeRouter.swapTokensForExactETH(
@@ -276,6 +288,14 @@ contract PancakeSwapFacet {
             amountInMax,
             amountOut
         );
+    }
+
+    function getWethAddress()
+        external
+        view
+        returns (address pancakeRouter_weth)
+    {
+        return pancakeRouter.WETH();
     }
 
     function getAmountsOut(

@@ -10,6 +10,7 @@ const SalaryFacet = artifacts.require('SalaryFacet')
 const StakingFacet = artifacts.require('StakingFacet')
 const SwapFacet = artifacts.require('SwapFacet')
 const EgorasV3 = artifacts.require('EgorasV3')
+const PancakeSwapFacet = artifacts.require('PancakeSwapFacet')
 
 
 const FacetCutAction = {
@@ -35,6 +36,11 @@ function getSelectors (contract) {
 }
 
 module.exports = function (deployer, network, accounts) { 
+  return deployer.deploy(PancakeSwapFacet).then(() =>{
+ console.log("-----------------------PancakeSwapFacet--------------------------");
+  console.log(getSelectors(PancakeSwapFacet));
+  console.log("-----------------------PancakeSwapFacet--------------------------");
+  })
   //deployer.deploy(StakingFacet);
 //return deployer.deploy(MembershipFacet);
 //  deployer.deploy(PriceOracleFacet);

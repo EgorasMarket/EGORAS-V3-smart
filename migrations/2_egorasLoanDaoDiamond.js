@@ -36,11 +36,11 @@ function getSelectors (contract) {
 }
 
 module.exports = function (deployer, network, accounts) { 
-  return deployer.deploy(PancakeSwapFacet).then(() =>{
- console.log("-----------------------PancakeSwapFacet--------------------------");
-  console.log(getSelectors(PancakeSwapFacet));
-  console.log("-----------------------PancakeSwapFacet--------------------------");
-  })
+//   return deployer.deploy(PancakeSwapFacet).then(() =>{
+//  console.log("-----------------------PancakeSwapFacet--------------------------");
+//   console.log(getSelectors(PancakeSwapFacet));
+//   console.log("-----------------------PancakeSwapFacet--------------------------");
+//   })
   //deployer.deploy(StakingFacet);
 //return deployer.deploy(MembershipFacet);
 //  deployer.deploy(PriceOracleFacet);
@@ -60,6 +60,7 @@ module.exports = function (deployer, network, accounts) {
       ["0x61e6C30879D91C19785F8cC9072Ea4028c040b26", 0, [ '0x076f2129', '0xcad44b33', '0x2e2d3122', '0xd045bbee' ]],
       ["0x04092A3B0147C55B4602Af0d75909e94E5C16E78", 0, ['0x57ca2ad3','0x0f56add4','0x529828ad','0x66663156','0x64b56e38','0xfc2d82b1','0x3cb8d1a9','0xbe57ce41','0x35c3ba4b']],
       ["0xd474ef1F654f9493c0713021EfAA64242b442Fa7", 0, [ '0xf2fde38b', '0x8da5cb5b' ]],
+      ["0x69bdC6AC926176D497f1308d92007Bf9abE351c7", 0, ['0xc21ebd07', '0xc6a7584e','0x5e593e8c', '0xc6032911','0xd14f1fdd', '0x9180fde8','0x01513825', '0x402c9ec1','0x2333927e', '0x787e354b','0x23a7b42a', '0xd06ca61f','0x1f00ca74']],
     ]
   return deployer.deploy(EgorasV3, diamondCut, [accounts[0]]);
   

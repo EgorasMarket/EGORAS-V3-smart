@@ -67,7 +67,7 @@ contract PancakeSwapFacet {
         pancakeRouter = IPancakeRouter02(_pancakeRouterAddress);
     }
 
-    function swapExactBNBForTokens(
+    function swapExactBNBForEUSD(
         uint amountOutMin,
         address tokenOut
     ) external payable {
@@ -93,7 +93,7 @@ contract PancakeSwapFacet {
         );
     }
 
-    function swapExactTokensForTokens(
+    function swapExactTokensForEUSD(
         uint amountIn,
         uint amountOutMin,
         address[] calldata path
@@ -119,7 +119,33 @@ contract PancakeSwapFacet {
         );
     }
 
-    function swapExactTokensforBNB(
+    function swapExactEUSDForTokens(
+        uint amountIn,
+        uint amountOutMin,
+        address[] calldata path
+    ) external {
+        IERC20(path[0]).transferFrom(_msgSender(), address(this), amountIn);
+        IERC20(path[0]).approve(address(pancakeRouter), amountIn);
+        pancakeRouter.swapExactTokensForTokens(
+            amountIn,
+            amountOutMin,
+            path,
+            _msgSender(),
+            block.timestamp.add(6 minutes)
+        );
+        uint256[] memory amounts = pancakeRouter.getAmountsOut(amountIn, path);
+
+        emit SwapTransfer(
+            address(pancakeRouter),
+            _msgSender(),
+            path[0],
+            path[1],
+            amountIn,
+            amounts[1]
+        );
+    }
+
+    function swapExactEUSDforBNB(
         address token,
         uint amountIn,
         uint amountOutMin
@@ -149,7 +175,7 @@ contract PancakeSwapFacet {
         );
     }
 
-    function swapBNBForExactTokens(
+    function swapBNBForExactEUSD(
         uint amountOut,
         address tokenOut
     ) external payable {
@@ -174,7 +200,7 @@ contract PancakeSwapFacet {
         );
     }
 
-    function swapTokensForExactToken(
+    function swapEUSDforExactToken(
         uint amountInMax,
         uint amountOut,
         address[] calldata path
@@ -199,7 +225,32 @@ contract PancakeSwapFacet {
         );
     }
 
-    function swapTokensForExactBNB(
+    function swapTokensforExactEUSD(
+        uint amountInMax,
+        uint amountOut,
+        address[] calldata path
+    ) external {
+        IERC20(path[0]).transferFrom(_msgSender(), address(this), amountInMax);
+        IERC20(path[0]).approve(address(pancakeRouter), amountInMax);
+        pancakeRouter.swapTokensForExactTokens(
+            amountOut,
+            amountInMax,
+            path,
+            _msgSender(),
+            block.timestamp.add(6 minutes)
+        );
+
+        emit SwapTransfer(
+            address(pancakeRouter),
+            _msgSender(),
+            path[0],
+            path[1],
+            amountInMax,
+            amountOut
+        );
+    }
+
+    function swapEUSDForExactBNB(
         address token,
         uint amountInMax,
         uint amountOut

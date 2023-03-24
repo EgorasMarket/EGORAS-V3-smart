@@ -261,6 +261,7 @@ contract MembershipFacet {
             "Fail to transfer"
         );
         s.expiryDate[_user] = _expiryDate;
+        s.member[_user] = true;
         emit Subscribed(_user, _amount, _expiryDate, plan, block.timestamp);
         return true;
     }

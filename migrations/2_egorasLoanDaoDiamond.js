@@ -36,7 +36,7 @@ function getSelectors (contract) {
 
 module.exports = function (deployer, network, accounts) { 
   //deployer.deploy(StakingFacet);
-//deployer.deploy(MembershipFacet);
+//return deployer.deploy(MembershipFacet);
 //  deployer.deploy(PriceOracleFacet);
 //  deployer.deploy(ProductFacet);
 //  deployer.deploy(SalaryFacet);
@@ -48,7 +48,7 @@ module.exports = function (deployer, network, accounts) {
       ["0x8aB0c7CE354dC9e83054AA6e5f51e5132D874FF3", 0, [ '0x1f931c1c' ]],
       ["0x911CFA89d5E6Fdc6a2dB0C9E822AFeb5A6d9c056", 0, ['0x7a0ed627','0xadfca15e','0x52ef6b2c','0xcdffacc6','0x01ffc9a7']],
       ["0x12D298fe0614218f7eb61B00Cee444aDb533F24E", 0, ['0x734bc659','0xfe2c6198','0x832427da','0xb55bfc6f','0x5c60896d','0x94a72f1c']],
-      ["0x25c8E67F5149B460F48E6c2C0Ac6E80189aE3BDe", 0, ['0xd1c6be68', '0x6bd50cef','0x60375738', '0x6cb49d7e','0xe2d87a0a', '0xd4ff7a85','0x0038e09a', '0x5518b833','0x8a0d515c', '0xd5de0f67','0x464bf241','0x77c6137b','0x44df8e70', '0x3a0e3409','0x593b79fe']],
+      ["0x8c34Ed5F3d4e348B47a38194C172BE1D08270480", 0, ['0xd1c6be68', '0x6bd50cef','0x60375738', '0x6cb49d7e','0xe2d87a0a', '0xd4ff7a85','0x0038e09a', '0x5518b833','0x8a0d515c', '0xd5de0f67','0x464bf241','0x77c6137b','0x44df8e70', '0x3a0e3409','0x593b79fe']],
       ["0x8650612A06DfD9c3dA1acb3c402bD417ac2DeFA0", 0, ['0x89a1b523','0x013e11f5','0x598647f8','0x2b1fd58a','0x27d55495','0xb364acd6','0x20e124f7','0x8642269e']],
       ["0x47f63fD6171403178131bca9D455f868D7345335", 0, [ '0x0292e391', '0xdc407b61', '0x8e1e14dd']],
       ["0x61e6C30879D91C19785F8cC9072Ea4028c040b26", 0, [ '0x076f2129', '0xcad44b33', '0x2e2d3122', '0xd045bbee' ]],

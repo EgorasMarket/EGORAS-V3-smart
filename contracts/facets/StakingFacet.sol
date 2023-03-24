@@ -12,14 +12,15 @@ interface IERC20 {
 
     function balanceOf(address account) external view returns (uint256);
 
-    function transfer(address recipient, uint256 amount)
-        external
-        returns (bool);
+    function transfer(
+        address recipient,
+        uint256 amount
+    ) external returns (bool);
 
-    function allowance(address owner, address spender)
-        external
-        view
-        returns (uint256);
+    function allowance(
+        address owner,
+        address spender
+    ) external view returns (uint256);
 
     function approve(address spender, uint256 amount) external returns (bool);
 
@@ -61,6 +62,14 @@ contract StakingFacet {
 
     function _msgSender() internal view virtual returns (address) {
         return msg.sender;
+    }
+
+    function unstake() external {
+        uint penalty = s.lockPeriod[_msgSender()] > block.timestamp
+            ? s.userTotalStakeUsd[_msgSender()].multiplyDecimal(
+                Utils.UNSTAKE_PENALTY
+            )
+            : 0;
     }
 
     function monthly(uint256 amount) external {
@@ -155,11 +164,10 @@ contract StakingFacet {
         );
     }
 
-    function getDiff(uint256 start, uint256 end)
-        internal
-        pure
-        returns (uint256)
-    {
+    function getDiff(
+        uint256 start,
+        uint256 end
+    ) internal pure returns (uint256) {
         uint256 daysDiff = (end - start) /
             Utils.MINUTE_IN_SECONDS /
             Utils.MINUTE_IN_SECONDS /
@@ -190,7 +198,9 @@ contract StakingFacet {
         emit Royalty(_msgSender(), rolyalty, block.timestamp);
     }
 
-    function royaltyStats(address user)
+    function royaltyStats(
+        address user
+    )
         external
         view
         returns (

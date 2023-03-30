@@ -26,7 +26,7 @@ function getSelectors (contract) {
   const selectors = contract.abi.reduce((acc, val) => {
     if (val.type === 'function') {
       acc.push(val.signature)
-     // console.log(val.signature, val.name);
+      console.log(val.signature, val.name);
       return acc
     } else {
       return acc

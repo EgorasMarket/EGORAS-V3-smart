@@ -84,12 +84,9 @@ contract DiamondLoupeFacet is IDiamondLoupe, IERC165 {
     /// @notice Gets all the function selectors supported by a specific facet.
     /// @param _facet The facet address.
     /// @return _facetFunctionSelectors The selectors associated with a facet address.
-    function facetFunctionSelectors(address _facet)
-        external
-        view
-        override
-        returns (bytes4[] memory _facetFunctionSelectors)
-    {
+    function facetFunctionSelectors(
+        address _facet
+    ) external view override returns (bytes4[] memory _facetFunctionSelectors) {
         LibDiamond.DiamondStorage storage ds = LibDiamond.diamondStorage();
         uint256 selectorCount = ds.selectors.length;
         uint256 numSelectors;
@@ -165,12 +162,9 @@ contract DiamondLoupeFacet is IDiamondLoupe, IERC165 {
     /// @dev If facet is not found return address(0).
     /// @param _functionSelector The function selector.
     /// @return facetAddress_ The facet address.
-    function facetAddress(bytes4 _functionSelector)
-        external
-        view
-        override
-        returns (address facetAddress_)
-    {
+    function facetAddress(
+        bytes4 _functionSelector
+    ) external view override returns (address facetAddress_) {
         LibDiamond.DiamondStorage storage ds = LibDiamond.diamondStorage();
         facetAddress_ = ds
             .facetAddressAndSelectorPosition[_functionSelector]
@@ -178,12 +172,9 @@ contract DiamondLoupeFacet is IDiamondLoupe, IERC165 {
     }
 
     // This implements ERC-165.
-    function supportsInterface(bytes4 _interfaceId)
-        external
-        view
-        override
-        returns (bool)
-    {
+    function safeSupportsInterface(
+        bytes4 _interfaceId
+    ) external view override returns (bool) {
         LibDiamond.DiamondStorage storage ds = LibDiamond.diamondStorage();
         return ds.supportedInterfaces[_interfaceId];
     }

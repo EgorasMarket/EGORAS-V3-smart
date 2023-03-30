@@ -93,8 +93,9 @@ contract ProductFacet is ERC721, ERC721URIStorage {
         address bidder,
         uint256 time
     );
-    event Sold(uint256 productID, uint qty, address buyer, uint256 time);
+    event Sold(uint256 productID, uint qty, uint soldProductCounter, address buyer, uint256 time);
     event NFTMinted(uint256 productID, uint256 tokenID, uint256 time);
+    event ReleaseProductFundToSeller(uint256 _productID, uint256 tradeID, uint256 time);
     modifier onlySystem() {
         require(
             _msgSender() == LibDiamond.contractOwner() ||
@@ -105,10 +106,9 @@ contract ProductFacet is ERC721, ERC721URIStorage {
     }
 
     using Counters for Counters.Counter;
-
-    bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
     Counters.Counter private _tokenIdCounter;
     Counters.Counter private _productCounter;
+    Counters.Counter private _soldProductCounter;
 
     function setupNFT(
         string memory _nftName,
@@ -273,6 +273,8 @@ contract ProductFacet is ERC721, ERC721URIStorage {
 
     function buyProduct(uint256 _productID, uint qty) external {
         Product storage p = products[_productID];
+        uint256 soldProductCounter = _soldProductCounter.current();
+
         require(!p.isdirect, "Invalid product type.");
         require(p.tradable, "Product is not yet approved/sold");
         IERC20 iERC20 = IERC20(s.eusdAddr);
@@ -283,12 +285,24 @@ contract ProductFacet is ERC721, ERC721URIStorage {
         );
         //require(iERC20.burnFrom(_msgSender(), p.selling), "Unable to burn.");
         iERC20.burnFrom(_msgSender(), p.selling.multiplyDecimal(qty));
+        s.soldProductAmount[_productID][soldProductCounter] = p
+            .selling
+            .multiplyDecimal(qty);
+        s.soldProductBuyer[_productID][soldProductCounter] = _msgSender();
         p.tradable = false;
-        emit Sold(_productID, qty, _msgSender(), block.timestamp);
+        _soldProductCounter.increment();
+        emit Sold(
+            _productID,
+            qty,
+            soldProductCounter,
+            _msgSender(),
+            block.timestamp
+        );
     }
 
     function buyDirectProduct(uint256 _productID, uint qty) external {
         Product storage p = products[_productID];
+        uint256 soldProductCounter = _soldProductCounter.current();
         require(p.isdirect, "Invalid product type.");
         require(p.qty >= qty, "Product is out of stock!");
         IERC20 iERC20 = IERC20(s.eusdAddr);
@@ -299,8 +313,35 @@ contract ProductFacet is ERC721, ERC721URIStorage {
         );
         //require(iERC20.burnFrom(_msgSender(), p.selling), "Unable to burn.");
         iERC20.burnFrom(_msgSender(), p.amount.multiplyDecimal(qty));
+        s.soldProductAmount[_productID][soldProductCounter] = p
+            .selling
+            .multiplyDecimal(qty);
+        s.soldProductBuyer[_productID][soldProductCounter] = _msgSender();
         p.tradable = false;
-        emit Sold(_productID, qty, _msgSender(), block.timestamp);
+        _soldProductCounter.increment();
+        emit Sold(
+            _productID,
+            qty,
+            soldProductCounter,
+            _msgSender(),
+            block.timestamp
+        );
+    }
+
+    function releaseProductFundToSeller(uint256 _productID, uint tradeID) {
+        Product memory p = products[_productID];
+        require(p.isdirect, "Invalid product.")
+        require(p.creator == _msgSender() || _msgSender() == LibDiamond.contractOwner(), "Unauthorized to release funds.")
+        IERC20 ierc20 = IERC20(s.egcusd);
+        require(
+            ierc20.mint(
+                p.creator,
+                s.soldProductAmount[_productID][tradeID]
+            ),
+            "Sending faild"
+        );
+
+        emit ReleaseProductFundToSeller(_productID, tradeID, block.timestamp);
     }
 
     // function directListing(string memory _title, uint256 _amount) external {

@@ -93,9 +93,19 @@ contract ProductFacet is ERC721, ERC721URIStorage {
         address bidder,
         uint256 time
     );
-    event Sold(uint256 productID, uint qty, uint soldProductCounter, address buyer, uint256 time);
+    event Sold(
+        uint256 productID,
+        uint qty,
+        uint soldProductCounter,
+        address buyer,
+        uint256 time
+    );
     event NFTMinted(uint256 productID, uint256 tokenID, uint256 time);
-    event ReleaseProductFundToSeller(uint256 _productID, uint256 tradeID, uint256 time);
+    event ReleaseProductFundToSeller(
+        uint256 _productID,
+        uint256 tradeID,
+        uint256 time
+    );
     modifier onlySystem() {
         require(
             _msgSender() == LibDiamond.contractOwner() ||
@@ -179,7 +189,7 @@ contract ProductFacet is ERC721, ERC721URIStorage {
             qty: _qty,
             isdirect: _isdirect
         });
-        products.push(_product);
+        products[productID] = _product;
 
         if (_isdirect) {
             _mintNft(productID, _qty);
@@ -328,16 +338,20 @@ contract ProductFacet is ERC721, ERC721URIStorage {
         );
     }
 
-    function releaseProductFundToSeller(uint256 _productID, uint tradeID) {
+    function releaseProductFundToSeller(
+        uint256 _productID,
+        uint tradeID
+    ) external {
         Product memory p = products[_productID];
-        require(p.isdirect, "Invalid product.")
-        require(p.creator == _msgSender() || _msgSender() == LibDiamond.contractOwner(), "Unauthorized to release funds.")
-        IERC20 ierc20 = IERC20(s.egcusd);
+        require(p.isdirect, "Invalid product.");
         require(
-            ierc20.mint(
-                p.creator,
-                s.soldProductAmount[_productID][tradeID]
-            ),
+            p.creator == _msgSender() ||
+                _msgSender() == LibDiamond.contractOwner(),
+            "Unauthorized to release funds."
+        );
+        IERC20 ierc20 = IERC20(s.eusdAddr);
+        require(
+            ierc20.mint(p.creator, s.soldProductAmount[_productID][tradeID]),
             "Sending faild"
         );
 

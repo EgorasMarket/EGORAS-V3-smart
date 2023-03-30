@@ -345,7 +345,8 @@ contract ProductFacet is ERC721, ERC721URIStorage {
         Product memory p = products[_productID];
         require(p.isdirect, "Invalid product.");
         require(
-            p.creator == _msgSender() ||
+            s.soldProductBuyer[_productID][soldProductCounter] ==
+                _msgSender() ||
                 _msgSender() == LibDiamond.contractOwner(),
             "Unauthorized to release funds."
         );

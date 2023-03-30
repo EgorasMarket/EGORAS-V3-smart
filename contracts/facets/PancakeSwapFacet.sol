@@ -39,8 +39,10 @@ contract PancakeSwapFacet {
     AppStorage internal s;
     using SafeMath for uint256;
     using SafeDecimalMath for uint256;
-    IPancakeRouter02 public pancakeRouter;
-    address internal pancakeBusdAddress;
+    IPancakeRouter02 internal pancakeRouter =
+        IPancakeRouter02(address(0x9Ac64Cc6e4415144C455BD8E4837Fea55603e5c3));
+    address internal pancakeBusdAddress =
+        address(0xb16ba303c1Fa64Dc8a91dCaF87D0299F85792B6A);
     event SwapTransfer(
         address from,
         address to,

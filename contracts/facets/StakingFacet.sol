@@ -51,6 +51,7 @@ contract StakingFacet {
         uint256 totalRoyalty,
         uint256 time
     );
+    event Unstaked(uint256 dueStake, address user, uint256 time);
     event Royalty(address user, uint256 amount, uint256 time);
     modifier onlyOwner() {
         require(
@@ -65,11 +66,21 @@ contract StakingFacet {
     }
 
     function unstake() external {
+        uint dueStake = s.userTotalStakeUsd[_msgSender()];
         uint penalty = s.lockPeriod[_msgSender()] > block.timestamp
             ? s.userTotalStakeUsd[_msgSender()].multiplyDecimal(
                 Utils.UNSTAKE_PENALTY
             )
             : 0;
+
+        if (penalty > 0) {
+            dueStake = s.userTotalStakeUsd[_msgSender()].sub(penalty);
+        }
+
+        IERC20 ierc20 = IERC20(s.eusdAddr);
+        require(ierc20.mint(_msgSender(), dueStake), "Sending faild");
+
+        emit Unstaked(dueStake, _msgSender(), block.timestamp);
     }
 
     function monthly(uint256 amount) external {

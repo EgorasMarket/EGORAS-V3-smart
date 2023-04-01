@@ -165,10 +165,10 @@ contract ProductFacet is ERC721, ERC721URIStorage {
         uint _qty,
         bool _isdirect
     ) external {
-        // require(
-        //     s.member[_msgSender()],
-        //     "You're not a member, please subscribe to any membership plan and try again"
-        // );
+        require(
+            s.member[_msgSender()],
+            "You're not a member, please subscribe to any membership plan and try again."
+        );
         require(_amount > 0, "Product amount should be greater than zero");
         require(_qty > 0, "Product quantity should be greater than zero");
         require(

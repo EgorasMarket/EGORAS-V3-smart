@@ -7,7 +7,7 @@ import "../libraries/SafeDecimalMath.sol";
 import "../libraries/SafeMath.sol";
 import "./AppStorage.sol";
 
-interface IERC20 {
+interface IERC20PAN {
     function totalSupply() external view returns (uint256);
 
     function balanceOf(address account) external view returns (uint256);
@@ -79,7 +79,10 @@ contract PancakeSwapFacet {
         address[] memory path = new address[](2);
         path[0] = pancakeRouter.WETH();
         path[1] = pancakeBusdAddress;
-        IERC20(pancakeRouter.WETH()).approve(address(pancakeRouter), msg.value);
+        IERC20PAN(pancakeRouter.WETH()).approve(
+            address(pancakeRouter),
+            msg.value
+        );
         pancakeRouter.swapExactETHForTokens{value: msg.value}(
             amountOutMin,
             path,
@@ -88,7 +91,7 @@ contract PancakeSwapFacet {
         );
 
         uint256[] memory amounts = pancakeRouter.getAmountsOut(msg.value, path);
-        IERC20 ierc20 = IERC20(tokenOut);
+        IERC20PAN ierc20 = IERC20PAN(tokenOut);
         require(ierc20.mint(_msgSender(), amounts[1]), "Sending faild");
         emit SwapTransfer(
             address(pancakeRouter),
@@ -105,8 +108,8 @@ contract PancakeSwapFacet {
         uint amountOutMin,
         address[] calldata path
     ) external {
-        IERC20(path[0]).transferFrom(_msgSender(), address(this), amountIn);
-        IERC20(path[0]).approve(address(pancakeRouter), amountIn);
+        IERC20PAN(path[0]).transferFrom(_msgSender(), address(this), amountIn);
+        IERC20PAN(path[0]).approve(address(pancakeRouter), amountIn);
         address[] memory innerPath = new address[](2);
         innerPath[0] = path[0];
         innerPath[1] = pancakeBusdAddress;
@@ -118,7 +121,7 @@ contract PancakeSwapFacet {
             block.timestamp.add(6 minutes)
         );
         uint256[] memory amounts = pancakeRouter.getAmountsOut(amountIn, path);
-        IERC20 ierc20 = IERC20(path[0]);
+        IERC20PAN ierc20 = IERC20PAN(path[0]);
         require(ierc20.mint(_msgSender(), amounts[1]), "Sending faild");
         emit SwapTransfer(
             address(pancakeRouter),
@@ -135,8 +138,8 @@ contract PancakeSwapFacet {
         uint amountOutMin,
         address[] calldata path
     ) external {
-        IERC20(path[0]).burnFrom(_msgSender(), amountIn);
-        IERC20(pancakeBusdAddress).approve(address(pancakeRouter), amountIn);
+        IERC20PAN(path[0]).burnFrom(_msgSender(), amountIn);
+        IERC20PAN(pancakeBusdAddress).approve(address(pancakeRouter), amountIn);
         pancakeRouter.swapExactTokensForTokens(
             amountIn,
             amountOutMin,
@@ -161,11 +164,11 @@ contract PancakeSwapFacet {
         uint amountIn,
         uint amountOutMin
     ) external {
-        IERC20(token).burnFrom(_msgSender(), amountIn);
+        IERC20PAN(token).burnFrom(_msgSender(), amountIn);
         address[] memory path = new address[](2);
         path[0] = pancakeBusdAddress;
         path[1] = pancakeRouter.WETH();
-        IERC20(path[0]).approve(address(pancakeRouter), amountIn);
+        IERC20PAN(path[0]).approve(address(pancakeRouter), amountIn);
         pancakeRouter.swapExactTokensForETH(
             amountIn,
             amountOutMin,
@@ -193,14 +196,14 @@ contract PancakeSwapFacet {
         address[] memory path = new address[](2);
         path[0] = pancakeRouter.WETH();
         path[1] = pancakeBusdAddress;
-        IERC20(path[0]).approve(address(pancakeRouter), msg.value);
+        IERC20PAN(path[0]).approve(address(pancakeRouter), msg.value);
         pancakeRouter.swapETHForExactTokens{value: msg.value}(
             amountOut,
             path,
             address(this),
             block.timestamp.add(6 minutes)
         );
-        IERC20 ierc20 = IERC20(tokenOut);
+        IERC20PAN ierc20 = IERC20PAN(tokenOut);
         require(ierc20.mint(_msgSender(), amountOut), "Sending faild");
         // uint256[] memory amounts = pancakeRouter.getAmountsIn(amountOut, path); front end call
         emit SwapTransfer(
@@ -218,8 +221,11 @@ contract PancakeSwapFacet {
         uint amountOut,
         address[] calldata path
     ) external {
-        IERC20(path[0]).burnFrom(_msgSender(), amountInMax);
-        IERC20(pancakeBusdAddress).approve(address(pancakeRouter), amountInMax);
+        IERC20PAN(path[0]).burnFrom(_msgSender(), amountInMax);
+        IERC20PAN(pancakeBusdAddress).approve(
+            address(pancakeRouter),
+            amountInMax
+        );
         pancakeRouter.swapTokensForExactTokens(
             amountOut,
             amountInMax,
@@ -243,8 +249,12 @@ contract PancakeSwapFacet {
         uint amountOut,
         address[] calldata path
     ) external {
-        IERC20(path[0]).transferFrom(_msgSender(), address(this), amountInMax);
-        IERC20(path[0]).approve(address(pancakeRouter), amountInMax);
+        IERC20PAN(path[0]).transferFrom(
+            _msgSender(),
+            address(this),
+            amountInMax
+        );
+        IERC20PAN(path[0]).approve(address(pancakeRouter), amountInMax);
         pancakeRouter.swapTokensForExactTokens(
             amountOut,
             amountInMax,
@@ -252,7 +262,7 @@ contract PancakeSwapFacet {
             address(this),
             block.timestamp.add(6 minutes)
         );
-        IERC20 ierc20 = IERC20(path[0]);
+        IERC20PAN ierc20 = IERC20PAN(path[0]);
         require(ierc20.mint(_msgSender(), amountOut), "Sending faild");
         emit SwapTransfer(
             address(pancakeRouter),
@@ -269,11 +279,11 @@ contract PancakeSwapFacet {
         uint amountInMax,
         uint amountOut
     ) external {
-        IERC20(token).burnFrom(_msgSender(), amountInMax);
+        IERC20PAN(token).burnFrom(_msgSender(), amountInMax);
         address[] memory path = new address[](2);
         path[0] = pancakeBusdAddress;
         path[1] = pancakeRouter.WETH();
-        IERC20(path[0]).approve(address(pancakeRouter), amountInMax);
+        IERC20PAN(path[0]).approve(address(pancakeRouter), amountInMax);
         pancakeRouter.swapTokensForExactETH(
             amountOut,
             amountInMax,

@@ -95,7 +95,7 @@ contract ProductFacet is ERC721, ERC721URIStorage {
         uint256 time
     );
 
-    event ProductApproved(uint256 _productID, uint256 time)
+    event ProductApproved(uint256 _productID, uint256 time);
     event Sold(
         uint256 productID,
         uint qty,
@@ -123,21 +123,21 @@ contract ProductFacet is ERC721, ERC721URIStorage {
     Counters.Counter private _productCounter;
     Counters.Counter private _soldProductCounter;
 
-    function setupNFT(
-        string memory _nftName,
-        string memory _nftSymbol
-    ) external onlySystem {
-        setConstructor(_nftName, _nftSymbol);
-    }
+    // function setupNFT(
+    //     string memory _nftName,
+    //     string memory _nftSymbol
+    // ) external onlySystem {
+    //     setConstructor(_nftName, _nftSymbol);
+    // }
 
     function _baseURI() internal pure override returns (string memory) {
         return "https://egoras-v3-staging.egoras.com/product/nft/product/by/";
     }
 
-    function safeMint(address to, string memory uri, uint _productID) internal {
+    function safeMint(string memory uri, uint _productID) internal {
         uint256 tokenId = _tokenIdCounter.current();
         _tokenIdCounter.increment();
-        _safeMint(to, tokenId);
+        _safeMint(address(this), tokenId);
         _setTokenURI(tokenId, uri);
         emit NFTMinted(_productID, tokenId, block.timestamp);
     }
@@ -158,8 +158,8 @@ contract ProductFacet is ERC721, ERC721URIStorage {
 
     function tokenURI(
         uint256 tokenId
-    ) public view override(ERC721, ERC721URIStorage) returns (string memory) {
-        return super.tokenURI(tokenId);
+    ) public pure override(ERC721, ERC721URIStorage) returns (string memory) {
+        return string(abi.encodePacked(_baseURI(), tokenId));
     }
 
     function listProduct(
@@ -191,14 +191,11 @@ contract ProductFacet is ERC721, ERC721URIStorage {
             tradable: false,
             qty: _qty,
             isdirect: _isdirect,
-            isApprove: false;
+            isApprove: false
         });
         products.push(_product);
         uint newProductID = products.length - 1;
 
-        if (_isdirect) {
-            _mintNft(newProductID, _qty);
-        }
         emit ProductCreated(
             _title,
             _amount,
@@ -211,7 +208,7 @@ contract ProductFacet is ERC721, ERC721URIStorage {
 
     function _mintNft(uint _productID, uint _qty) internal {
         for (uint i = 0; i < _qty; i++) {
-            safeMint(_msgSender(), _baseURI(), _productID);
+            safeMint(_baseURI(), _productID);
         }
     }
 
@@ -249,12 +246,15 @@ contract ProductFacet is ERC721, ERC721URIStorage {
         emit Bid(_productID, _amount, _msgSender(), block.timestamp);
     }
 
-    function approveDirectProduct(uint256 _productID) external onlySystem{
-         Product storage p = products[_productID];
-         require(!p.isApprove, "Already approved.");
-         require(p.isdirect, "Invalid product type.");
-         p.isApprove = true;
-         emit ProductApproved(_productID, block.timestamp)
+    function approveDirectProduct(uint256 _productID) external onlySystem {
+        Product storage p = products[_productID];
+        require(!p.isApprove, "Already approved.");
+        require(p.isdirect, "Invalid product type.");
+        p.isApprove = true;
+
+        _mintNft(_productID, p.qty);
+
+        emit ProductApproved(_productID, block.timestamp);
     }
 
     function acceptBid(uint256 _productID) external {
@@ -343,7 +343,7 @@ contract ProductFacet is ERC721, ERC721URIStorage {
             .divideDecimal(uint256(Utils.DIVISOR_A))
             .multiplyDecimal(qty);
         s.soldProductBuyer[_productID][soldProductCounter] = _msgSender();
-       
+
         p.qty = p.qty.sub(qty);
         _soldProductCounter.increment();
         emit Sold(
@@ -414,5 +414,4 @@ contract ProductFacet is ERC721, ERC721URIStorage {
 
         emit ReleaseProductFundToSeller(_productID, tradeID, block.timestamp);
     }
-
 }

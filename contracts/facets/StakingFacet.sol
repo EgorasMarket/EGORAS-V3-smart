@@ -7,7 +7,7 @@ import "../libraries/SafeDecimalMath.sol";
 import "../libraries/SafeMath.sol";
 import "./AppStorage.sol";
 
-interface IERC20 {
+interface IERC20STAKE {
     function totalSupply() external view returns (uint256);
 
     function balanceOf(address account) external view returns (uint256);
@@ -82,7 +82,7 @@ contract StakingFacet {
         s.dailyRoyalty[_msgSender()] = 0;
         s.lockPeriod[_msgSender()] = block.timestamp.sub(1 days);
         s.nextRoyaltyTakePeriod[_msgSender()] = block.timestamp.sub(2 days);
-        IERC20 ierc20 = IERC20(s.egcAddr);
+        IERC20STAKE ierc20 = IERC20STAKE(s.egcAddr);
         require(ierc20.transfer(_msgSender(), dueStake), "Sending faild");
 
         emit Unstaked(dueStake, _msgSender(), block.timestamp);
@@ -99,7 +99,7 @@ contract StakingFacet {
             inusd >= s.stakingPlan[uint256(Stakinglan.MONTHLY)],
             "Please increase your staking amount."
         );
-        IERC20 iERC20 = IERC20(s.egcAddr);
+        IERC20STAKE iERC20 = IERC20STAKE(s.egcAddr);
         require(
             iERC20.allowance(_msgSender(), address(this)) >= amount,
             "Insufficient EGC allowance for staking!"
@@ -145,7 +145,7 @@ contract StakingFacet {
             inusd >= s.stakingPlan[uint256(Stakinglan.ANNUALLY)],
             "Please increase your staking amount."
         );
-        IERC20 iERC20 = IERC20(s.egcAddr);
+        IERC20STAKE iERC20 = IERC20STAKE(s.egcAddr);
         require(
             iERC20.allowance(_msgSender(), address(this)) >= amount,
             "Insufficient EGC allowance for staking!"
@@ -205,7 +205,7 @@ contract StakingFacet {
                 .divideDecimal(uint256(Utils.DIVISOR_A))
                 .multiplyDecimal(uint256(getNumDays > 0 ? getNumDays : 1))
         );
-        IERC20 eusd = IERC20(s.eusdAddr);
+        IERC20STAKE eusd = IERC20STAKE(s.eusdAddr);
         require(eusd.mint(_msgSender(), rolyalty), "Fail to transfer fund");
         s.totalRoyaltyTaken[_msgSender()] = s
             .totalRoyaltyTaken[_msgSender()]

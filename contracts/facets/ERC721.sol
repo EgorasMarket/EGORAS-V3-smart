@@ -22,10 +22,10 @@ contract ERC721 is Context, ERC165, IERC721, IERC721Metadata {
     using Strings for uint256;
 
     // Token name
-    string private _name;
+    string private _name = "Egoras Market NFT";
 
     // Token symbol
-    string private _symbol;
+    string private _symbol = "EMN";
 
     // Mapping from token ID to owner address
     mapping(uint256 => address) private _owners;
@@ -43,13 +43,13 @@ contract ERC721 is Context, ERC165, IERC721, IERC721Metadata {
      * @dev Initializes the contract by setting a `name` and a `symbol` to the token collection.
      */
 
-    function setConstructor(
-        string memory name_,
-        string memory symbol_
-    ) internal virtual {
-        _name = name_;
-        _symbol = symbol_;
-    }
+    // function setConstructor(
+    //     string memory name_,
+    //     string memory symbol_
+    // ) internal virtual {
+    //     _name = name_;
+    //     _symbol = symbol_;
+    // }
 
     /**
      * @dev See {IERC165-supportsInterface}.
@@ -122,7 +122,7 @@ contract ERC721 is Context, ERC165, IERC721, IERC721Metadata {
      * by default, can be overridden in child contracts.
      */
     function _baseURI() internal view virtual returns (string memory) {
-        return "";
+        return "https://egoras-v3-staging.egoras.com/product/nft/product/by/";
     }
 
     /**

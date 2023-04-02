@@ -32,7 +32,7 @@ library Utils {
     uint256 constant SALE_PERCENTAGE = 200000000000000000;
     uint256 constant REFERRAL_BONUS = 600000000000000000;
     uint256 constant NONE_MEMBER_FEE = 300000000000000000;
-    uint256 constant UNSTAKE_PENALTY = 190000000000000000;
+    uint256 constant UNSTAKE_PENALTY = 100000000000000000;
     address constant BASE = address(0x58f66D0183615797940360A43c333A44215830BA);
 
     function getDiff(uint256 start, uint256 end) public pure returns (uint256) {

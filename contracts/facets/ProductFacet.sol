@@ -11,7 +11,7 @@ import "../extensions/ERC721URIStorage.sol";
 import "../access/AccessControl.sol";
 import "../utils/Counters.sol";
 
-interface IERC20 {
+interface IERC20PRODUCTINTERFACE {
     function totalSupply() external view returns (uint256);
 
     function balanceOf(address account) external view returns (uint256);
@@ -54,6 +54,7 @@ contract ProductFacet is ERC721, ERC721URIStorage {
         bool tradable;
         uint qty;
         bool isdirect;
+        bool isApprove;
     }
     Product[] products;
 
@@ -93,6 +94,8 @@ contract ProductFacet is ERC721, ERC721URIStorage {
         address bidder,
         uint256 time
     );
+
+    event ProductApproved(uint256 _productID, uint256 time)
     event Sold(
         uint256 productID,
         uint qty,
@@ -162,7 +165,7 @@ contract ProductFacet is ERC721, ERC721URIStorage {
     function listProduct(
         string memory _title,
         uint256 _amount,
-        uint _qty,
+        uint256 _qty,
         bool _isdirect
     ) external {
         require(
@@ -187,19 +190,21 @@ contract ProductFacet is ERC721, ERC721URIStorage {
             creator: _msgSender(),
             tradable: false,
             qty: _qty,
-            isdirect: _isdirect
+            isdirect: _isdirect,
+            isApprove: false;
         });
-        products[productID] = _product;
+        products.push(_product);
+        uint newProductID = products.length - 1;
 
         if (_isdirect) {
-            _mintNft(productID, _qty);
+            _mintNft(newProductID, _qty);
         }
         emit ProductCreated(
             _title,
             _amount,
             _msgSender(),
             false,
-            productID,
+            newProductID,
             block.timestamp
         );
     }
@@ -215,10 +220,24 @@ contract ProductFacet is ERC721, ERC721URIStorage {
     )
         external
         view
-        returns (bool isBidding, uint256 latestBid, address _creator)
+        returns (
+            bool isBidding,
+            uint256 latestBid,
+            address _creator,
+            uint256 _amount,
+            uint256 _selling,
+            address eusd
+        )
     {
         Product memory p = products[_productID];
-        return (p.isBidding, p.latestBid, p.creator);
+        return (
+            p.isBidding,
+            p.latestBid,
+            p.creator,
+            p.amount,
+            p.selling,
+            s.eusdAddr
+        );
     }
 
     function bid(uint256 _productID, uint256 _amount) external {
@@ -228,6 +247,14 @@ contract ProductFacet is ERC721, ERC721URIStorage {
         p.latestBid = _amount;
         p.isBidding = true;
         emit Bid(_productID, _amount, _msgSender(), block.timestamp);
+    }
+
+    function approveDirectProduct(uint256 _productID) external onlySystem{
+         Product storage p = products[_productID];
+         require(!p.isApprove, "Already approved.");
+         require(p.isdirect, "Invalid product type.");
+         p.isApprove = true;
+         emit ProductApproved(_productID, block.timestamp)
     }
 
     function acceptBid(uint256 _productID) external {
@@ -249,9 +276,16 @@ contract ProductFacet is ERC721, ERC721URIStorage {
         require(!p.tradable, "Product is already approved");
         require(!p.isBidding, "Bid not accepted");
         require(!p.isdirect, "Invalid product type.");
-        IERC20 eusd = IERC20(s.eusdAddr);
+        IERC20PRODUCTINTERFACE __eusd = IERC20PRODUCTINTERFACE(s.eusdAddr);
+
         require(
-            eusd.mint(p.creator, p.amount.multiplyDecimal(p.qty)),
+            __eusd.mint(
+                p.creator,
+                p
+                    .amount
+                    .divideDecimal(uint256(Utils.DIVISOR_A))
+                    .multiplyDecimal(p.qty)
+            ),
             "Fail to transfer fund"
         );
         uint256 newProductSellingAmount = p.amount.multiplyDecimal(
@@ -284,22 +318,33 @@ contract ProductFacet is ERC721, ERC721URIStorage {
     function buyProduct(uint256 _productID, uint qty) external {
         Product storage p = products[_productID];
         uint256 soldProductCounter = _soldProductCounter.current();
-
+        require(p.qty >= qty, "Product is out of stock!");
         require(!p.isdirect, "Invalid product type.");
         require(p.tradable, "Product is not yet approved/sold");
-        IERC20 iERC20 = IERC20(s.eusdAddr);
+        IERC20PRODUCTINTERFACE __iERC20 = IERC20PRODUCTINTERFACE(s.eusdAddr);
+
         require(
-            iERC20.allowance(_msgSender(), address(this)) >=
-                p.selling.multiplyDecimal(qty),
+            __iERC20.allowance(_msgSender(), address(this)) >=
+                p
+                    .selling
+                    .divideDecimal(uint256(Utils.DIVISOR_A))
+                    .multiplyDecimal(qty),
             "Insufficient allowance for buyinng!"
         );
         //require(iERC20.burnFrom(_msgSender(), p.selling), "Unable to burn.");
-        iERC20.burnFrom(_msgSender(), p.selling.multiplyDecimal(qty));
+        __iERC20.burnFrom(
+            _msgSender(),
+            p.selling.divideDecimal(uint256(Utils.DIVISOR_A)).multiplyDecimal(
+                qty
+            )
+        );
         s.soldProductAmount[_productID][soldProductCounter] = p
             .selling
+            .divideDecimal(uint256(Utils.DIVISOR_A))
             .multiplyDecimal(qty);
         s.soldProductBuyer[_productID][soldProductCounter] = _msgSender();
-        p.tradable = false;
+       
+        p.qty = p.qty.sub(qty);
         _soldProductCounter.increment();
         emit Sold(
             _productID,
@@ -314,20 +359,32 @@ contract ProductFacet is ERC721, ERC721URIStorage {
         Product storage p = products[_productID];
         uint256 soldProductCounter = _soldProductCounter.current();
         require(p.isdirect, "Invalid product type.");
+        require(p.isApprove, "This product is not approved.");
         require(p.qty >= qty, "Product is out of stock!");
-        IERC20 iERC20 = IERC20(s.eusdAddr);
+        IERC20PRODUCTINTERFACE __iERC20 = IERC20PRODUCTINTERFACE(s.eusdAddr);
+
         require(
-            iERC20.allowance(_msgSender(), address(this)) >=
-                p.amount.multiplyDecimal(qty),
+            __iERC20.allowance(_msgSender(), address(this)) >=
+                p
+                    .amount
+                    .divideDecimal(uint256(Utils.DIVISOR_A))
+                    .multiplyDecimal(qty),
             "Insufficient allowance for buyinng!"
         );
         //require(iERC20.burnFrom(_msgSender(), p.selling), "Unable to burn.");
-        iERC20.burnFrom(_msgSender(), p.amount.multiplyDecimal(qty));
+        __iERC20.burnFrom(
+            _msgSender(),
+            p.amount.divideDecimal(uint256(Utils.DIVISOR_A)).multiplyDecimal(
+                qty
+            )
+        );
+
         s.soldProductAmount[_productID][soldProductCounter] = p
             .selling
+            .divideDecimal(uint256(Utils.DIVISOR_A))
             .multiplyDecimal(qty);
         s.soldProductBuyer[_productID][soldProductCounter] = _msgSender();
-        p.tradable = false;
+        p.qty = p.qty.sub(qty);
         _soldProductCounter.increment();
         emit Sold(
             _productID,
@@ -349,44 +406,13 @@ contract ProductFacet is ERC721, ERC721URIStorage {
                 _msgSender() == LibDiamond.contractOwner(),
             "Unauthorized to release funds."
         );
-        IERC20 ierc20 = IERC20(s.eusdAddr);
+        IERC20PRODUCTINTERFACE __ierc20 = IERC20PRODUCTINTERFACE(s.eusdAddr);
         require(
-            ierc20.mint(p.creator, s.soldProductAmount[_productID][tradeID]),
+            __ierc20.mint(p.creator, s.soldProductAmount[_productID][tradeID]),
             "Sending faild"
         );
 
         emit ReleaseProductFundToSeller(_productID, tradeID, block.timestamp);
     }
 
-    // function directListing(string memory _title, uint256 _amount) external {
-    //     require(
-    //         s.member[_msgSender()],
-    //         "You're not a member, please subscribe to any membership plan and try again"
-    //     );
-    //     require(_amount > 0, "Product amount should be greater than zero");
-    //     require(
-    //         bytes(_title).length > 3,
-    //         "Product title should more than three characters long"
-    //     );
-
-    //     Product memory _product = Product({
-    //         title: _title,
-    //         amount: _amount,
-    //         isBidding: false,
-    //         latestBid: 0,
-    //         selling: _amount,
-    //         creator: _msgSender(),
-    //         tradable: true
-    //     });
-    //     products.push(_product);
-    //     uint256 newProductID = products.length - 1;
-    //     emit DirectProductCreated(
-    //         _title,
-    //         _amount,
-    //         _msgSender(),
-    //         true,
-    //         newProductID,
-    //         block.timestamp
-    //     );
-    // }
 }

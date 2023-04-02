@@ -66,19 +66,24 @@ contract StakingFacet {
     }
 
     function unstake() external {
-        uint dueStake = s.userTotalStakeUsd[_msgSender()];
+        uint dueStake = s.userTotalStake[_msgSender()];
         uint penalty = s.lockPeriod[_msgSender()] > block.timestamp
-            ? s.userTotalStakeUsd[_msgSender()].multiplyDecimal(
+            ? s.userTotalStake[_msgSender()].multiplyDecimal(
                 Utils.UNSTAKE_PENALTY
             )
             : 0;
 
         if (penalty > 0) {
-            dueStake = s.userTotalStakeUsd[_msgSender()].sub(penalty);
+            dueStake = s.userTotalStake[_msgSender()].sub(penalty);
         }
 
-        IERC20 ierc20 = IERC20(s.eusdAddr);
-        require(ierc20.mint(_msgSender(), dueStake), "Sending faild");
+        s.userTotalStake[_msgSender()] = 0;
+        s.userTotalStakeUsd[_msgSender()] = 0;
+        s.dailyRoyalty[_msgSender()] = 0;
+        s.lockPeriod[_msgSender()] = block.timestamp.sub(1 days);
+        s.nextRoyaltyTakePeriod[_msgSender()] = block.timestamp.sub(2 days);
+        IERC20 ierc20 = IERC20(s.egcAddr);
+        require(ierc20.transfer(_msgSender(), dueStake), "Sending faild");
 
         emit Unstaked(dueStake, _msgSender(), block.timestamp);
     }
@@ -198,7 +203,7 @@ contract StakingFacet {
         uint256 rolyalty = uint256(
             uint256(s.dailyRoyalty[_msgSender()])
                 .divideDecimal(uint256(Utils.DIVISOR_A))
-                .multiplyDecimal(uint256(getNumDays))
+                .multiplyDecimal(uint256(getNumDays > 0 ? getNumDays : 1))
         );
         IERC20 eusd = IERC20(s.eusdAddr);
         require(eusd.mint(_msgSender(), rolyalty), "Fail to transfer fund");
@@ -209,6 +214,22 @@ contract StakingFacet {
         emit Royalty(_msgSender(), rolyalty, block.timestamp);
     }
 
+    function stakeConfig()
+        external
+        view
+        returns (
+            uint256 _YEARLY_INTEREST_RATE,
+            uint256 _DAYS_IN_A_YEAR,
+            uint256 _egcusd
+        )
+    {
+        return (
+            Utils.YEARLY_INTEREST_RATE,
+            Utils.DAYS_IN_A_YEAR,
+            s.ticker[s.egcusd]
+        );
+    }
+
     function royaltyStats(
         address user
     )
@@ -217,17 +238,49 @@ contract StakingFacet {
         returns (
             uint256 _dailyRoyalty,
             uint256 _totalStake,
+            uint256 _totalStakeUSD,
             uint256 _nextRoyaltyTakePeriod,
             uint256 _lockPeriod,
-            uint256 _totalRoyaltyTaken
+            uint256 _totalRoyaltyTaken,
+            uint256 _penalty
         )
     {
         return (
             s.dailyRoyalty[user],
             s.userTotalStake[user],
+            s.userTotalStakeUsd[user],
             s.nextRoyaltyTakePeriod[user],
             s.lockPeriod[user],
-            s.totalRoyaltyTaken[user]
+            s.totalRoyaltyTaken[user],
+            Utils.UNSTAKE_PENALTY
         );
+    }
+
+    function resetTakeRoyaltyTime(address user) external {
+        s.nextRoyaltyTakePeriod[user] = block.timestamp;
+    }
+
+    function increaseTakeRoyaltyTime(address user) external {
+        s.nextRoyaltyTakePeriod[user] = block.timestamp.sub(4 days);
+    }
+
+    function increaseTakeRoyaltyTime2(address user) external {
+        s.nextRoyaltyTakePeriod[user] = block.timestamp.sub(2 days);
+    }
+
+    function calculateRoyalty(
+        address user
+    ) external view returns (uint256 _royalty) {
+        uint256 getNumDays = getDiff(
+            s.nextRoyaltyTakePeriod[user],
+            block.timestamp
+        );
+        uint256 rolyalty = uint256(
+            uint256(s.dailyRoyalty[user])
+                .divideDecimal(uint256(Utils.DIVISOR_A))
+                .multiplyDecimal(uint256(getNumDays > 0 ? getNumDays : 1))
+        );
+
+        return rolyalty;
     }
 }

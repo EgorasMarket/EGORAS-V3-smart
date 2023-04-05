@@ -45,8 +45,8 @@ module.exports = function (deployer, network, accounts) {
 //  return getSelectors(ProductFacet)
 //  });
 
- deployer.deploy(StakingFacet).then(()=> {
- return getSelectors(StakingFacet)
+ deployer.deploy(MembershipFacet).then(()=> {
+ return getSelectors(MembershipFacet)
  });
 
  

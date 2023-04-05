@@ -205,12 +205,13 @@ contract StakingFacet {
                 .divideDecimal(uint256(Utils.DIVISOR_A))
                 .multiplyDecimal(uint256(getNumDays > 0 ? getNumDays : 1))
         );
+        s.nextRoyaltyTakePeriod[_msgSender()] = block.timestamp.add(1 days);
         IERC20STAKE eusd = IERC20STAKE(s.eusdAddr);
         require(eusd.mint(_msgSender(), rolyalty), "Fail to transfer fund");
         s.totalRoyaltyTaken[_msgSender()] = s
             .totalRoyaltyTaken[_msgSender()]
             .add(rolyalty);
-        s.nextRoyaltyTakePeriod[_msgSender()] = block.timestamp.add(1 days);
+
         emit Royalty(_msgSender(), rolyalty, block.timestamp);
     }
 

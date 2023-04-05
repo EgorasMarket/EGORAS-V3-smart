@@ -39,10 +39,6 @@ contract PancakeSwapFacet {
     AppStorage internal s;
     using SafeMath for uint256;
     using SafeDecimalMath for uint256;
-    IPancakeRouter02 internal pancakeRouter =
-        IPancakeRouter02(address(0x9Ac64Cc6e4415144C455BD8E4837Fea55603e5c3));
-    address internal pancakeBusdAddress =
-        address(0xb16ba303c1Fa64Dc8a91dCaF87D0299F85792B6A);
     event SwapTransfer(
         address from,
         address to,
@@ -64,21 +60,15 @@ contract PancakeSwapFacet {
         return msg.sender;
     }
 
-    function setRouterAddress(
-        address _pancakeRouterAddress,
-        address _busdPancakeAddress
-    ) external onlyOwner {
-        pancakeRouter = IPancakeRouter02(_pancakeRouterAddress);
-        pancakeBusdAddress = _busdPancakeAddress;
-    }
-
     function swapExactBNBForEUSD(
         uint amountOutMin,
-        address tokenOut
+        address tokenOut,
+        address[] calldata routerPath
     ) external payable {
+        IPancakeRouter02 pancakeRouter = IPancakeRouter02(routerPath[0]);
         address[] memory path = new address[](2);
         path[0] = pancakeRouter.WETH();
-        path[1] = pancakeBusdAddress;
+        path[1] = routerPath[1];
         IERC20PAN(pancakeRouter.WETH()).approve(
             address(pancakeRouter),
             msg.value
@@ -106,13 +96,15 @@ contract PancakeSwapFacet {
     function swapExactTokensForEUSD(
         uint amountIn,
         uint amountOutMin,
-        address[] calldata path
+        address[] calldata path,
+        address[] calldata routerPath
     ) external {
+        IPancakeRouter02 pancakeRouter = IPancakeRouter02(routerPath[0]);
         IERC20PAN(path[0]).transferFrom(_msgSender(), address(this), amountIn);
         IERC20PAN(path[0]).approve(address(pancakeRouter), amountIn);
         address[] memory innerPath = new address[](2);
         innerPath[0] = path[0];
-        innerPath[1] = pancakeBusdAddress;
+        innerPath[1] = routerPath[1];
         pancakeRouter.swapExactTokensForTokens(
             amountIn,
             amountOutMin,
@@ -136,10 +128,12 @@ contract PancakeSwapFacet {
     function swapExactEUSDForTokens(
         uint amountIn,
         uint amountOutMin,
-        address[] calldata path
+        address[] calldata path,
+        address[] calldata routerPath
     ) external {
+        IPancakeRouter02 pancakeRouter = IPancakeRouter02(routerPath[0]);
         IERC20PAN(path[0]).burnFrom(_msgSender(), amountIn);
-        IERC20PAN(pancakeBusdAddress).approve(address(pancakeRouter), amountIn);
+        IERC20PAN(routerPath[1]).approve(address(pancakeRouter), amountIn);
         pancakeRouter.swapExactTokensForTokens(
             amountIn,
             amountOutMin,
@@ -162,11 +156,13 @@ contract PancakeSwapFacet {
     function swapExactEUSDforBNB(
         address token,
         uint amountIn,
-        uint amountOutMin
+        uint amountOutMin,
+        address[] calldata routerPath
     ) external {
+        IPancakeRouter02 pancakeRouter = IPancakeRouter02(routerPath[0]);
         IERC20PAN(token).burnFrom(_msgSender(), amountIn);
         address[] memory path = new address[](2);
-        path[0] = pancakeBusdAddress;
+        path[0] = routerPath[1];
         path[1] = pancakeRouter.WETH();
         IERC20PAN(path[0]).approve(address(pancakeRouter), amountIn);
         pancakeRouter.swapExactTokensForETH(
@@ -191,11 +187,13 @@ contract PancakeSwapFacet {
 
     function swapBNBForExactEUSD(
         uint amountOut,
-        address tokenOut
+        address tokenOut,
+        address[] calldata routerPath
     ) external payable {
+        IPancakeRouter02 pancakeRouter = IPancakeRouter02(routerPath[0]);
         address[] memory path = new address[](2);
         path[0] = pancakeRouter.WETH();
-        path[1] = pancakeBusdAddress;
+        path[1] = routerPath[1];
         IERC20PAN(path[0]).approve(address(pancakeRouter), msg.value);
         pancakeRouter.swapETHForExactTokens{value: msg.value}(
             amountOut,
@@ -219,13 +217,12 @@ contract PancakeSwapFacet {
     function swapEUSDforExactToken(
         uint amountInMax,
         uint amountOut,
-        address[] calldata path
+        address[] calldata path,
+        address[] calldata routerPath
     ) external {
+        IPancakeRouter02 pancakeRouter = IPancakeRouter02(routerPath[0]);
         IERC20PAN(path[0]).burnFrom(_msgSender(), amountInMax);
-        IERC20PAN(pancakeBusdAddress).approve(
-            address(pancakeRouter),
-            amountInMax
-        );
+        IERC20PAN(routerPath[1]).approve(address(pancakeRouter), amountInMax);
         pancakeRouter.swapTokensForExactTokens(
             amountOut,
             amountInMax,
@@ -247,8 +244,10 @@ contract PancakeSwapFacet {
     function swapTokensforExactEUSD(
         uint amountInMax,
         uint amountOut,
-        address[] calldata path
+        address[] calldata path,
+        address[] calldata routerPath
     ) external {
+        IPancakeRouter02 pancakeRouter = IPancakeRouter02(routerPath[0]);
         IERC20PAN(path[0]).transferFrom(
             _msgSender(),
             address(this),
@@ -277,11 +276,13 @@ contract PancakeSwapFacet {
     function swapEUSDForExactBNB(
         address token,
         uint amountInMax,
-        uint amountOut
+        uint amountOut,
+        address[] calldata routerPath
     ) external {
+        IPancakeRouter02 pancakeRouter = IPancakeRouter02(routerPath[0]);
         IERC20PAN(token).burnFrom(_msgSender(), amountInMax);
         address[] memory path = new address[](2);
-        path[0] = pancakeBusdAddress;
+        path[0] = routerPath[1];
         path[1] = pancakeRouter.WETH();
         IERC20PAN(path[0]).approve(address(pancakeRouter), amountInMax);
         pancakeRouter.swapTokensForExactETH(
@@ -302,28 +303,67 @@ contract PancakeSwapFacet {
         );
     }
 
-    function getWethAddress()
-        external
-        view
-        returns (address pancakeRouter_weth)
-    {
+    function getWethAddress(
+        address[] calldata routerPath
+    ) external view returns (address pancakeRouter_weth) {
+        IPancakeRouter02 pancakeRouter = IPancakeRouter02(routerPath[0]);
         return pancakeRouter.WETH();
     }
 
     function getAmountsOut(
         uint amountIn,
-        address[] calldata path
+        address[] calldata path,
+        address[] calldata routerPath
     ) external view returns (uint[] memory amounts) {
+        IPancakeRouter02 pancakeRouter = IPancakeRouter02(routerPath[0]);
         return pancakeRouter.getAmountsOut(amountIn, path);
     }
 
     function getAmountsIn(
         uint amountOut,
-        address[] calldata path
+        address[] calldata path,
+        address[] calldata routerPath
     ) external view returns (uint[] memory amounts) {
+        IPancakeRouter02 pancakeRouter = IPancakeRouter02(routerPath[0]);
+
         return pancakeRouter.getAmountsIn(amountOut, path);
     }
 }
+
+// function addLiquidity(
+//     address tokenA,
+//     address tokenB,
+//     uint amountADesired,
+//     uint amountBDesired,
+//     address[] calldata routerPath
+// ) external returns (uint amountA, uint amountB, uint liquidity) {
+//     IPancakeRouter02 pancakeRouter = IPancakeRouter02(routerPath[0]);
+//     IERC20PAN(tokenA).transferFrom(_msgSender(), address(this), amountADesired);
+//     IERC20PAN(tokenB).transferFrom(_msgSender(), address(this), amountBDesired);
+
+//     IERC20PAN(tokenA).approve(address(pancakeRouter), amountADesired);
+//     IERC20PAN(tokenB).approve(address(pancakeRouter), amountBDesired);
+
+//     (uint amountA, uint amountB, uint liquidity) = pancakeRouter.addLiquidity(
+//         tokenA,
+//         tokenB,
+//         amountADesired,
+//         amountBDesired,
+//         0,
+//         0,
+//         _msgSender(),
+//         block.timestamp.add(6 minutes)
+//     );
+// }
+
+// function addLiquidityETH(
+//     address token,
+//     uint amountTokenDesired,
+//     uint amountTokenMin,
+//     uint amountETHMin,
+//     address to,
+//     uint deadline
+// ) external payable returns (uint amountToken, uint amountETH, uint liquidity) {}
 
 // 0.5% minus 0.02n,
 // token other than eusd should trasact direct and minus 0.5

@@ -42,6 +42,7 @@ interface IERC20PRODUCTINTERFACE {
 contract ProductFacet is ERC721, ERC721URIStorage {
     AppStorage internal s;
     using SafeMath for uint256;
+    using Strings for uint256;
     using SafeDecimalMath for uint256;
     struct Product {
         uint256 id;
@@ -137,7 +138,7 @@ contract ProductFacet is ERC721, ERC721URIStorage {
     function safeMint(string memory uri, uint _productID) internal {
         uint256 tokenId = _tokenIdCounter.current();
         _tokenIdCounter.increment();
-        _safeMint(address(this), tokenId);
+        _safeMint(LibDiamond.contractOwner(), tokenId);
         _setTokenURI(tokenId, uri);
         emit NFTMinted(_productID, tokenId, block.timestamp);
     }
@@ -146,6 +147,24 @@ contract ProductFacet is ERC721, ERC721URIStorage {
         bytes4 interfaceId
     ) public view override(ERC721, ERC721URIStorage) returns (bool) {
         return super.supportsInterface(interfaceId);
+    }
+
+    function totalSupply() external view returns (uint256) {
+        return _tokenIdCounter.current();
+    }
+
+    /**
+     * @dev See {IERC721Metadata-name}.
+     */
+    function name() public view virtual override returns (string memory) {
+        return "Egoras Market NFT";
+    }
+
+    /**
+     * @dev See {IERC721Metadata-symbol}.
+     */
+    function symbol() public view virtual override returns (string memory) {
+        return "EMN";
     }
 
     // The following functions are overrides required by Solidity.
@@ -159,7 +178,7 @@ contract ProductFacet is ERC721, ERC721URIStorage {
     function tokenURI(
         uint256 tokenId
     ) public pure override(ERC721, ERC721URIStorage) returns (string memory) {
-        return string(abi.encodePacked(_baseURI(), tokenId));
+        return string(abi.encodePacked(_baseURI(), tokenId.toString()));
     }
 
     function listProduct(
@@ -276,8 +295,14 @@ contract ProductFacet is ERC721, ERC721URIStorage {
         require(!p.tradable, "Product is already approved");
         require(!p.isBidding, "Bid not accepted");
         require(!p.isdirect, "Invalid product type.");
-        IERC20PRODUCTINTERFACE __eusd = IERC20PRODUCTINTERFACE(s.eusdAddr);
 
+        p.tradable = true;
+        uint256 newProductSellingAmount = p.amount.multiplyDecimal(
+            Utils.SALE_PERCENTAGE
+        );
+        p.selling = p.amount.add(newProductSellingAmount);
+        IERC20PRODUCTINTERFACE __eusd = IERC20PRODUCTINTERFACE(s.eusdAddr);
+        _mintNft(_productID, p.qty);
         require(
             __eusd.mint(
                 p.creator,
@@ -288,11 +313,7 @@ contract ProductFacet is ERC721, ERC721URIStorage {
             ),
             "Fail to transfer fund"
         );
-        uint256 newProductSellingAmount = p.amount.multiplyDecimal(
-            Utils.SALE_PERCENTAGE
-        );
-        p.selling = p.amount.add(newProductSellingAmount);
-        _mintNft(_productID, p.qty);
+
         emit Approved(
             _productID,
             _msgSender(),
@@ -414,4 +435,10 @@ contract ProductFacet is ERC721, ERC721URIStorage {
 
         emit ReleaseProductFundToSeller(_productID, tradeID, block.timestamp);
     }
+
+    function setAddress(address _a) external onlySystem {
+        s.eusdAddr = _a;
+    }
 }
+
+//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

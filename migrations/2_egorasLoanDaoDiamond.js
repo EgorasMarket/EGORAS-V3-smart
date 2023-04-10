@@ -45,74 +45,72 @@ module.exports = function (deployer, network, accounts) {
 //  return getSelectors(ProductFacet)
 //  });
 
- deployer.deploy(MembershipFacet).then(()=> {
- return getSelectors(MembershipFacet)
- });
+ 
 
  
 
-//  deployer.deploy(StakingFacet)
-//  deployer.deploy(MembershipFacet);
-//  deployer.deploy(PriceOracleFacet);
-//  deployer.deploy(ProductFacet);
-//  deployer.deploy(SalaryFacet);
-//  deployer.deploy(PancakeSwapFacet);
-//  deployer.deploy(DiamondCutFacet);
-//  deployer.deploy(DiamondLoupeFacet);
+ deployer.deploy(StakingFacet)
+ deployer.deploy(MembershipFacet);
+ deployer.deploy(PriceOracleFacet);
+ deployer.deploy(ProductFacet);
+ deployer.deploy(SalaryFacet);
+ deployer.deploy(PancakeSwapFacet);
+ deployer.deploy(DiamondCutFacet);
+ deployer.deploy(DiamondLoupeFacet);
 
-//   deployer.deploy(OwnershipFacet).then(() => {
-//     const diamondCut = [
-//       [DiamondCutFacet.address, FacetCutAction.Add, getSelectors(DiamondCutFacet)],
-//       [DiamondLoupeFacet.address, FacetCutAction.Add, getSelectors(DiamondLoupeFacet)],
-//       [PriceOracleFacet.address, FacetCutAction.Add, getSelectors(PriceOracleFacet)],
-//       [MembershipFacet.address, FacetCutAction.Add, getSelectors(MembershipFacet)],
-//       [ProductFacet.address, FacetCutAction.Add, getSelectors(ProductFacet)],
-//       [SalaryFacet.address, FacetCutAction.Add, getSelectors(SalaryFacet)],
-//       [StakingFacet.address, FacetCutAction.Add, getSelectors(StakingFacet)],
-//       [PancakeSwapFacet.address, FacetCutAction.Add, getSelectors(PancakeSwapFacet)],
-//       [OwnershipFacet.address, FacetCutAction.Add, getSelectors(OwnershipFacet)],
-//     ]
-//     // console.log("-----------------------DiamondCutFacet--------------------------");
-//     // console.log(getSelectors(DiamondCutFacet));
-//     // console.log("-----------------------DiamondCutFacet--------------------------");
+  deployer.deploy(OwnershipFacet).then(() => {
+    const diamondCut = [
+      [DiamondCutFacet.address, FacetCutAction.Add, getSelectors(DiamondCutFacet)],
+      [DiamondLoupeFacet.address, FacetCutAction.Add, getSelectors(DiamondLoupeFacet)],
+      [PriceOracleFacet.address, FacetCutAction.Add, getSelectors(PriceOracleFacet)],
+      [MembershipFacet.address, FacetCutAction.Add, getSelectors(MembershipFacet)],
+      [ProductFacet.address, FacetCutAction.Add, getSelectors(ProductFacet)],
+      [SalaryFacet.address, FacetCutAction.Add, getSelectors(SalaryFacet)],
+      [StakingFacet.address, FacetCutAction.Add, getSelectors(StakingFacet)],
+      [PancakeSwapFacet.address, FacetCutAction.Add, getSelectors(PancakeSwapFacet)],
+      [OwnershipFacet.address, FacetCutAction.Add, getSelectors(OwnershipFacet)],
+    ]
+    // console.log("-----------------------DiamondCutFacet--------------------------");
+    // console.log(getSelectors(DiamondCutFacet));
+    // console.log("-----------------------DiamondCutFacet--------------------------");
 
 
-//     // console.log("-----------------------DiamondLoupeFacet--------------------------");
-//     // console.log(getSelectors(DiamondLoupeFacet));
-//     // console.log("-----------------------DiamondLoupeFacet--------------------------");
+    // console.log("-----------------------DiamondLoupeFacet--------------------------");
+    // console.log(getSelectors(DiamondLoupeFacet));
+    // console.log("-----------------------DiamondLoupeFacet--------------------------");
 
  
-//     // console.log("-----------------------PriceOracleFacet--------------------------");
-//     // console.log(getSelectors(PriceOracleFacet));
-//     // console.log("-----------------------PriceOracleFacet--------------------------");
+    // console.log("-----------------------PriceOracleFacet--------------------------");
+    // console.log(getSelectors(PriceOracleFacet));
+    // console.log("-----------------------PriceOracleFacet--------------------------");
 
-//     // console.log("-----------------------MembershipFacet--------------------------");
-//     // console.log(getSelectors(MembershipFacet));
-//     // console.log("-----------------------MembershipFacet--------------------------");
+    // console.log("-----------------------MembershipFacet--------------------------");
+    // console.log(getSelectors(MembershipFacet));
+    // console.log("-----------------------MembershipFacet--------------------------");
 
-//     // console.log("-----------------------ProductFacet--------------------------");
-//     // console.log(getSelectors(ProductFacet));
-//     // console.log("-----------------------ProductFacet--------------------------");
+    // console.log("-----------------------ProductFacet--------------------------");
+    // console.log(getSelectors(ProductFacet));
+    // console.log("-----------------------ProductFacet--------------------------");
 
-//     // console.log("-----------------------SalaryFacet--------------------------");
-//     // console.log(getSelectors(SalaryFacet));
-//     // console.log("-----------------------SalaryFacet--------------------------");
+    // console.log("-----------------------SalaryFacet--------------------------");
+    // console.log(getSelectors(SalaryFacet));
+    // console.log("-----------------------SalaryFacet--------------------------");
 
-//     // console.log("-----------------------StakingFacet--------------------------");
-//     // console.log(getSelectors(StakingFacet));
-//     // console.log("-----------------------StakingFacet--------------------------");
+    // console.log("-----------------------StakingFacet--------------------------");
+    // console.log(getSelectors(StakingFacet));
+    // console.log("-----------------------StakingFacet--------------------------");
 
-//     // console.log("-----------------------SwapFacet--------------------------");
-//     // console.log(getSelectors(SwapFacet));
-//     // console.log("-----------------------SwapFacet--------------------------");
+    // console.log("-----------------------SwapFacet--------------------------");
+    // console.log(getSelectors(SwapFacet));
+    // console.log("-----------------------SwapFacet--------------------------");
 
 
-//     // console.log("-----------------------OwnershipFacet--------------------------");
-//     // console.log(getSelectors(OwnershipFacet));
-//     // console.log("-----------------------OwnershipFacet--------------------------");
+    // console.log("-----------------------OwnershipFacet--------------------------");
+    // console.log(getSelectors(OwnershipFacet));
+    // console.log("-----------------------OwnershipFacet--------------------------");
     
 
-//     return deployer.deploy(EgorasV3, diamondCut, [accounts[0]])
-//  })
+    return deployer.deploy(EgorasV3, diamondCut, [accounts[0]])
+ })
 }
  

@@ -103,6 +103,14 @@ contract MembershipFacet {
         );
     }
 
+    function getAddresses()
+        external
+        view
+        returns (address _egc, address _eusd)
+    {
+        return (s.egcAddr, s.eusdAddr);
+    }
+
     function getConfiguration()
         external
         view
@@ -442,6 +450,7 @@ contract MembershipFacet {
         } else if (members.length > (s.nextSpillIndex + 1)) {
             Members memory _m = members[s.nextSpillIndex];
             s.nextSpillIndex = s.nextSpillIndex.add(1);
+
             return _m.user;
         } else {
             return address(this);

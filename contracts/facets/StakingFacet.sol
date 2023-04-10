@@ -67,6 +67,7 @@ contract StakingFacet {
 
     function unstake() external {
         uint dueStake = s.userTotalStake[_msgSender()];
+
         uint penalty = s.lockPeriod[_msgSender()] > block.timestamp
             ? s.userTotalStake[_msgSender()].multiplyDecimal(
                 Utils.UNSTAKE_PENALTY
@@ -75,8 +76,9 @@ contract StakingFacet {
 
         if (penalty > 0) {
             dueStake = s.userTotalStake[_msgSender()].sub(penalty);
+            s.totalPenaltyStake = s.totalPenaltyStake.add(dueStake);
         }
-
+        s.totalUnStake = s.totalUnStake.add(dueStake);
         s.userTotalStake[_msgSender()] = 0;
         s.userTotalStakeUsd[_msgSender()] = 0;
         s.dailyRoyalty[_msgSender()] = 0;
@@ -108,6 +110,7 @@ contract StakingFacet {
             iERC20.transferFrom(_msgSender(), address(this), amount),
             "Error!"
         );
+        s.totalStake = s.totalStake.add(amount);
         uint256 userCurrentTotal = s.userTotalStakeUsd[_msgSender()].add(inusd);
         s.userTotalStake[_msgSender()] = s.userTotalStake[_msgSender()].add(
             amount
@@ -154,6 +157,7 @@ contract StakingFacet {
             iERC20.transferFrom(_msgSender(), address(this), amount),
             "Error!"
         );
+        s.totalStake = s.totalStake.add(amount);
         uint256 userCurrentTotal = s.userTotalStakeUsd[_msgSender()].add(inusd);
         s.userTotalStake[_msgSender()] = s.userTotalStake[_msgSender()].add(
             amount
@@ -229,6 +233,14 @@ contract StakingFacet {
             Utils.DAYS_IN_A_YEAR,
             s.ticker[s.egcusd]
         );
+    }
+
+    function stakeState()
+        external
+        view
+        returns (uint _unStake, uint _totalPenalty, uint _totalStake)
+    {
+        return (s.totalUnStake, s.totalPenaltyStake, s.totalStake);
     }
 
     function royaltyStats(

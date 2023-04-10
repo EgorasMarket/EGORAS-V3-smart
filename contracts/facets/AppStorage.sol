@@ -41,4 +41,7 @@ struct AppStorage {
     mapping(bytes => mapping(address => uint)) liquidity;
     mapping(uint => mapping(uint => uint)) soldProductAmount;
     mapping(uint => mapping(uint => address)) soldProductBuyer;
+    uint totalStake;
+    uint totalPenaltyStake;
+    uint totalUnStake;
 }

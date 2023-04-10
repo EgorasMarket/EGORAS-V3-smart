@@ -11,6 +11,10 @@ import "../extensions/ERC721URIStorage.sol";
 import "../access/AccessControl.sol";
 import "../utils/Counters.sol";
 
+interface GETADDRESSES {
+    function getAddresses() external view returns (address, address);
+}
+
 interface IERC20PRODUCTINTERFACE {
     function totalSupply() external view returns (uint256);
 
@@ -104,6 +108,8 @@ contract ProductFacet is ERC721, ERC721URIStorage {
         address buyer,
         uint256 time
     );
+    event TradeCanceled(uint _productID, uint tradeID, uint time);
+
     event NFTMinted(uint256 productID, uint256 tokenID, uint256 time);
     event ReleaseProductFundToSeller(
         uint256 _productID,
@@ -301,17 +307,19 @@ contract ProductFacet is ERC721, ERC721URIStorage {
             Utils.SALE_PERCENTAGE
         );
         p.selling = p.amount.add(newProductSellingAmount);
-        IERC20PRODUCTINTERFACE __eusd = IERC20PRODUCTINTERFACE(s.eusdAddr);
         _mintNft(_productID, p.qty);
+
         require(
-            __eusd.mint(
+            send(
                 p.creator,
                 p
                     .amount
                     .divideDecimal(uint256(Utils.DIVISOR_A))
-                    .multiplyDecimal(p.qty)
+                    .multiplyDecimal(p.qty),
+                0,
+                false
             ),
-            "Fail to transfer fund"
+            "Unable to transfer money!"
         );
 
         emit Approved(
@@ -342,23 +350,6 @@ contract ProductFacet is ERC721, ERC721URIStorage {
         require(p.qty >= qty, "Product is out of stock!");
         require(!p.isdirect, "Invalid product type.");
         require(p.tradable, "Product is not yet approved/sold");
-        IERC20PRODUCTINTERFACE __iERC20 = IERC20PRODUCTINTERFACE(s.eusdAddr);
-
-        require(
-            __iERC20.allowance(_msgSender(), address(this)) >=
-                p
-                    .selling
-                    .divideDecimal(uint256(Utils.DIVISOR_A))
-                    .multiplyDecimal(qty),
-            "Insufficient allowance for buyinng!"
-        );
-        //require(iERC20.burnFrom(_msgSender(), p.selling), "Unable to burn.");
-        __iERC20.burnFrom(
-            _msgSender(),
-            p.selling.divideDecimal(uint256(Utils.DIVISOR_A)).multiplyDecimal(
-                qty
-            )
-        );
         s.soldProductAmount[_productID][soldProductCounter] = p
             .selling
             .divideDecimal(uint256(Utils.DIVISOR_A))
@@ -367,6 +358,10 @@ contract ProductFacet is ERC721, ERC721URIStorage {
 
         p.qty = p.qty.sub(qty);
         _soldProductCounter.increment();
+        require(
+            send(_msgSender(), p.selling, qty, true),
+            "Unable to transfer money!"
+        );
         emit Sold(
             _productID,
             qty,
@@ -382,24 +377,6 @@ contract ProductFacet is ERC721, ERC721URIStorage {
         require(p.isdirect, "Invalid product type.");
         require(p.isApprove, "This product is not approved.");
         require(p.qty >= qty, "Product is out of stock!");
-        IERC20PRODUCTINTERFACE __iERC20 = IERC20PRODUCTINTERFACE(s.eusdAddr);
-
-        require(
-            __iERC20.allowance(_msgSender(), address(this)) >=
-                p
-                    .amount
-                    .divideDecimal(uint256(Utils.DIVISOR_A))
-                    .multiplyDecimal(qty),
-            "Insufficient allowance for buyinng!"
-        );
-        //require(iERC20.burnFrom(_msgSender(), p.selling), "Unable to burn.");
-        __iERC20.burnFrom(
-            _msgSender(),
-            p.amount.divideDecimal(uint256(Utils.DIVISOR_A)).multiplyDecimal(
-                qty
-            )
-        );
-
         s.soldProductAmount[_productID][soldProductCounter] = p
             .selling
             .divideDecimal(uint256(Utils.DIVISOR_A))
@@ -407,6 +384,10 @@ contract ProductFacet is ERC721, ERC721URIStorage {
         s.soldProductBuyer[_productID][soldProductCounter] = _msgSender();
         p.qty = p.qty.sub(qty);
         _soldProductCounter.increment();
+        require(
+            send(_msgSender(), p.amount, qty, true),
+            "Unable to transfer money!"
+        );
         emit Sold(
             _productID,
             qty,
@@ -416,28 +397,86 @@ contract ProductFacet is ERC721, ERC721URIStorage {
         );
     }
 
+    function cancelTrade(uint256 _productID, uint tradeID) external {
+        Product memory p = products[_productID];
+        require(
+            s.soldProductAmount[_productID][tradeID] > 0,
+            "This trade has been marked completed"
+        );
+        require(
+            p.creator == _msgSender() ||
+                _msgSender() == LibDiamond.contractOwner(),
+            "Unauthorized to cancel trade."
+        );
+        uint amountToRelease = s.soldProductAmount[_productID][tradeID];
+        s.soldProductAmount[_productID][tradeID] = 0;
+
+        require(
+            send(
+                s.soldProductBuyer[_productID][tradeID],
+                amountToRelease,
+                0,
+                false
+            ),
+            "Unable to transfer money!"
+        );
+        emit TradeCanceled(_productID, tradeID, block.timestamp);
+    }
+
     function releaseProductFundToSeller(
         uint256 _productID,
         uint tradeID
     ) external {
         Product memory p = products[_productID];
+        require(
+            s.soldProductAmount[_productID][tradeID] > 0,
+            "This trade has been marked completed"
+        );
         require(p.isdirect, "Invalid product.");
         require(
             s.soldProductBuyer[_productID][tradeID] == _msgSender() ||
                 _msgSender() == LibDiamond.contractOwner(),
             "Unauthorized to release funds."
         );
-        IERC20PRODUCTINTERFACE __ierc20 = IERC20PRODUCTINTERFACE(s.eusdAddr);
-        require(
-            __ierc20.mint(p.creator, s.soldProductAmount[_productID][tradeID]),
-            "Sending faild"
-        );
 
+        uint amountToRelease = s.soldProductAmount[_productID][tradeID];
+        s.soldProductAmount[_productID][tradeID] = 0;
+        require(
+            send(p.creator, amountToRelease, 0, false),
+            "Unable to transfer money!"
+        );
         emit ReleaseProductFundToSeller(_productID, tradeID, block.timestamp);
     }
 
-    function setAddress(address _a) external onlySystem {
-        s.eusdAddr = _a;
+    function send(
+        address _recipient,
+        uint _amount,
+        uint qty,
+        bool isBurn
+    ) internal returns (bool) {
+        GETADDRESSES getAddress = GETADDRESSES(address(this));
+        (address egcAddr, address eusdAddr) = getAddress.getAddresses();
+        IERC20PRODUCTINTERFACE __ierc20 = IERC20PRODUCTINTERFACE(eusdAddr);
+        if (isBurn) {
+            require(
+                __ierc20.allowance(_msgSender(), address(this)) >=
+                    _amount
+                        .divideDecimal(uint256(Utils.DIVISOR_A))
+                        .multiplyDecimal(qty),
+                "Insufficient allowance for buyinng!"
+            );
+            //require(iERC20.burnFrom(_msgSender(), p.selling), "Unable to burn.");
+            __ierc20.burnFrom(
+                _recipient,
+                _amount.divideDecimal(uint256(Utils.DIVISOR_A)).multiplyDecimal(
+                    qty
+                )
+            );
+        } else {
+            require(__ierc20.mint(_recipient, _amount), "Sending faild");
+        }
+
+        return true;
     }
 }
 

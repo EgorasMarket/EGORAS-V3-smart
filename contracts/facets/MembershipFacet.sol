@@ -295,10 +295,10 @@ contract MembershipFacet {
         //     "You can only renew your plan."
         // );
         address _referral = getNextSpill();
-        require(
-            address(0) != _referral,
-            "Invalid address. Address zero was returned."
-        );
+        // require(
+        //     address(0) != _referral,
+        //     "Invalid address. Address zero was returned."
+        // );
         uint256 bonus = _amount.multiplyDecimal(Utils.REFERRAL_BONUS);
         s.referredBy[_msgSender()] = _referral;
         s.referralCount[_referral] = s.referralCount[_referral].add(1);

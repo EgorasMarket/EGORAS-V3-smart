@@ -95,6 +95,11 @@ contract StakingFacet {
             s.member[_msgSender()],
             "You're not a member, please subscribe to any membership plan and try again"
         );
+        require(
+            block.timestamp >= s.lockPeriod[_msgSender()],
+            "Wait until lock period is over!"
+        );
+
         require(amount > 0, "invalid amount");
         uint256 inusd = s.ticker[s.egcusd].multiplyDecimal(amount);
         require(
@@ -141,6 +146,10 @@ contract StakingFacet {
         require(
             s.member[_msgSender()],
             "You're not a member, please subscribe to any membership plan and try again"
+        );
+        require(
+            block.timestamp >= s.lockPeriod[_msgSender()],
+            "Wait until lock period is over!"
         );
         require(amount > 0, "invalid amount");
         uint256 inusd = s.ticker[s.egcusd].multiplyDecimal(amount);

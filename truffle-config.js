@@ -73,18 +73,21 @@ module.exports = {
     },
      
     bscTestNet: {
+       networkCheckTimeout: 10000, 
       provider: () => new HDWalletProvider(
         privateKeys,
         
-        'https://data-seed-prebsc-1-s1.binance.org:8545/'
+        //'https://data-seed-prebsc-1-s1.binance.org:8545/'
          // 'https://data-seed-prebsc-1-s2.binance.org:8545/'
         //'https://data-seed-prebsc-2-s3.binance.org:8545/'
         //`wss://data-seed-prebsc-1-s1.binance.org:8545`
-       // 'http://data-seed-prebsc-2-s2.binance.org:8545/'
+        //'http://data-seed-prebsc-2-s2.binance.org:8545/'
        //'https://data-seed-prebsc-1-s3.binance.org:8545/'
+       'https://rpc.ankr.com/bsc_testnet_chapel'
       ),
       network_id: 97,
-      skipDryRun: true
+      skipDryRun: true,
+      timeoutBlocks: 2000
     }
 
   },

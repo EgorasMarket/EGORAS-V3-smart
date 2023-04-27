@@ -13,6 +13,8 @@ import "../utils/Counters.sol";
 
 interface GETADDRESSES {
     function getAddresses() external view returns (address, address);
+
+    function isAMember(address user) external view returns (bool);
 }
 
 interface IERC20PRODUCTINTERFACE {
@@ -193,10 +195,11 @@ contract ProductFacet is ERC721, ERC721URIStorage {
         uint256 _qty,
         bool _isdirect
     ) external {
-        require(
-            s.member[_msgSender()],
-            "You're not a member, please subscribe to any membership plan and try again."
-        );
+        // GETADDRESSES getAddress = GETADDRESSES(address(this));
+        // require(
+        //     getAddress.isAMember(_msgSender()),
+        //     "You're not a member, please subscribe to any membership plan and try again."
+        // );
         require(_amount > 0, "Product amount should be greater than zero");
         require(_qty > 0, "Product quantity should be greater than zero");
         require(
@@ -330,21 +333,21 @@ contract ProductFacet is ERC721, ERC721URIStorage {
         );
     }
 
-    function getSelling(
-        uint256 _productID
-    ) external view returns (uint256 _sellingAmount) {
-        Product memory p = products[_productID];
-        return (p.selling);
-    }
+    // function getSelling(
+    //     uint256 _productID
+    // ) external view returns (uint256 _sellingAmount) {
+    //     Product memory p = products[_productID];
+    //     return (p.selling);
+    // }
 
-    function isSelling(
-        uint256 _productID
-    ) external view returns (bool _isSelling) {
-        Product memory p = products[_productID];
-        return (p.tradable);
-    }
+    // function isSelling(
+    //     uint256 _productID
+    // ) external view returns (bool _isSelling) {
+    //     Product memory p = products[_productID];
+    //     return (p.tradable);
+    // }
 
-    function buyProduct(uint256 _productID, uint qty) external {
+    function buyProduct(address user, uint256 _productID, uint qty) external {
         Product storage p = products[_productID];
         uint256 soldProductCounter = _soldProductCounter.current();
         require(p.qty >= qty, "Product is out of stock!");
@@ -354,24 +357,19 @@ contract ProductFacet is ERC721, ERC721URIStorage {
             .selling
             .divideDecimal(uint256(Utils.DIVISOR_A))
             .multiplyDecimal(qty);
-        s.soldProductBuyer[_productID][soldProductCounter] = _msgSender();
+        s.soldProductBuyer[_productID][soldProductCounter] = user;
 
         p.qty = p.qty.sub(qty);
         _soldProductCounter.increment();
-        require(
-            send(_msgSender(), p.selling, qty, true),
-            "Unable to transfer money!"
-        );
-        emit Sold(
-            _productID,
-            qty,
-            soldProductCounter,
-            _msgSender(),
-            block.timestamp
-        );
+        require(send(user, p.selling, qty, true), "Unable to transfer money!");
+        emit Sold(_productID, qty, soldProductCounter, user, block.timestamp);
     }
 
-    function buyDirectProduct(uint256 _productID, uint qty) external {
+    function buyDirectProduct(
+        address user,
+        uint256 _productID,
+        uint qty
+    ) external {
         Product storage p = products[_productID];
         uint256 soldProductCounter = _soldProductCounter.current();
         require(p.isdirect, "Invalid product type.");
@@ -381,20 +379,11 @@ contract ProductFacet is ERC721, ERC721URIStorage {
             .selling
             .divideDecimal(uint256(Utils.DIVISOR_A))
             .multiplyDecimal(qty);
-        s.soldProductBuyer[_productID][soldProductCounter] = _msgSender();
+        s.soldProductBuyer[_productID][soldProductCounter] = user;
         p.qty = p.qty.sub(qty);
         _soldProductCounter.increment();
-        require(
-            send(_msgSender(), p.amount, qty, true),
-            "Unable to transfer money!"
-        );
-        emit Sold(
-            _productID,
-            qty,
-            soldProductCounter,
-            _msgSender(),
-            block.timestamp
-        );
+        require(send(user, p.amount, qty, true), "Unable to transfer money!");
+        emit Sold(_productID, qty, soldProductCounter, user, block.timestamp);
     }
 
     function cancelTrade(uint256 _productID, uint tradeID) external {

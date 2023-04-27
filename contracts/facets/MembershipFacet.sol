@@ -123,8 +123,7 @@ contract MembershipFacet {
         );
     }
 
-    function membershipMonthlyPlan() external {
-        address user = _msgSender();
+    function membershipMonthlyPlan(address user) external {
         require(
             block.timestamp >= s.expiryDate[user],
             "Wait until your current plan elapses."
@@ -142,12 +141,12 @@ contract MembershipFacet {
             "Unable to subscribe"
         );
 
-        require(referralHelper(amount), "Referral error");
+        require(referralHelper(user, amount), "Referral error");
     }
 
-    function monthlyPlanWithReferral(address _referral) external {
+    function monthlyPlanWithReferral(address user, address _referral) external {
         require(s.alreadyMember[_referral], "Invalid referral address.");
-        address user = _msgSender();
+
         require(
             block.timestamp >= s.expiryDate[user],
             "Wait until your current plan elapses."
@@ -166,14 +165,17 @@ contract MembershipFacet {
             "Unable to subscribe"
         );
         require(
-            referralWithReferralHelper(_referral, amount),
+            referralWithReferralHelper(user, _referral, amount),
             "Referral error."
         );
     }
 
-    function semiAnnuallyPlanWithReferral(address _referral) external {
+    function semiAnnuallyPlanWithReferral(
+        address user,
+        address _referral
+    ) external {
         require(s.alreadyMember[_referral], "Invalid referral address.");
-        address user = _msgSender();
+
         require(
             block.timestamp >= s.expiryDate[user],
             "Wait until your current plan elapses."
@@ -192,13 +194,12 @@ contract MembershipFacet {
         );
 
         require(
-            referralWithReferralHelper(_referral, amount),
+            referralWithReferralHelper(user, _referral, amount),
             "Referral error."
         );
     }
 
-    function membershipSemiAnnuallyPlan() external {
-        address user = _msgSender();
+    function membershipSemiAnnuallyPlan(address user) external {
         require(
             block.timestamp >= s.expiryDate[user],
             "Wait until your current plan elapses."
@@ -216,12 +217,12 @@ contract MembershipFacet {
             "Unable to subscribe"
         );
 
-        require(referralHelper(amount), "Referral error");
+        require(referralHelper(user, amount), "Referral error");
     }
 
-    function annuallyWithReferral(address _referral) external {
+    function annuallyWithReferral(address user, address _referral) external {
         require(s.alreadyMember[_referral], "Invalid referral address.");
-        address user = _msgSender();
+
         require(
             block.timestamp >= s.expiryDate[user],
             "Wait until your current plan elapses."
@@ -240,13 +241,12 @@ contract MembershipFacet {
         );
 
         require(
-            referralWithReferralHelper(_referral, amount),
+            referralWithReferralHelper(user, _referral, amount),
             "Referral error."
         );
     }
 
-    function membershipAnnually() external {
-        address user = _msgSender();
+    function membershipAnnually(address user) external {
         require(
             block.timestamp >= s.expiryDate[user],
             "Wait until your current plan elapses."
@@ -264,7 +264,7 @@ contract MembershipFacet {
             ),
             "Unable to subscribe"
         );
-        require(referralHelper(amount), "Referral error");
+        require(referralHelper(user, amount), "Referral error");
     }
 
     function subscribe(
@@ -277,11 +277,11 @@ contract MembershipFacet {
         s.member[_user] = true;
         IERC20 iERC20 = IERC20(s.egcAddr);
         require(
-            iERC20.allowance(_user, address(this)) >= _amount,
+            iERC20.allowance(_msgSender(), address(this)) >= _amount,
             "Insufficient EGC allowance for subscription!"
         );
         require(
-            iERC20.transferFrom(_user, address(this), _amount),
+            iERC20.transferFrom(_msgSender(), address(this), _amount),
             "Fail to transfer"
         );
 
@@ -289,31 +289,35 @@ contract MembershipFacet {
         return true;
     }
 
-    function referralHelper(uint256 _amount) internal returns (bool) {
+    function referralHelper(
+        address _user,
+        uint256 _amount
+    ) internal returns (bool) {
         // require(
         //     !s.alreadyMember[_msgSender()],
         //     "You can only renew your plan."
         // );
-        address _referral = getNextSpill();
+        address _referral = this.getNextSpill();
         // require(
         //     address(0) != _referral,
         //     "Invalid address. Address zero was returned."
         // );
         uint256 bonus = _amount.multiplyDecimal(Utils.REFERRAL_BONUS);
-        s.referredBy[_msgSender()] = _referral;
+        s.referredBy[_user] = _referral;
         s.referralCount[_referral] = s.referralCount[_referral].add(1);
         s.referralRewardBalance[_referral] = s
             .referralRewardBalance[_referral]
             .add(bonus);
         s.referralBurnBalance = s.referralBurnBalance.add(_amount.sub(bonus));
-        Members memory _m = Members({user: _msgSender()});
+        Members memory _m = Members({user: _user});
         members.push(_m);
-        s.alreadyMember[_msgSender()] = true;
-        emit Referral(_msgSender(), _referral, block.timestamp);
+        s.alreadyMember[_user] = true;
+        emit Referral(_user, _referral, block.timestamp);
         return true;
     }
 
     function referralWithReferralHelper(
+        address _user,
         address _referral,
         uint256 _amount
     ) internal returns (bool) {
@@ -322,21 +326,20 @@ contract MembershipFacet {
         //     "You can only renew your plan."
         // );
         uint256 bonus = _amount.multiplyDecimal(Utils.REFERRAL_BONUS);
-        s.referredBy[_msgSender()] = _referral;
+        s.referredBy[_user] = _referral;
         s.referralCount[_referral] = s.referralCount[_referral].add(1);
         s.referralRewardBalance[_referral] = s
             .referralRewardBalance[_referral]
             .add(bonus);
         s.referralBurnBalance = s.referralBurnBalance.add(_amount.sub(bonus));
-        Members memory _m = Members({user: _msgSender()});
+        Members memory _m = Members({user: _user});
         members.push(_m);
-        s.alreadyMember[_msgSender()] = true;
-        emit Referral(_msgSender(), _referral, block.timestamp);
+        s.alreadyMember[_user] = true;
+        emit Referral(_user, _referral, block.timestamp);
         return true;
     }
 
-    function renewMonthlyMembership() external {
-        address user = _msgSender();
+    function renewMonthlyMembership(address user) external {
         require(
             block.timestamp >= s.expiryDate[user],
             "Wait until your current plan elapses."
@@ -355,13 +358,12 @@ contract MembershipFacet {
         );
 
         require(
-            referralWithReferralHelper(s.referredBy[_msgSender()], amount),
+            referralWithReferralHelper(user, s.referredBy[user], amount),
             "Referral error."
         );
     }
 
-    function renewSemiAnnualMembership() external {
-        address user = _msgSender();
+    function renewSemiAnnualMembership(address user) external {
         require(
             block.timestamp >= s.expiryDate[user],
             "Wait until your current plan elapses."
@@ -380,13 +382,16 @@ contract MembershipFacet {
         );
 
         require(
-            referralWithReferralHelper(s.referredBy[_msgSender()], amount),
+            referralWithReferralHelper(
+                user,
+                s.referredBy[_msgSender()],
+                amount
+            ),
             "Referral error."
         );
     }
 
-    function renewAnnualMembership() external {
-        address user = _msgSender();
+    function renewAnnualMembership(address user) external {
         require(
             block.timestamp >= s.expiryDate[user],
             "Wait until your current plan elapses."
@@ -405,21 +410,21 @@ contract MembershipFacet {
         );
 
         require(
-            referralWithReferralHelper(s.referredBy[_msgSender()], amount),
+            referralWithReferralHelper(user, s.referredBy[user], amount),
             "Referral error."
         );
     }
 
-    function takeReferralReward() external {
+    function takeReferralReward(address user) external {
         require(
-            s.expiryDate[_msgSender()] >= block.timestamp,
+            s.expiryDate[user] >= block.timestamp,
             "Renew your membership plan"
         );
-        uint256 amount = s.referralRewardBalance[_msgSender()];
+        uint256 amount = s.referralRewardBalance[user];
         IERC20 iERC20 = IERC20(s.egcAddr);
 
-        require(iERC20.transfer(_msgSender(), amount), "Fail to transfer");
-        emit Rewarded(_msgSender(), amount, block.timestamp);
+        require(iERC20.transfer(user, amount), "Fail to transfer");
+        emit Rewarded(user, amount, block.timestamp);
     }
 
     function burn() external {
@@ -442,7 +447,7 @@ contract MembershipFacet {
         return (s.referralRewardBalance[user], s.referralCount[user]);
     }
 
-    function getNextSpill() internal returns (address) {
+    function getNextSpill() external returns (address) {
         if (members.length == (s.nextSpillIndex + 1)) {
             Members memory _m = members[s.nextSpillIndex];
             s.nextSpillIndex = 0;
@@ -459,5 +464,24 @@ contract MembershipFacet {
 
     function toBytes(address a) public pure returns (bytes memory) {
         return abi.encodePacked(a);
+    }
+
+    function isAMember(address user) external view returns (bool) {
+        return s.member[user];
+    }
+
+    function getMembersLength() external view returns (uint) {
+        return members.length;
+    }
+
+    function getMember(uint index) external view returns (address) {
+        Members memory _m = members[index];
+        return _m.user;
+    }
+
+    function pushMembers(address user) external {
+        require(s.pythia[_msgSender()], "Only Pythia is allowed");
+        Members memory _m = Members({user: user});
+        members.push(_m);
     }
 }

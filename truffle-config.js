@@ -18,8 +18,9 @@
  *
  */
  const HDWalletProvider = require("@truffle/hdwallet-provider");
- const {PRIVATE_KEY, BSCSCAN_API_KEY} = require("./env.json");
+ const {PRIVATE_KEY,PRIVATE_KEY3, BSCSCAN_API_KEY} = require("./env.json");
  const privateKeys = [PRIVATE_KEY]
+ const privateKeys3 = [PRIVATE_KEY3]
 // const HDWalletProvider = require('@truffle/hdwallet-provider');
 //
 // const fs = require('fs');
@@ -72,6 +73,24 @@ module.exports = {
       skipDryRun: true
     },
      
+     bscTestNet3: {
+       networkCheckTimeout: 10000, 
+      provider: () => new HDWalletProvider(
+        privateKeys3,
+        
+        //'https://data-seed-prebsc-1-s1.binance.org:8545/'
+         // 'https://data-seed-prebsc-1-s2.binance.org:8545/'
+        //'https://data-seed-prebsc-2-s3.binance.org:8545/'
+        //`wss://data-seed-prebsc-1-s1.binance.org:8545`
+        //'http://data-seed-prebsc-2-s2.binance.org:8545/'
+       //'https://data-seed-prebsc-1-s3.binance.org:8545/'
+       'https://rpc.ankr.com/bsc_testnet_chapel'
+      ),
+      network_id: 97,
+      skipDryRun: true,
+      timeoutBlocks: 2000
+    },
+
     bscTestNet: {
        networkCheckTimeout: 10000, 
       provider: () => new HDWalletProvider(

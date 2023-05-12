@@ -223,7 +223,7 @@ contract ProductFacet is ERC721, ERC721URIStorage {
         });
         products.push(_product);
         uint newProductID = products.length - 1;
-
+        s.initProductCount = s.initProductCount.add(1);
         emit ProductCreated(
             _title,
             _amount,

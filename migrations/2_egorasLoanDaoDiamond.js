@@ -11,7 +11,7 @@ const StakingFacet = artifacts.require('StakingFacet')
 const SwapFacet = artifacts.require('SwapFacet')
 const EgorasV3 = artifacts.require('EgorasV3')
 const PancakeSwapFacet = artifacts.require('PancakeSwapFacet')
-const ProductAdapter = artifacts.require('ProductAdapter')
+//const ProductAdapter = artifacts.require('ProductAdapter')
 
 
 const FacetCutAction = {
@@ -43,9 +43,11 @@ module.exports = function (deployer, network, accounts) {
 //   console.log("-----------------------PancakeSwapFacet--------------------------");
 //   })
 
-//  return deployer.deploy(ProductAdapter).then(()=> {
-//  return getSelectors(ProductAdapter)
-//  });
+ return deployer.deploy(ProductFacet).then(()=> {
+ return getSelectors(ProductFacet)
+ });
+
+
 
  
 

@@ -44,4 +44,5 @@ struct AppStorage {
     uint totalStake;
     uint totalPenaltyStake;
     uint totalUnStake;
+    uint initProductCount;
 }

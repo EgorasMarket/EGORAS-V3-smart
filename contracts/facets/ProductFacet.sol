@@ -120,7 +120,7 @@ contract ProductFacet is ERC721, ERC721URIStorage {
     );
     modifier onlySystem() {
         require(
-            _msgSender() == LibDiamond.contractOwner() ||
+            LibDiamond.contractOwner() == _msgSender() ||
                 s.pythia[_msgSender()] == true,
             "Access denied, Only system is allowed!"
         );

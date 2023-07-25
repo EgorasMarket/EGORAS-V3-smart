@@ -1,0 +1,278 @@
+{
+	"compiler": {
+		"version": "0.8.18+commit.87f61d96"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "_ticker",
+						"type": "string"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "_price",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "_pythia",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "_time",
+						"type": "uint256"
+					}
+				],
+				"name": "PriceUpdated",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "_time",
+						"type": "uint256"
+					}
+				],
+				"name": "PrinceChanged",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "_pythia",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "_addBy",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "_time",
+						"type": "uint256"
+					}
+				],
+				"name": "PythiaAdded",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "_pythia",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "_addBy",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "_time",
+						"type": "uint256"
+					}
+				],
+				"name": "PythiaSuspended",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "_source",
+						"type": "string"
+					}
+				],
+				"name": "converter",
+				"outputs": [
+					{
+						"internalType": "bytes",
+						"name": "",
+						"type": "bytes"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_pythia",
+						"type": "address"
+					}
+				],
+				"name": "isPythia",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "_ticker",
+						"type": "string"
+					}
+				],
+				"name": "price",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "_ticker",
+						"type": "string"
+					}
+				],
+				"name": "setEGCUSDTicker",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_pythia",
+						"type": "address"
+					}
+				],
+				"name": "setPythia",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_pythia",
+						"type": "address"
+					}
+				],
+				"name": "suspendPythia",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256[]",
+						"name": "_prices",
+						"type": "uint256[]"
+					},
+					{
+						"internalType": "string[]",
+						"name": "_tickers",
+						"type": "string[]"
+					}
+				],
+				"name": "updateTickerPrices",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"smart contract/SwapCryptoLoanUpdate/contracts/facets/PriceOracleFacet.sol": "PriceOracleFacet"
+		},
+		"evmVersion": "paris",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"smart contract/SwapCryptoLoanUpdate/contracts/facets/AppStorage.sol": {
+			"keccak256": "0xd3e39882d3a299c8d13aeeee741f0fa80bc97f30316ad133ec3242975839a6b5",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://1138965152a7b5fbc1f91ea5aef087d646a63e8fd03aa7e6908e6a88ca732e57",
+				"dweb:/ipfs/Qme8KAN2dqeR3JxGddGgMAonsA4j9KpGu3nTXRRBz4WD9Y"
+			]
+		},
+		"smart contract/SwapCryptoLoanUpdate/contracts/facets/PriceOracleFacet.sol": {
+			"keccak256": "0x0c9c9fb9b69692b2c1937e2a09873b280d6e762d936b9d058d4b91de75e2fa30",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://302fcf7f501153d93f6d2e4148cedc703f03059a4d2c8fd06ad8fcbe5d1bf8cc",
+				"dweb:/ipfs/QmbYFQoHa5s1uzQ8kWuniTNGazS9HhaqzZfBP6s3hbjjhS"
+			]
+		},
+		"smart contract/SwapCryptoLoanUpdate/contracts/interfaces/IDiamondCut.sol": {
+			"keccak256": "0x21afb9584ec8e432c2c17acd3700e4c99b2d2c5d941c899fd5997a65cc689d56",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://a128bfc29cfc74fbfcb1bba3363c88df9521b5de7fc53b9c11fddd9389224abd",
+				"dweb:/ipfs/QmNfhvg7Aud1yXTZqzXTGdUf38tpv63Pbbuo3KKrYoRFrj"
+			]
+		},
+		"smart contract/SwapCryptoLoanUpdate/contracts/libraries/LibDiamond.sol": {
+			"keccak256": "0x4059248e993742cacdf0492134bbf0d504aab17f28299a706c9ca24b1a17fdf5",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://2940793983c72f0b2cfbe3dae334e0f327f89b1db096647df0494ca7e87f2757",
+				"dweb:/ipfs/QmP8GdGLKnQUKN5n1TjVodVAvvFjcDkUgcKNn9vZK9ztL1"
+			]
+		}
+	},
+	"version": 1
+}

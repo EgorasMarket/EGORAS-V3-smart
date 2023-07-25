@@ -18,9 +18,10 @@
  *
  */
  const HDWalletProvider = require("@truffle/hdwallet-provider");
- const {PRIVATE_KEY,PRIVATE_KEY3, BSCSCAN_API_KEY} = require("./env.json");
+ const {PRIVATE_KEY,PRIVATE_KEY3, BSCSCAN_API_KEY, PRIVATE_KEY4} = require("./env.json");
  const privateKeys = [PRIVATE_KEY]
  const privateKeys3 = [PRIVATE_KEY3]
+ const privateKeys4 = [PRIVATE_KEY4]
 // const HDWalletProvider = require('@truffle/hdwallet-provider');
 //
 // const fs = require('fs');
@@ -52,16 +53,35 @@ module.exports = {
     bscMainNet: {
       provider: () => new HDWalletProvider(
         privateKeys,
-        'https://bscrpc.com'
+        //'https://bscrpc.com'
          //`wss://bsc-ws-node.nariox.org:443`
-       // 'https://bsc-dataseed.binance.org'
+        'https://bsc-dataseed.binance.org'
       //  'https://bsc-dataseed1.ninicoin.io/'
      // 'https://bsc-dataseed1.defibit.io'
        //'https://bsc-dataseed.binance.org'
+      // 'https://rpc.ankr.com/bsc'
       ),
       network_id: 56,
       skipDryRun: true
     },
+ bscMainNetChidubem: {
+      provider: () => new HDWalletProvider(
+        privateKeys4,
+        //'https://bscrpc.com'
+        // `wss://bsc-ws-node.nariox.org:443`
+       // 'https://bsc-dataseed.binance.org'
+        'https://bsc-dataseed1.ninicoin.io/'
+     // 'https://bsc-dataseed1.defibit.io'
+       //'https://bsc-dataseed.binance.org'
+       //'https://rpc.ankr.com/bsc'
+      ),
+     networkCheckTimeout: 10000, 
+      network_id: 56,
+      skipDryRun: true,
+      timeoutBlocks: 2000
+    },
+
+    
   bscMainNetPythia: {
       provider: () => new HDWalletProvider(
         //pythia,

@@ -45,4 +45,28 @@ struct AppStorage {
     uint totalPenaltyStake;
     uint totalUnStake;
     uint initProductCount;
+    mapping(uint => mapping(address => uint)) userActivity;
+    mapping(address => uint) allUserActivity;
+    mapping(uint => uint) currentAllActivity;
+    uint allActivity;
+    uint rewardPeriod;
+    uint nextRewardPeriod;
+    mapping(uint => mapping(address => bool)) currentPerfomers;
+    uint totalRewardTokenRemaining;
+    uint totalRewardDistributed;
+    mapping(address => uint) userTotalRewardRecieved;
+    mapping(address => uint) lockedRewardForStaking;
+    uint stakingPlanForSixMonths;
+    mapping(uint256 => uint256) dealersPlan;
+    address _token_addres;
+    mapping(address => uint256) dealerExpiryDate;
+    mapping(address => bool) isADealer;
+    mapping(address => uint256) dealerPlan;
+    address dealerSubcriptionCollector;
+    mapping(address => uint256) referralDealerRewardBalance;
+    uint256 dealerSubcriptionCollectorBalance;
+    mapping(address => address) deallerReferredBy;
+    mapping(address => uint256) deallerReferralCount;
+    bytes naira;
+    uint256 totalProcurementAmount;
 }

@@ -1,0 +1,436 @@
+{
+	"compiler": {
+		"version": "0.8.18+commit.87f61d96"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "tokenIn",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "tokenOut",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amountIn",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amountOut",
+						"type": "uint256"
+					}
+				],
+				"name": "SwapTransfer",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "amountOut",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address[]",
+						"name": "path",
+						"type": "address[]"
+					},
+					{
+						"internalType": "address[]",
+						"name": "routerPath",
+						"type": "address[]"
+					}
+				],
+				"name": "getAmountsIn",
+				"outputs": [
+					{
+						"internalType": "uint256[]",
+						"name": "amounts",
+						"type": "uint256[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "amountIn",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address[]",
+						"name": "path",
+						"type": "address[]"
+					},
+					{
+						"internalType": "address[]",
+						"name": "routerPath",
+						"type": "address[]"
+					}
+				],
+				"name": "getAmountsOut",
+				"outputs": [
+					{
+						"internalType": "uint256[]",
+						"name": "amounts",
+						"type": "uint256[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address[]",
+						"name": "routerPath",
+						"type": "address[]"
+					}
+				],
+				"name": "getWethAddress",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "pancakeRouter_weth",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "amountOut",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "tokenOut",
+						"type": "address"
+					},
+					{
+						"internalType": "address[]",
+						"name": "routerPath",
+						"type": "address[]"
+					}
+				],
+				"name": "swapBNBForExactEUSD",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "token",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amountInMax",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amountOut",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address[]",
+						"name": "routerPath",
+						"type": "address[]"
+					}
+				],
+				"name": "swapEUSDForExactBNB",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "amountInMax",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amountOut",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address[]",
+						"name": "path",
+						"type": "address[]"
+					},
+					{
+						"internalType": "address[]",
+						"name": "routerPath",
+						"type": "address[]"
+					}
+				],
+				"name": "swapEUSDforExactToken",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "amountOutMin",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "tokenOut",
+						"type": "address"
+					},
+					{
+						"internalType": "address[]",
+						"name": "routerPath",
+						"type": "address[]"
+					}
+				],
+				"name": "swapExactBNBForEUSD",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "amountIn",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amountOutMin",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address[]",
+						"name": "path",
+						"type": "address[]"
+					},
+					{
+						"internalType": "address[]",
+						"name": "routerPath",
+						"type": "address[]"
+					}
+				],
+				"name": "swapExactEUSDForTokens",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "token",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amountIn",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amountOutMin",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address[]",
+						"name": "routerPath",
+						"type": "address[]"
+					}
+				],
+				"name": "swapExactEUSDforBNB",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "amountIn",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amountOutMin",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address[]",
+						"name": "path",
+						"type": "address[]"
+					},
+					{
+						"internalType": "address[]",
+						"name": "routerPath",
+						"type": "address[]"
+					}
+				],
+				"name": "swapExactTokensForEUSD",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "amountInMax",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amountOut",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address[]",
+						"name": "path",
+						"type": "address[]"
+					},
+					{
+						"internalType": "address[]",
+						"name": "routerPath",
+						"type": "address[]"
+					}
+				],
+				"name": "swapTokensforExactEUSD",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"smart contract/SwapCryptoLoanUpdate/contracts/facets/PancakeSwapFacet.sol": "PancakeSwapFacet"
+		},
+		"evmVersion": "paris",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"smart contract/SwapCryptoLoanUpdate/contracts/facets/AppStorage.sol": {
+			"keccak256": "0x967b39e32c17e8e52c5b3d5069cd52f39cc61c8212e20cd5fce30357e458147b",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://42493d81d17d27db3be2e157382823002d89da142e5cdc5b71f718c5fa31104b",
+				"dweb:/ipfs/QmUCa94XnjBmWyTo3yLxRrVxEGHatG9U6WzthYieG6r1LE"
+			]
+		},
+		"smart contract/SwapCryptoLoanUpdate/contracts/facets/PancakeSwapFacet.sol": {
+			"keccak256": "0x0d53d4f61ceaa1e46123e86c92b0c7c24751dab94372eda14f1f534280ac7c30",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://3c7fc0c6c3cd9d5fce487af2d310524ba0d22f5335dd80f264e8d7023ce122aa",
+				"dweb:/ipfs/QmVVk7TRYACXVw87DUAnF7r5Q3MWAZj8CopWbx8ZzypogY"
+			]
+		},
+		"smart contract/SwapCryptoLoanUpdate/contracts/interfaces/IDiamondCut.sol": {
+			"keccak256": "0x21afb9584ec8e432c2c17acd3700e4c99b2d2c5d941c899fd5997a65cc689d56",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://a128bfc29cfc74fbfcb1bba3363c88df9521b5de7fc53b9c11fddd9389224abd",
+				"dweb:/ipfs/QmNfhvg7Aud1yXTZqzXTGdUf38tpv63Pbbuo3KKrYoRFrj"
+			]
+		},
+		"smart contract/SwapCryptoLoanUpdate/contracts/interfaces/Pancakes.sol": {
+			"keccak256": "0x0c8f0b68eb77676f51b1423374dca08bf628d85ac9b8d689d8b8b46331388d70",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://933a7c3abc75b3dcc64855b38814e5c694bf52e28b9008dc7ab903c0e5422173",
+				"dweb:/ipfs/QmeGt24jefudkJEv9DMknRktFb3JgZ4mA9Xybj6u4yrg9S"
+			]
+		},
+		"smart contract/SwapCryptoLoanUpdate/contracts/libraries/LibDiamond.sol": {
+			"keccak256": "0x4059248e993742cacdf0492134bbf0d504aab17f28299a706c9ca24b1a17fdf5",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://2940793983c72f0b2cfbe3dae334e0f327f89b1db096647df0494ca7e87f2757",
+				"dweb:/ipfs/QmP8GdGLKnQUKN5n1TjVodVAvvFjcDkUgcKNn9vZK9ztL1"
+			]
+		},
+		"smart contract/SwapCryptoLoanUpdate/contracts/libraries/SafeDecimalMath.sol": {
+			"keccak256": "0x1cc5eadb868b1c7c2fd0d652e29178ea3af0ad2cfce0a147bf82c37b27b4e96c",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://2c39bba0e670e811b987f1744c18bf69927b3b72a82b83c1e154d4eb0a7e685a",
+				"dweb:/ipfs/QmfGtnkfVqt8zYFU2272T5GXLT4wuw7mTdRWshTu4BL8sZ"
+			]
+		},
+		"smart contract/SwapCryptoLoanUpdate/contracts/libraries/SafeMath.sol": {
+			"keccak256": "0x32b3bc6a0c948063e8e21287584c180be2653c8d590a9537abd6aaa767885f3b",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://37a515286727d38a84d2a4acb3fa0b527ae130b7af8bfe321203d20dae5f7f1d",
+				"dweb:/ipfs/QmYLztAGbmx96aSZwS4Bzsp8V12DEoerSYLLJpyJSTpazk"
+			]
+		},
+		"smart contract/SwapCryptoLoanUpdate/contracts/libraries/Utils.sol": {
+			"keccak256": "0x152da78e69a665ef52be349a522d825f469a4e2adf0c1028a6718675b139bd2a",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://e491f5cfd3c8bb8d6f5d3c445f09e1f04818b31e0bfc1df711321f819a5e4524",
+				"dweb:/ipfs/QmW6aJb4J1BT9fbx8YSDoduwYucbanVuJsuYEXJ6eGiLex"
+			]
+		}
+	},
+	"version": 1
+}

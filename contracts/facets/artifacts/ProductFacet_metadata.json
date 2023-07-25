@@ -1,0 +1,1195 @@
+{
+	"compiler": {
+		"version": "0.8.18+commit.87f61d96"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "approved",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "Approval",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "operator",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "bool",
+						"name": "approved",
+						"type": "bool"
+					}
+				],
+				"name": "ApprovalForAll",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "productID",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "approvedBy",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "nowSelling",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "time",
+						"type": "uint256"
+					}
+				],
+				"name": "Approved",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "_fromTokenId",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "_toTokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "BatchMetadataUpdate",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "_productID",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "_amount",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "bidder",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "time",
+						"type": "uint256"
+					}
+				],
+				"name": "Bid",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "_productID",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "_amount",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "bidder",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "time",
+						"type": "uint256"
+					}
+				],
+				"name": "BidAccepted",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "_title",
+						"type": "string"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "_amount",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "_creator",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "bool",
+						"name": "_tradable",
+						"type": "bool"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "_productID",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "_time",
+						"type": "uint256"
+					}
+				],
+				"name": "DirectProductCreated",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "_tokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "MetadataUpdate",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "productID",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "tokenID",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "time",
+						"type": "uint256"
+					}
+				],
+				"name": "NFTMinted",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "_productID",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "time",
+						"type": "uint256"
+					}
+				],
+				"name": "ProductApproved",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "_title",
+						"type": "string"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "_amount",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "_creator",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "bool",
+						"name": "_tradable",
+						"type": "bool"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "_productID",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "_time",
+						"type": "uint256"
+					}
+				],
+				"name": "ProductCreated",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "_productID",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "tradeID",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "time",
+						"type": "uint256"
+					}
+				],
+				"name": "ReleaseProductFundToSeller",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "productID",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "qty",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "soldProductCounter",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "buyer",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "time",
+						"type": "uint256"
+					}
+				],
+				"name": "Sold",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "_productID",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "tradeID",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "time",
+						"type": "uint256"
+					}
+				],
+				"name": "TradeCanceled",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "Transfer",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_productID",
+						"type": "uint256"
+					}
+				],
+				"name": "acceptBid",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "approve",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_productID",
+						"type": "uint256"
+					}
+				],
+				"name": "approveDirectProduct",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_productID",
+						"type": "uint256"
+					}
+				],
+				"name": "approveProduct",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					}
+				],
+				"name": "balanceOf",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_productID",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_amount",
+						"type": "uint256"
+					}
+				],
+				"name": "bid",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_productID",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "qty",
+						"type": "uint256"
+					}
+				],
+				"name": "buyDirectProduct",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_productID",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "qty",
+						"type": "uint256"
+					}
+				],
+				"name": "buyProduct",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_productID",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "tradeID",
+						"type": "uint256"
+					}
+				],
+				"name": "cancelTrade",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "getApproved",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getNetworkFeeIfNotMember",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "operator",
+						"type": "address"
+					}
+				],
+				"name": "isApprovedForAll",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "_title",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_amount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_qty",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "_isdirect",
+						"type": "bool"
+					}
+				],
+				"name": "listProduct",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "name",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "ownerOf",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_productID",
+						"type": "uint256"
+					}
+				],
+				"name": "productState",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "isBidding",
+						"type": "bool"
+					},
+					{
+						"internalType": "uint256",
+						"name": "latestBid",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "_creator",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_amount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_selling",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "eusd",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_productID",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "tradeID",
+						"type": "uint256"
+					}
+				],
+				"name": "releaseProductFundToSeller",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "safeTransferFrom",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bytes",
+						"name": "data",
+						"type": "bytes"
+					}
+				],
+				"name": "safeTransferFrom",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "operator",
+						"type": "address"
+					},
+					{
+						"internalType": "bool",
+						"name": "approved",
+						"type": "bool"
+					}
+				],
+				"name": "setApprovalForAll",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_fee",
+						"type": "uint256"
+					}
+				],
+				"name": "setNetworkFeeIfNotMember",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes4",
+						"name": "interfaceId",
+						"type": "bytes4"
+					}
+				],
+				"name": "supportsInterface",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "symbol",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "tokenURI",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "totalSupply",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "transferFrom",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"events": {
+				"Approval(address,address,uint256)": {
+					"details": "Emitted when `owner` enables `approved` to manage the `tokenId` token."
+				},
+				"ApprovalForAll(address,address,bool)": {
+					"details": "Emitted when `owner` enables or disables (`approved`) `operator` to manage all of its assets."
+				},
+				"BatchMetadataUpdate(uint256,uint256)": {
+					"details": "This event emits when the metadata of a range of tokens is changed. So that the third-party platforms such as NFT market could timely update the images and related attributes of the NFTs."
+				},
+				"MetadataUpdate(uint256)": {
+					"details": "This event emits when the metadata of a token is changed. So that the third-party platforms such as NFT market could timely update the images and related attributes of the NFT."
+				},
+				"Transfer(address,address,uint256)": {
+					"details": "Emitted when `tokenId` token is transferred from `from` to `to`."
+				}
+			},
+			"kind": "dev",
+			"methods": {
+				"approve(address,uint256)": {
+					"details": "See {IERC721-approve}."
+				},
+				"balanceOf(address)": {
+					"details": "See {IERC721-balanceOf}."
+				},
+				"getApproved(uint256)": {
+					"details": "See {IERC721-getApproved}."
+				},
+				"isApprovedForAll(address,address)": {
+					"details": "See {IERC721-isApprovedForAll}."
+				},
+				"name()": {
+					"details": "See {IERC721Metadata-name}."
+				},
+				"ownerOf(uint256)": {
+					"details": "See {IERC721-ownerOf}."
+				},
+				"safeTransferFrom(address,address,uint256)": {
+					"details": "See {IERC721-safeTransferFrom}."
+				},
+				"safeTransferFrom(address,address,uint256,bytes)": {
+					"details": "See {IERC721-safeTransferFrom}."
+				},
+				"setApprovalForAll(address,bool)": {
+					"details": "See {IERC721-setApprovalForAll}."
+				},
+				"symbol()": {
+					"details": "See {IERC721Metadata-symbol}."
+				},
+				"transferFrom(address,address,uint256)": {
+					"details": "See {IERC721-transferFrom}."
+				}
+			},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"smart contract/SwapCryptoLoanUpdate/contracts/facets/ProductFacet.sol": "ProductFacet"
+		},
+		"evmVersion": "paris",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"smart contract/SwapCryptoLoanUpdate/contracts/access/AccessControl.sol": {
+			"keccak256": "0x0deab104728933be313ed8dad5c7659dba1574efb5ca03046319c3ec7b2b2371",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://c797d8422c42e59b737922bdb914dc0d3a53d62bb3bce9cc9c61987b5fb81713",
+				"dweb:/ipfs/QmUdbH14C9Bhjm8dyXPMiR6ytSoEJ32HBgV8w7B7cn9oLf"
+			]
+		},
+		"smart contract/SwapCryptoLoanUpdate/contracts/extensions/ERC721URIStorage.sol": {
+			"keccak256": "0xb86b456d1854cea3ea57b16efa31fac0a346df1989f4d5b55d89c7f14d6a7dda",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://e7a9ff899068a2d7727f1c1dc657ffff0a0f951380d9e0c660fd9632cc842f9c",
+				"dweb:/ipfs/QmQCSiaDjBz435np5smddfaLGr9YRwEmMBzTbVewh9TQPj"
+			]
+		},
+		"smart contract/SwapCryptoLoanUpdate/contracts/extensions/IERC721Metadata.sol": {
+			"keccak256": "0x3f0264e17a1a99df85f5866f4ad9f7ec5e1cb4027a809ebf66b33e97e6218973",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://5f733be4074bbbda540174d8025e61f686b19b1325060eaa4078aab3bd84619a",
+				"dweb:/ipfs/QmQWQQjv4F95Mpzdiz3o3kd1N5ehjetFxtoXoGPZCgDDc5"
+			]
+		},
+		"smart contract/SwapCryptoLoanUpdate/contracts/facets/AppStorage.sol": {
+			"keccak256": "0x967b39e32c17e8e52c5b3d5069cd52f39cc61c8212e20cd5fce30357e458147b",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://42493d81d17d27db3be2e157382823002d89da142e5cdc5b71f718c5fa31104b",
+				"dweb:/ipfs/QmUCa94XnjBmWyTo3yLxRrVxEGHatG9U6WzthYieG6r1LE"
+			]
+		},
+		"smart contract/SwapCryptoLoanUpdate/contracts/facets/ERC721.sol": {
+			"keccak256": "0x89c174bf014d7b930a02e8f99f936bc4305fd25945d9cabb96187b6e733b5ff3",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://b25257a3336212a3277659221e16ac2ed96040bb27fe6bafaf52e1b4e1d899a9",
+				"dweb:/ipfs/QmZKbdYy955TUp8yubmTz2tsLVQCR4Ry53TX3CkuUVDzge"
+			]
+		},
+		"smart contract/SwapCryptoLoanUpdate/contracts/facets/ProductFacet.sol": {
+			"keccak256": "0xecb2c56769f35d3f6809095ea61c24d53f6f0e4d57bde1c2a55d70abbce6b80a",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://6987d051bdbffb90b15bde9b3d7aa999d758b5304c6ac792fe4c5396a9fa03d5",
+				"dweb:/ipfs/QmS2nFHXBdosGEVQHPGFUqKvrgPzymjJXJoJ8BkMiXFqkk"
+			]
+		},
+		"smart contract/SwapCryptoLoanUpdate/contracts/interfaces/IAccessControl.sol": {
+			"keccak256": "0x8ffc72e44eb5edb07c5dccdab3be37674cf515abe115c5a2d19ca723612ee6e4",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://3337e77c739c36062267ede4be92db01a184decf088527a7ce2d1bd6ecac08b9",
+				"dweb:/ipfs/QmSBXQAgbLLqh94LhwAra2kDgHEmRAtaGH97oj3JqMQ6BD"
+			]
+		},
+		"smart contract/SwapCryptoLoanUpdate/contracts/interfaces/IDiamondCut.sol": {
+			"keccak256": "0x21afb9584ec8e432c2c17acd3700e4c99b2d2c5d941c899fd5997a65cc689d56",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://a128bfc29cfc74fbfcb1bba3363c88df9521b5de7fc53b9c11fddd9389224abd",
+				"dweb:/ipfs/QmNfhvg7Aud1yXTZqzXTGdUf38tpv63Pbbuo3KKrYoRFrj"
+			]
+		},
+		"smart contract/SwapCryptoLoanUpdate/contracts/interfaces/IERC4906.sol": {
+			"keccak256": "0xc89213f251a7d611119239e18e53ed27ce6ffb7f1fb3ea4f466dd4c690df7951",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://e9f536086bd6eacb2ced47f509410f8de557154c833b23320889b0846f91ba27",
+				"dweb:/ipfs/QmajRX6Vg7Uv7i2oYWTLwWRB5fXQZVW9FqJc6MbBZUw6ZA"
+			]
+		},
+		"smart contract/SwapCryptoLoanUpdate/contracts/interfaces/IERC721.sol": {
+			"keccak256": "0x8e12f56d976426c71f8010313259686d701c4451c8ea9ea0d59f3d427125d312",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://d12fad704b237791d724cfe0c0973480f6660757a39495c991a78dda5f3cfd92",
+				"dweb:/ipfs/QmdwbQeBi97oDiy3rWJMenRRAYprg2LqTrN4xgRJ7VhGWY"
+			]
+		},
+		"smart contract/SwapCryptoLoanUpdate/contracts/interfaces/IERC721Receiver.sol": {
+			"keccak256": "0xa82b58eca1ee256be466e536706850163d2ec7821945abd6b4778cfb3bee37da",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://6e75cf83beb757b8855791088546b8337e9d4684e169400c20d44a515353b708",
+				"dweb:/ipfs/QmYvPafLfoquiDMEj7CKHtvbgHu7TJNPSVPSCjrtjV8HjV"
+			]
+		},
+		"smart contract/SwapCryptoLoanUpdate/contracts/libraries/LibDiamond.sol": {
+			"keccak256": "0x4059248e993742cacdf0492134bbf0d504aab17f28299a706c9ca24b1a17fdf5",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://2940793983c72f0b2cfbe3dae334e0f327f89b1db096647df0494ca7e87f2757",
+				"dweb:/ipfs/QmP8GdGLKnQUKN5n1TjVodVAvvFjcDkUgcKNn9vZK9ztL1"
+			]
+		},
+		"smart contract/SwapCryptoLoanUpdate/contracts/libraries/SafeDecimalMath.sol": {
+			"keccak256": "0x1cc5eadb868b1c7c2fd0d652e29178ea3af0ad2cfce0a147bf82c37b27b4e96c",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://2c39bba0e670e811b987f1744c18bf69927b3b72a82b83c1e154d4eb0a7e685a",
+				"dweb:/ipfs/QmfGtnkfVqt8zYFU2272T5GXLT4wuw7mTdRWshTu4BL8sZ"
+			]
+		},
+		"smart contract/SwapCryptoLoanUpdate/contracts/libraries/SafeMath.sol": {
+			"keccak256": "0x32b3bc6a0c948063e8e21287584c180be2653c8d590a9537abd6aaa767885f3b",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://37a515286727d38a84d2a4acb3fa0b527ae130b7af8bfe321203d20dae5f7f1d",
+				"dweb:/ipfs/QmYLztAGbmx96aSZwS4Bzsp8V12DEoerSYLLJpyJSTpazk"
+			]
+		},
+		"smart contract/SwapCryptoLoanUpdate/contracts/libraries/Utils.sol": {
+			"keccak256": "0x152da78e69a665ef52be349a522d825f469a4e2adf0c1028a6718675b139bd2a",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://e491f5cfd3c8bb8d6f5d3c445f09e1f04818b31e0bfc1df711321f819a5e4524",
+				"dweb:/ipfs/QmW6aJb4J1BT9fbx8YSDoduwYucbanVuJsuYEXJ6eGiLex"
+			]
+		},
+		"smart contract/SwapCryptoLoanUpdate/contracts/math/Math.sol": {
+			"keccak256": "0x9bb4173446228f52656c63eeb772bea871828e4e04279f62c71680d809a166b4",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://56008d420bcaa5d4a5a18f85162ae5795baa4752f94ea6c122e949601a50105b",
+				"dweb:/ipfs/QmTAcykW7zpK9QEQmMCV44vMHN87ntFvhBJLioP4yG7jJP"
+			]
+		},
+		"smart contract/SwapCryptoLoanUpdate/contracts/math/SignedMath.sol": {
+			"keccak256": "0xf92515413956f529d95977adc9b0567d583c6203fc31ab1c23824c35187e3ddc",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://c50fcc459e49a9858b6d8ad5f911295cb7c9ab57567845a250bf0153f84a95c7",
+				"dweb:/ipfs/QmcEW85JRzvDkQggxiBBLVAasXWdkhEysqypj9EaB6H2g6"
+			]
+		},
+		"smart contract/SwapCryptoLoanUpdate/contracts/utils/Address.sol": {
+			"keccak256": "0x3101a95b16d10092faa4afb894b44af92a39ab1161edaf3e4d6b948ddeef6916",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://9dc74d46c4a86d4914fc91b2e191cc2a8d5400da86300c107844e669adba4ce5",
+				"dweb:/ipfs/QmfRG52srPNE3W3E5NT3j1s3yuoivqzYsEZYcn3KpvSYvs"
+			]
+		},
+		"smart contract/SwapCryptoLoanUpdate/contracts/utils/Context.sol": {
+			"keccak256": "0xe2e337e6dde9ef6b680e07338c493ebea1b5fd09b43424112868e9cc1706bca7",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://6df0ddf21ce9f58271bdfaa85cde98b200ef242a05a3f85c2bc10a8294800a92",
+				"dweb:/ipfs/QmRK2Y5Yc6BK7tGKkgsgn3aJEQGi5aakeSPZvS65PV8Xp3"
+			]
+		},
+		"smart contract/SwapCryptoLoanUpdate/contracts/utils/Counters.sol": {
+			"keccak256": "0xf0018c2440fbe238dd3a8732fa8e17a0f9dce84d31451dc8a32f6d62b349c9f1",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://59e1c62884d55b70f3ae5432b44bb3166ad71ae3acd19c57ab6ddc3c87c325ee",
+				"dweb:/ipfs/QmezuXg5GK5oeA4F91EZhozBFekhq5TD966bHPH18cCqhu"
+			]
+		},
+		"smart contract/SwapCryptoLoanUpdate/contracts/utils/Strings.sol": {
+			"keccak256": "0x63eabf50dde2f7308b99932fed33b7b66600b846e13b8dcc4ae5c01eb10d801e",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://b32569a1f74f4ff9aab30e1caf000ae2d7a6fd99c50901dbbcc54a09c92fd464",
+				"dweb:/ipfs/QmcMj2Nk3frxaPPteUzBo7tVYTtb3dAwJuEw3ctJFbMPEK"
+			]
+		},
+		"smart contract/SwapCryptoLoanUpdate/contracts/utils/introspection/ERC165.sol": {
+			"keccak256": "0x2d2ed0b388dfb21faeb22bae67e0ac9301c109702145310fcd5948f947b81ffe",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://1040df2aefbcf18419444019a59e6e66b960e323596704d1d2bc07ee6f346087",
+				"dweb:/ipfs/QmXcsbbQnJWNNuoEvG4rN57QE3hjJQakDA6EFr6AkDRdDh"
+			]
+		},
+		"smart contract/SwapCryptoLoanUpdate/contracts/utils/introspection/IERC165.sol": {
+			"keccak256": "0x447a5f3ddc18419d41ff92b3773fb86471b1db25773e07f877f548918a185bf1",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://be161e54f24e5c6fae81a12db1a8ae87bc5ae1b0ddc805d82a1440a68455088f",
+				"dweb:/ipfs/QmP7C3CHdY9urF4dEMb9wmsp1wMxHF6nhA2yQE5SKiPAdy"
+			]
+		}
+	},
+	"version": 1
+}

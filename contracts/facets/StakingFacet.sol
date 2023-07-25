@@ -228,6 +228,10 @@ contract StakingFacet {
         emit Royalty(_msgSender(), rolyalty, block.timestamp);
     }
 
+    function totalStake() external view returns (uint256) {
+        return (s.totalStake.sub(s.totalUnStake));
+    }
+
     function stakeConfig()
         external
         view
@@ -278,17 +282,17 @@ contract StakingFacet {
         );
     }
 
-    function resetTakeRoyaltyTime(address user) external {
-        s.nextRoyaltyTakePeriod[user] = block.timestamp;
-    }
+    // function resetTakeRoyaltyTime(address user) external {
+    //     s.nextRoyaltyTakePeriod[user] = block.timestamp;
+    // }
 
-    function increaseTakeRoyaltyTime(address user) external {
-        s.nextRoyaltyTakePeriod[user] = block.timestamp.sub(4 days);
-    }
+    // function increaseTakeRoyaltyTime(address user) external {
+    //     s.nextRoyaltyTakePeriod[user] = block.timestamp.sub(4 days);
+    // }
 
-    function increaseTakeRoyaltyTime2(address user) external {
-        s.nextRoyaltyTakePeriod[user] = block.timestamp.sub(2 days);
-    }
+    // function increaseTakeRoyaltyTime2(address user) external {
+    //     s.nextRoyaltyTakePeriod[user] = block.timestamp.sub(2 days);
+    // }
 
     function calculateRoyalty(
         address user

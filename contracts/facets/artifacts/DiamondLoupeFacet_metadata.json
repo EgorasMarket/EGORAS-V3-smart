@@ -1,0 +1,214 @@
+{
+	"compiler": {
+		"version": "0.8.18+commit.87f61d96"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "bytes4",
+						"name": "_functionSelector",
+						"type": "bytes4"
+					}
+				],
+				"name": "facetAddress",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "facetAddress_",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "facetAddresses",
+				"outputs": [
+					{
+						"internalType": "address[]",
+						"name": "facetAddresses_",
+						"type": "address[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_facet",
+						"type": "address"
+					}
+				],
+				"name": "facetFunctionSelectors",
+				"outputs": [
+					{
+						"internalType": "bytes4[]",
+						"name": "_facetFunctionSelectors",
+						"type": "bytes4[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "facets",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "address",
+								"name": "facetAddress",
+								"type": "address"
+							},
+							{
+								"internalType": "bytes4[]",
+								"name": "functionSelectors",
+								"type": "bytes4[]"
+							}
+						],
+						"internalType": "struct IDiamondLoupe.Facet[]",
+						"name": "facets_",
+						"type": "tuple[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes4",
+						"name": "_interfaceId",
+						"type": "bytes4"
+					}
+				],
+				"name": "safeSupportsInterface",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {
+				"facetAddress(bytes4)": {
+					"details": "If facet is not found return address(0).",
+					"params": {
+						"_functionSelector": "The function selector."
+					},
+					"returns": {
+						"facetAddress_": "The facet address."
+					}
+				},
+				"facetAddresses()": {
+					"returns": {
+						"facetAddresses_": "facetAddresses_"
+					}
+				},
+				"facetFunctionSelectors(address)": {
+					"params": {
+						"_facet": "The facet address."
+					},
+					"returns": {
+						"_facetFunctionSelectors": "The selectors associated with a facet address."
+					}
+				},
+				"facets()": {
+					"returns": {
+						"facets_": "Facet"
+					}
+				}
+			},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {
+				"facetAddress(bytes4)": {
+					"notice": "Gets the facet address that supports the given selector."
+				},
+				"facetAddresses()": {
+					"notice": "Get all the facet addresses used by a diamond."
+				},
+				"facetFunctionSelectors(address)": {
+					"notice": "Gets all the function selectors supported by a specific facet."
+				},
+				"facets()": {
+					"notice": "Gets all facets and their selectors."
+				}
+			},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"smart contract/SwapCryptoLoanUpdate/contracts/facets/DiamondLoupeFacet.sol": "DiamondLoupeFacet"
+		},
+		"evmVersion": "paris",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"smart contract/SwapCryptoLoanUpdate/contracts/facets/DiamondLoupeFacet.sol": {
+			"keccak256": "0x6e753a34c2645f0da70ca0031b360c0da721180049fb8b677ca47624d6e29841",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://d304312cf9f8b844d22e242f57ee5144bba918d1d4efdb3820f76856d6ece699",
+				"dweb:/ipfs/QmRmMf6uBENDih83fBGNYRScrchkFgrYgKjZU5WUZSw8x2"
+			]
+		},
+		"smart contract/SwapCryptoLoanUpdate/contracts/interfaces/IDiamondCut.sol": {
+			"keccak256": "0x21afb9584ec8e432c2c17acd3700e4c99b2d2c5d941c899fd5997a65cc689d56",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://a128bfc29cfc74fbfcb1bba3363c88df9521b5de7fc53b9c11fddd9389224abd",
+				"dweb:/ipfs/QmNfhvg7Aud1yXTZqzXTGdUf38tpv63Pbbuo3KKrYoRFrj"
+			]
+		},
+		"smart contract/SwapCryptoLoanUpdate/contracts/interfaces/IDiamondLoupe.sol": {
+			"keccak256": "0x22651ae779776d5c818442cfd3d5675f7b36bac6530db30d77aef6e555a90fc2",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://0646a9b4be9b4beee561f593f873180c1381a39b153ff6601a6caa40d06882b0",
+				"dweb:/ipfs/QmfTJRgEXtcUJC5oyzmauGeMQp83mkLjPeHF8oHQzG67Mr"
+			]
+		},
+		"smart contract/SwapCryptoLoanUpdate/contracts/interfaces/IERC165.sol": {
+			"keccak256": "0x1b9ce37b2234d093449a99c4b88054c6b7c150f6dfedbc6a593bb6578d0ded16",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://f5debf7f7183c510fd1b24955a1e9f71d3062518a0f15fb22c067c5433e8c1d0",
+				"dweb:/ipfs/QmNjomUhMUPrXhkdxhuuAuuDPpRtkG14MjKwcsCnJNUYkh"
+			]
+		},
+		"smart contract/SwapCryptoLoanUpdate/contracts/libraries/LibDiamond.sol": {
+			"keccak256": "0x4059248e993742cacdf0492134bbf0d504aab17f28299a706c9ca24b1a17fdf5",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://2940793983c72f0b2cfbe3dae334e0f327f89b1db096647df0494ca7e87f2757",
+				"dweb:/ipfs/QmP8GdGLKnQUKN5n1TjVodVAvvFjcDkUgcKNn9vZK9ztL1"
+			]
+		}
+	},
+	"version": 1
+}

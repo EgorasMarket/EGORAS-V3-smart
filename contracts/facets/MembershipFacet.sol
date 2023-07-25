@@ -77,6 +77,10 @@ contract MembershipFacet {
         );
         _;
     }
+    uint private totalBurnAmount = 0;
+    uint private totalRefferral = 0;
+
+    mapping(address => uint256) totalReferralRewardBalance;
 
     function _msgSender() internal view virtual returns (address) {
         return msg.sender;
@@ -421,18 +425,34 @@ contract MembershipFacet {
             "Renew your membership plan"
         );
         uint256 amount = s.referralRewardBalance[user];
+        s.referralRewardBalance[user] = 0;
+
         IERC20 iERC20 = IERC20(s.egcAddr);
 
         require(iERC20.transfer(user, amount), "Fail to transfer");
+        totalReferralRewardBalance[user] = totalReferralRewardBalance[user].add(
+            amount
+        );
+        totalRefferral = totalRefferral.add(amount);
         emit Rewarded(user, amount, block.timestamp);
     }
 
     function burn() external {
         uint256 amount = s.referralBurnBalance;
+        s.referralBurnBalance = 0;
         IERC20 iERC20 = IERC20(s.egcAddr);
 
         iERC20.burn(amount);
+        totalBurnAmount = totalBurnAmount.add(amount);
         emit Burn(_msgSender(), amount, block.timestamp);
+    }
+
+    function getBurnableAmount() external view returns (uint) {
+        return s.referralBurnBalance;
+    }
+
+    function totalBurn() external view returns (uint) {
+        return totalBurnAmount;
     }
 
     function referredBy(
@@ -443,8 +463,16 @@ contract MembershipFacet {
 
     function referralStats(
         address user
-    ) external view returns (uint256 _count, uint256 _amount) {
-        return (s.referralRewardBalance[user], s.referralCount[user]);
+    )
+        external
+        view
+        returns (uint256 _count, uint256 _amount, uint _totalTaken)
+    {
+        return (
+            s.referralRewardBalance[user],
+            s.referralCount[user],
+            totalReferralRewardBalance[user]
+        );
     }
 
     function getNextSpill() external returns (address) {
@@ -477,11 +505,5 @@ contract MembershipFacet {
     function getMember(uint index) external view returns (address) {
         Members memory _m = members[index];
         return _m.user;
-    }
-
-    function pushMembers(address user) external {
-        require(s.pythia[_msgSender()], "Only Pythia is allowed");
-        Members memory _m = Members({user: user});
-        members.push(_m);
     }
 }

@@ -1,0 +1,130 @@
+{
+	"compiler": {
+		"version": "0.8.18+commit.87f61d96"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"components": [
+							{
+								"internalType": "address",
+								"name": "facetAddress",
+								"type": "address"
+							},
+							{
+								"internalType": "enum IDiamondCut.FacetCutAction",
+								"name": "action",
+								"type": "uint8"
+							},
+							{
+								"internalType": "bytes4[]",
+								"name": "functionSelectors",
+								"type": "bytes4[]"
+							}
+						],
+						"internalType": "struct IDiamondCut.FacetCut[]",
+						"name": "_diamondCut",
+						"type": "tuple[]"
+					},
+					{
+						"components": [
+							{
+								"internalType": "address",
+								"name": "owner",
+								"type": "address"
+							}
+						],
+						"internalType": "struct EgorasV3.EgorasV3Args",
+						"name": "_args",
+						"type": "tuple"
+					}
+				],
+				"stateMutability": "payable",
+				"type": "constructor"
+			},
+			{
+				"stateMutability": "payable",
+				"type": "fallback"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"smart contract/SwapCryptoLoanUpdate/contracts/EgorasV3.sol": "EgorasV3"
+		},
+		"evmVersion": "paris",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"smart contract/SwapCryptoLoanUpdate/contracts/EgorasV3.sol": {
+			"keccak256": "0x40310e555508a4a22d39dc154bc935a4699089473c8a80efab84e84d316bacbf",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://ab6b67a832369e3561bf85d65bef6e36ecb1ce63c3b365e6bebbbd2867d70392",
+				"dweb:/ipfs/QmbUg2UT8C9CSN6P8mzwVjH4CRikXPiADDUE2AUVy5s3fe"
+			]
+		},
+		"smart contract/SwapCryptoLoanUpdate/contracts/interfaces/IDiamondCut.sol": {
+			"keccak256": "0x21afb9584ec8e432c2c17acd3700e4c99b2d2c5d941c899fd5997a65cc689d56",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://a128bfc29cfc74fbfcb1bba3363c88df9521b5de7fc53b9c11fddd9389224abd",
+				"dweb:/ipfs/QmNfhvg7Aud1yXTZqzXTGdUf38tpv63Pbbuo3KKrYoRFrj"
+			]
+		},
+		"smart contract/SwapCryptoLoanUpdate/contracts/interfaces/IDiamondLoupe.sol": {
+			"keccak256": "0x22651ae779776d5c818442cfd3d5675f7b36bac6530db30d77aef6e555a90fc2",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://0646a9b4be9b4beee561f593f873180c1381a39b153ff6601a6caa40d06882b0",
+				"dweb:/ipfs/QmfTJRgEXtcUJC5oyzmauGeMQp83mkLjPeHF8oHQzG67Mr"
+			]
+		},
+		"smart contract/SwapCryptoLoanUpdate/contracts/interfaces/IERC165.sol": {
+			"keccak256": "0x1b9ce37b2234d093449a99c4b88054c6b7c150f6dfedbc6a593bb6578d0ded16",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://f5debf7f7183c510fd1b24955a1e9f71d3062518a0f15fb22c067c5433e8c1d0",
+				"dweb:/ipfs/QmNjomUhMUPrXhkdxhuuAuuDPpRtkG14MjKwcsCnJNUYkh"
+			]
+		},
+		"smart contract/SwapCryptoLoanUpdate/contracts/interfaces/IERC173.sol": {
+			"keccak256": "0x2c725fda85ada86c94ec21592a2057205897324886b769fea8b09b6472ae9528",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://cd6a482c886e15fa7ae60bfd01486a68c48b0034e730a25347465158e2237cb7",
+				"dweb:/ipfs/QmWPD5egogtk1QeAxufk7BvjiRtt9HMo2G7XM34ManDdcw"
+			]
+		},
+		"smart contract/SwapCryptoLoanUpdate/contracts/libraries/LibDiamond.sol": {
+			"keccak256": "0x4059248e993742cacdf0492134bbf0d504aab17f28299a706c9ca24b1a17fdf5",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://2940793983c72f0b2cfbe3dae334e0f327f89b1db096647df0494ca7e87f2757",
+				"dweb:/ipfs/QmP8GdGLKnQUKN5n1TjVodVAvvFjcDkUgcKNn9vZK9ztL1"
+			]
+		}
+	},
+	"version": 1
+}

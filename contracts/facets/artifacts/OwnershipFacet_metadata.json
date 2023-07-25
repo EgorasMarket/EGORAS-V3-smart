@@ -1,0 +1,139 @@
+{
+	"compiler": {
+		"version": "0.8.18+commit.87f61d96"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "previousOwner",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "OwnershipTransferred",
+				"type": "event"
+			},
+			{
+				"inputs": [],
+				"name": "owner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "owner_",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_newOwner",
+						"type": "address"
+					}
+				],
+				"name": "transferOwnership",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"events": {
+				"OwnershipTransferred(address,address)": {
+					"details": "This emits when ownership of a contract changes."
+				}
+			},
+			"kind": "dev",
+			"methods": {
+				"owner()": {
+					"returns": {
+						"owner_": "The address of the owner."
+					}
+				},
+				"transferOwnership(address)": {
+					"details": "Set _newOwner to address(0) to renounce any ownership.",
+					"params": {
+						"_newOwner": "The address of the new owner of the contract"
+					}
+				}
+			},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {
+				"owner()": {
+					"notice": "Get the address of the owner"
+				},
+				"transferOwnership(address)": {
+					"notice": "Set the address of the new owner of the contract"
+				}
+			},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"smart contract/SwapCryptoLoanUpdate/contracts/facets/OwnershipFacet.sol": "OwnershipFacet"
+		},
+		"evmVersion": "paris",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"smart contract/SwapCryptoLoanUpdate/contracts/facets/OwnershipFacet.sol": {
+			"keccak256": "0x5c035a08e92dd5f9b6b6afad325c21c408d1b8ca75dfcdd1e82b4355e75d39c3",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://5c1ef057d6021ca6b26db1db7266160b40e17bd0e7b82dbec26571c8736a79a0",
+				"dweb:/ipfs/QmSaxKewRPPpQU7ee6qXstUXzUFnfNY2ivdYqCKznES5et"
+			]
+		},
+		"smart contract/SwapCryptoLoanUpdate/contracts/interfaces/IDiamondCut.sol": {
+			"keccak256": "0x21afb9584ec8e432c2c17acd3700e4c99b2d2c5d941c899fd5997a65cc689d56",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://a128bfc29cfc74fbfcb1bba3363c88df9521b5de7fc53b9c11fddd9389224abd",
+				"dweb:/ipfs/QmNfhvg7Aud1yXTZqzXTGdUf38tpv63Pbbuo3KKrYoRFrj"
+			]
+		},
+		"smart contract/SwapCryptoLoanUpdate/contracts/interfaces/IERC173.sol": {
+			"keccak256": "0x2c725fda85ada86c94ec21592a2057205897324886b769fea8b09b6472ae9528",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://cd6a482c886e15fa7ae60bfd01486a68c48b0034e730a25347465158e2237cb7",
+				"dweb:/ipfs/QmWPD5egogtk1QeAxufk7BvjiRtt9HMo2G7XM34ManDdcw"
+			]
+		},
+		"smart contract/SwapCryptoLoanUpdate/contracts/libraries/LibDiamond.sol": {
+			"keccak256": "0x4059248e993742cacdf0492134bbf0d504aab17f28299a706c9ca24b1a17fdf5",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://2940793983c72f0b2cfbe3dae334e0f327f89b1db096647df0494ca7e87f2757",
+				"dweb:/ipfs/QmP8GdGLKnQUKN5n1TjVodVAvvFjcDkUgcKNn9vZK9ztL1"
+			]
+		}
+	},
+	"version": 1
+}

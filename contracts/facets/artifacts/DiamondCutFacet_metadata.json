@@ -1,0 +1,156 @@
+{
+	"compiler": {
+		"version": "0.8.18+commit.87f61d96"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"components": [
+							{
+								"internalType": "address",
+								"name": "facetAddress",
+								"type": "address"
+							},
+							{
+								"internalType": "enum IDiamondCut.FacetCutAction",
+								"name": "action",
+								"type": "uint8"
+							},
+							{
+								"internalType": "bytes4[]",
+								"name": "functionSelectors",
+								"type": "bytes4[]"
+							}
+						],
+						"indexed": false,
+						"internalType": "struct IDiamondCut.FacetCut[]",
+						"name": "_diamondCut",
+						"type": "tuple[]"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "_init",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "bytes",
+						"name": "_calldata",
+						"type": "bytes"
+					}
+				],
+				"name": "DiamondCut",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"components": [
+							{
+								"internalType": "address",
+								"name": "facetAddress",
+								"type": "address"
+							},
+							{
+								"internalType": "enum IDiamondCut.FacetCutAction",
+								"name": "action",
+								"type": "uint8"
+							},
+							{
+								"internalType": "bytes4[]",
+								"name": "functionSelectors",
+								"type": "bytes4[]"
+							}
+						],
+						"internalType": "struct IDiamondCut.FacetCut[]",
+						"name": "_diamondCut",
+						"type": "tuple[]"
+					},
+					{
+						"internalType": "address",
+						"name": "_init",
+						"type": "address"
+					},
+					{
+						"internalType": "bytes",
+						"name": "_calldata",
+						"type": "bytes"
+					}
+				],
+				"name": "diamondCut",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {
+				"diamondCut((address,uint8,bytes4[])[],address,bytes)": {
+					"params": {
+						"_calldata": "A function call, including function selector and arguments                  _calldata is executed with delegatecall on _init",
+						"_diamondCut": "Contains the facet addresses and function selectors",
+						"_init": "The address of the contract or facet to execute _calldata"
+					}
+				}
+			},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {
+				"diamondCut((address,uint8,bytes4[])[],address,bytes)": {
+					"notice": "Add/replace/remove any number of functions and optionally execute         a function with delegatecall"
+				}
+			},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"smart contract/SwapCryptoLoanUpdate/contracts/facets/DiamondCutFacet.sol": "DiamondCutFacet"
+		},
+		"evmVersion": "paris",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"smart contract/SwapCryptoLoanUpdate/contracts/facets/DiamondCutFacet.sol": {
+			"keccak256": "0x68a40889c1cb8a360e361687284a2921e47cc39649948a83f591e2f8d1ff613a",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://e882957bcce3c2893b61337725615d3c257662f9954d8aa554dfb28160a3a568",
+				"dweb:/ipfs/QmQW4dUHxWQBewTciB13CuPoMuWyZJBrHuYYW5pS8JFU4U"
+			]
+		},
+		"smart contract/SwapCryptoLoanUpdate/contracts/interfaces/IDiamondCut.sol": {
+			"keccak256": "0x21afb9584ec8e432c2c17acd3700e4c99b2d2c5d941c899fd5997a65cc689d56",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://a128bfc29cfc74fbfcb1bba3363c88df9521b5de7fc53b9c11fddd9389224abd",
+				"dweb:/ipfs/QmNfhvg7Aud1yXTZqzXTGdUf38tpv63Pbbuo3KKrYoRFrj"
+			]
+		},
+		"smart contract/SwapCryptoLoanUpdate/contracts/libraries/LibDiamond.sol": {
+			"keccak256": "0x4059248e993742cacdf0492134bbf0d504aab17f28299a706c9ca24b1a17fdf5",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://2940793983c72f0b2cfbe3dae334e0f327f89b1db096647df0494ca7e87f2757",
+				"dweb:/ipfs/QmP8GdGLKnQUKN5n1TjVodVAvvFjcDkUgcKNn9vZK9ztL1"
+			]
+		}
+	},
+	"version": 1
+}

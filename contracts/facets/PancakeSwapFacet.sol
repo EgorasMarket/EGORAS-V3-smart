@@ -33,6 +33,8 @@ interface IERC20PAN {
     function mint(address account, uint256 amount) external returns (bool);
 
     function burnFrom(address account, uint256 amount) external;
+
+    function recordUserActivity(address user, uint256 amount) external;
 }
 
 contract PancakeSwapFacet {
@@ -73,6 +75,7 @@ contract PancakeSwapFacet {
             address(pancakeRouter),
             msg.value
         );
+
         pancakeRouter.swapExactETHForTokens{value: msg.value}(
             amountOutMin,
             path,
@@ -82,6 +85,7 @@ contract PancakeSwapFacet {
 
         uint256[] memory amounts = pancakeRouter.getAmountsOut(msg.value, path);
         IERC20PAN ierc20 = IERC20PAN(tokenOut);
+        IERC20PAN(address(this)).recordUserActivity(_msgSender(), amounts[1]);
         require(ierc20.mint(_msgSender(), amounts[1]), "Sending faild");
         emit SwapTransfer(
             address(pancakeRouter),
@@ -93,38 +97,6 @@ contract PancakeSwapFacet {
         );
     }
 
-    function swapExactTokensForEUSD(
-        uint amountIn,
-        uint amountOutMin,
-        address[] calldata path,
-        address[] calldata routerPath
-    ) external {
-        IPancakeRouter02 pancakeRouter = IPancakeRouter02(routerPath[0]);
-        IERC20PAN(path[0]).transferFrom(_msgSender(), address(this), amountIn);
-        IERC20PAN(path[0]).approve(address(pancakeRouter), amountIn);
-        address[] memory innerPath = new address[](2);
-        innerPath[0] = path[0];
-        innerPath[1] = routerPath[1];
-        pancakeRouter.swapExactTokensForTokens(
-            amountIn,
-            amountOutMin,
-            innerPath,
-            address(this),
-            block.timestamp.add(6 minutes)
-        );
-        uint256[] memory amounts = pancakeRouter.getAmountsOut(amountIn, path);
-        IERC20PAN ierc20 = IERC20PAN(path[0]);
-        require(ierc20.mint(_msgSender(), amounts[1]), "Sending faild");
-        emit SwapTransfer(
-            address(pancakeRouter),
-            _msgSender(),
-            path[0],
-            path[1],
-            amountIn,
-            amounts[1]
-        );
-    }
-
     function swapExactEUSDForTokens(
         uint amountIn,
         uint amountOutMin,
@@ -132,16 +104,22 @@ contract PancakeSwapFacet {
         address[] calldata routerPath
     ) external {
         IPancakeRouter02 pancakeRouter = IPancakeRouter02(routerPath[0]);
+        IERC20PAN(address(this)).recordUserActivity(_msgSender(), amountIn);
         IERC20PAN(path[0]).burnFrom(_msgSender(), amountIn);
         IERC20PAN(routerPath[1]).approve(address(pancakeRouter), amountIn);
+        address[] memory paths = new address[](2);
+        paths[0] = routerPath[1];
+        paths[1] = path[1];
         pancakeRouter.swapExactTokensForTokens(
             amountIn,
             amountOutMin,
-            path,
+            paths,
             _msgSender(),
             block.timestamp.add(6 minutes)
         );
-        uint256[] memory amounts = pancakeRouter.getAmountsOut(amountIn, path);
+
+        // i sent the wrong path change send Busd Instead
+        uint256[] memory amounts = pancakeRouter.getAmountsOut(amountIn, paths);
 
         emit SwapTransfer(
             address(pancakeRouter),
@@ -161,6 +139,7 @@ contract PancakeSwapFacet {
     ) external {
         IPancakeRouter02 pancakeRouter = IPancakeRouter02(routerPath[0]);
         IERC20PAN(token).burnFrom(_msgSender(), amountIn);
+        IERC20PAN(address(this)).recordUserActivity(_msgSender(), amountIn);
         address[] memory path = new address[](2);
         path[0] = routerPath[1];
         path[1] = pancakeRouter.WETH();
@@ -202,6 +181,7 @@ contract PancakeSwapFacet {
             block.timestamp.add(6 minutes)
         );
         IERC20PAN ierc20 = IERC20PAN(tokenOut);
+        IERC20PAN(address(this)).recordUserActivity(_msgSender(), amountOut);
         require(ierc20.mint(_msgSender(), amountOut), "Sending faild");
         // uint256[] memory amounts = pancakeRouter.getAmountsIn(amountOut, path); front end call
         emit SwapTransfer(
@@ -223,6 +203,7 @@ contract PancakeSwapFacet {
         IPancakeRouter02 pancakeRouter = IPancakeRouter02(routerPath[0]);
         IERC20PAN(path[0]).burnFrom(_msgSender(), amountInMax);
         IERC20PAN(routerPath[1]).approve(address(pancakeRouter), amountInMax);
+        IERC20PAN(address(this)).recordUserActivity(_msgSender(), amountInMax);
         pancakeRouter.swapTokensForExactTokens(
             amountOut,
             amountInMax,
@@ -238,6 +219,44 @@ contract PancakeSwapFacet {
             path[1],
             amountInMax,
             amountOut
+        );
+    }
+
+    function swapExactTokensForEUSD(
+        uint amountIn,
+        uint amountOutMin,
+        address[] calldata path,
+        address[] calldata routerPath
+    ) external {
+        IPancakeRouter02 pancakeRouter = IPancakeRouter02(routerPath[0]);
+        IERC20PAN(path[0]).transferFrom(_msgSender(), address(this), amountIn);
+        IERC20PAN(path[0]).approve(address(pancakeRouter), amountIn);
+
+        address[] memory innerPath = new address[](2);
+        innerPath[0] = path[0];
+        innerPath[1] = routerPath[1];
+        pancakeRouter.swapExactTokensForTokens(
+            amountIn,
+            amountOutMin,
+            innerPath,
+            address(this),
+            block.timestamp.add(6 minutes)
+        );
+        uint256[] memory amounts = pancakeRouter.getAmountsOut(
+            amountIn,
+            innerPath
+        );
+        IERC20PAN ierc20 = IERC20PAN(path[1]);
+        IERC20PAN(address(this)).recordUserActivity(_msgSender(), amounts[1]);
+
+        require(ierc20.mint(_msgSender(), amounts[1]), "Sending faild");
+        emit SwapTransfer(
+            address(pancakeRouter),
+            _msgSender(),
+            path[0],
+            path[1],
+            amountIn,
+            amounts[1]
         );
     }
 
@@ -263,6 +282,8 @@ contract PancakeSwapFacet {
         );
         IERC20PAN ierc20 = IERC20PAN(path[0]);
         require(ierc20.mint(_msgSender(), amountOut), "Sending faild");
+        IERC20PAN(address(this)).recordUserActivity(_msgSender(), amountOut);
+
         emit SwapTransfer(
             address(pancakeRouter),
             _msgSender(),
@@ -281,6 +302,7 @@ contract PancakeSwapFacet {
     ) external {
         IPancakeRouter02 pancakeRouter = IPancakeRouter02(routerPath[0]);
         IERC20PAN(token).burnFrom(_msgSender(), amountInMax);
+        IERC20PAN(address(this)).recordUserActivity(_msgSender(), amountInMax);
         address[] memory path = new address[](2);
         path[0] = routerPath[1];
         path[1] = pancakeRouter.WETH();

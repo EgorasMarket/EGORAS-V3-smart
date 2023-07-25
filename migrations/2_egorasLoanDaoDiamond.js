@@ -7,11 +7,11 @@ const MembershipFacet = artifacts.require('MembershipFacet')
 const PriceOracleFacet = artifacts.require('PriceOracleFacet')
 const ProductFacet = artifacts.require('ProductFacet')
 const SalaryFacet = artifacts.require('SalaryFacet')
-const StakingFacet = artifacts.require('StakingFacet')
 const SwapFacet = artifacts.require('SwapFacet')
 const EgorasV3 = artifacts.require('EgorasV3')
 const PancakeSwapFacet = artifacts.require('PancakeSwapFacet')
-//const ProductAdapter = artifacts.require('ProductAdapter')
+const MartGPTToken = artifacts.require('MartGPTToken')
+const RewardFaucet = artifacts.require('RewardFaucet')
 
 
 const FacetCutAction = {
@@ -21,16 +21,14 @@ const FacetCutAction = {
 }
 
 
-//
+// 
 
 function getSelectors (contract) {
   const selectors = contract.abi.reduce((acc, val) => {
     if (val.type === 'function') {
       acc.push(val.signature)
-      
-      // console.log("Start------"+contract.contractName+"--------Start")
-      // console.log([contract.contractName, 0, acc])
-      //  console.log("END------"+contract.contractName+"--------END")
+      console.log(val.signature, val.name);
+     
       return acc
     } else {
       return acc
@@ -40,20 +38,28 @@ function getSelectors (contract) {
 }
 
 module.exports = function (deployer, network, accounts) { 
-//   return deployer.deploy(PancakeSwapFacet).then(() =>{
-//  console.log("-----------------------PancakeSwapFacet--------------------------");
-//   console.log(getSelectors(PancakeSwapFacet));
-//   console.log("-----------------------PancakeSwapFacet--------------------------");
-//   })
+  //return deployer.deploy(MartGPTToken, "MartGPT Token","MA","0xb9bfBE13137A78ED3392866C479378a4f7595ef6","0xD195dCC364Beeedd3117e331a17e3A6863D1Aa43", "100000000000000000000000000000","100000000000000000000")
+//return deployer.deploy(RewardFaucet);
+  
+  return deployer.deploy(RewardFaucet).then(() =>{
+    const diamondCut2 = [
+    [RewardFaucet.contractName, FacetCutAction.Add, getSelectors(RewardFaucet)]
+    ];
+    console.log("Start------RewardFaucet--------Start");
+    console.log(diamondCut2);
+    console.log("END-----RewardFaucet--------END");
+  })
 
-//  return deployer.deploy(ProductFacet).then(()=> {
-//  return getSelectors(ProductFacet)
-//  });
+ return deployer.deploy(PancakeSwapFacet).then(()=> {
+  console.log("Start------ProductFacet--------Start")
+       console.log(["contract.contractName", 0, getSelectors(PancakeSwapFacet)])
+        console.log("END-----ProductFacet--------END")
+ });
 
 const deploy = [
-  [ '0xC602De3Ff5Ba266EeD4B13934D1A3BDd4DE88679', 0, [ '0x1f931c1c' ] ],
+  [ '0x27d0fd6a1ff41db21ba24c66a90abc2e34053e0e', 0, [ '0x1f931c1c' ] ],
   [
-    '0xFDC857E32a1dFb09832993594bF9e47544246C70',
+    '0xd691b24b8d80602715a2124b9e98bcbb3e45a788',
     0,
     [
       '0x7a0ed627',
@@ -64,10 +70,11 @@ const deploy = [
     ]
   ],
   [
-    '0xf721257dAAE194a46FF92c892995e92DE1E571d5',
+    '0x3b83ae5dd00717c9e3c58457789455ec5207e757',
     0,
     [
       '0x734bc659',
+      '0x658bdb2e',
       '0xfe2c6198',
       '0x832427da',
       '0xb55bfc6f',
@@ -76,7 +83,7 @@ const deploy = [
     ]
   ],
   [
-    '0x289FAE72B0E4a5747a9B50CAc20e357c49e25206',
+    '0xcff34847a99a210e58e713a5a1f7ba78c6fd317b',
     0,
     [
       '0xd1c6be68', '0xa39fac12',
@@ -86,14 +93,15 @@ const deploy = [
       '0xf320bed4', '0x6be44073',
       '0x1a915049', '0xdafac561',
       '0xe4721b1a', '0x44df8e70',
+      '0x1f2781a6', '0x3c9f861d',
       '0xa90f8e9a', '0x3a0e3409',
       '0xfab96348', '0x593b79fe',
       '0x5d672a62', '0xfc53c821',
-      '0xab3545e5', '0xa9006616'
+      '0xab3545e5'
     ]
   ],
   [
-    '0x9E2cf66EdC1b56A4254b5Ff5BA2F626E1d5F2ae6',
+    '0xd9e1c00df4bcdda9faf08f0dee892c9295f0eb33',
     0,
     [
       '0x095ea7b3', '0x70a08231',
@@ -105,14 +113,15 @@ const deploy = [
       '0x95d89b41', '0xc87b56dd',
       '0x3eca6995', '0x013e11f5',
       '0x598647f8', '0x9033e995',
-      '0x2b1fd58a', '0x27d55495',
+      '0x2b1fd58a', '0x5c0fe63f',
+      '0xd4781dbf', '0x27d55495',
       '0xdc78d93b', '0xdf88480f',
       '0x64339dbf', '0x75681d0e'
     ]
   ],
-  [ '0xc740fd7aaF017c594Ddf58eCCC98eE0312EB7DcB', 0, [ '0x0292e391', '0xdc407b61', '0x8e1e14dd' ] ],
+  [ '0x77bfd212c4b9d555700ea9b5d523f2a03ffc85a9', 0, [ '0x0292e391', '0xdc407b61', '0x8e1e14dd' ] ],
   [
-    '0xC9f86D4b806955E8c96B60229615824f5b5E4f73',
+    '0xc72429606c32fe8e60386447244deea865a1ae94',
     0,
     [
       '0x2def6620', '0x076f2129',
@@ -124,7 +133,7 @@ const deploy = [
     ]
   ],
   [
-    '0xFc58F1D90e4B96622f82302Cf0bDB7f8D7f59B20',
+    '0x91925933151f5856e6f6cc24ce2b97c0340f445b',
     0,
     [
       '0xcf1d14dc', '0x9c48a3c3',
@@ -135,7 +144,7 @@ const deploy = [
       '0x9e269b68'
     ]
   ],
-  [ '0x4bd8818B8D0F51b764d67edca8ba81a47cF0Fc99', 0, [ '0xf2fde38b', '0x8da5cb5b' ] ]
+  [ '0xb9aeb0575381482d35252c1d084f990fcf3cbe0a', 0, [ '0xf2fde38b', '0x8da5cb5b' ] ]
 ];
 
 
@@ -179,6 +188,7 @@ const deploy = [
     ]
 
     console.log(diamondCut2);
+
     // console.log("-----------------------DiamondCutFacet--------------------------");
     // console.log(getSelectors(DiamondCutFacet));
     // console.log("-----------------------DiamondCutFacet--------------------------");

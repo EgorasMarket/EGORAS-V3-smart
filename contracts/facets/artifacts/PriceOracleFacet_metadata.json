@@ -119,34 +119,14 @@
 				"type": "function"
 			},
 			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "_pythia",
-						"type": "address"
-					}
-				],
-				"name": "isPythia",
+				"inputs": [],
+				"name": "getStakingAndBuyingTokenPrices",
 				"outputs": [
 					{
-						"internalType": "bool",
+						"internalType": "uint256",
 						"name": "",
-						"type": "bool"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "string",
-						"name": "_ticker",
-						"type": "string"
-					}
-				],
-				"name": "price",
-				"outputs": [
+						"type": "uint256"
+					},
 					{
 						"internalType": "uint256",
 						"name": "",
@@ -164,51 +144,7 @@
 						"type": "string"
 					}
 				],
-				"name": "setEGCUSDTicker",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "_pythia",
-						"type": "address"
-					}
-				],
-				"name": "setPythia",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "_pythia",
-						"type": "address"
-					}
-				],
-				"name": "suspendPythia",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "uint256[]",
-						"name": "_prices",
-						"type": "uint256[]"
-					},
-					{
-						"internalType": "string[]",
-						"name": "_tickers",
-						"type": "string[]"
-					}
-				],
-				"name": "updateTickerPrices",
+				"name": "setNairaUSDTicker",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -242,19 +178,19 @@
 	},
 	"sources": {
 		"smart contract/SwapCryptoLoanUpdate/contracts/facets/AppStorage.sol": {
-			"keccak256": "0xd3e39882d3a299c8d13aeeee741f0fa80bc97f30316ad133ec3242975839a6b5",
+			"keccak256": "0x7d429e458ca9ee49ccd10689771dff4cb31160d4e0dc0e2c5b61830310a36b6f",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://1138965152a7b5fbc1f91ea5aef087d646a63e8fd03aa7e6908e6a88ca732e57",
-				"dweb:/ipfs/Qme8KAN2dqeR3JxGddGgMAonsA4j9KpGu3nTXRRBz4WD9Y"
+				"bzz-raw://ae565832a92e949203b8e9a8edcb248cac10aad5847d059a02ec4455e63e7ea7",
+				"dweb:/ipfs/Qmc52fxdsSzCx4VL4P1ouFNpDdcDgJUTF19p4nFrGiTH1t"
 			]
 		},
 		"smart contract/SwapCryptoLoanUpdate/contracts/facets/PriceOracleFacet.sol": {
-			"keccak256": "0x0c9c9fb9b69692b2c1937e2a09873b280d6e762d936b9d058d4b91de75e2fa30",
+			"keccak256": "0x0b77d5c6b6e70b148f1f24162f59d4b240cbab326d900fa79b971238fa9fa684",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://302fcf7f501153d93f6d2e4148cedc703f03059a4d2c8fd06ad8fcbe5d1bf8cc",
-				"dweb:/ipfs/QmbYFQoHa5s1uzQ8kWuniTNGazS9HhaqzZfBP6s3hbjjhS"
+				"bzz-raw://2593f23ee189584a4bc1cee99b425fa4da1aacd07e48361c95723c7db04e152d",
+				"dweb:/ipfs/QmRwiohHit67UkGpm5sgfg7swDgykkHgh1Wfg3JbCvXw7Z"
 			]
 		},
 		"smart contract/SwapCryptoLoanUpdate/contracts/interfaces/IDiamondCut.sol": {

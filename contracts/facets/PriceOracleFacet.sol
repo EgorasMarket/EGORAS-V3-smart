@@ -29,37 +29,37 @@ contract PriceOracleFacet {
         _;
     }
 
-    function updateTickerPrices(
-        uint256[] calldata _prices,
-        string[] calldata _tickers
-    ) external onlyPythia {
-        require(
-            _prices.length == _tickers.length,
-            "Prices and tickers must be of equal length"
-        );
-        for (uint256 i; i < _prices.length; i++) {
-            s.ticker[this.converter(_tickers[i])] = _prices[i];
-            emit PriceUpdated(
-                _tickers[i],
-                _prices[i],
-                msg.sender,
-                block.timestamp
-            );
-        }
-        emit PrinceChanged(block.timestamp);
-    }
+    // function updateTickerPrices(
+    //     uint256[] calldata _prices,
+    //     string[] calldata _tickers
+    // ) external onlyPythia {
+    //     require(
+    //         _prices.length == _tickers.length,
+    //         "Prices and tickers must be of equal length"
+    //     );
+    //     for (uint256 i; i < _prices.length; i++) {
+    //         s.ticker[this.converter(_tickers[i])] = _prices[i];
+    //         emit PriceUpdated(
+    //             _tickers[i],
+    //             _prices[i],
+    //             msg.sender,
+    //             block.timestamp
+    //         );
+    //     }
+    //     emit PrinceChanged(block.timestamp);
+    // }
 
-    function isPythia(address _pythia) external view returns (bool) {
-        return s.pythia[_pythia];
-    }
+    // function isPythia(address _pythia) external view returns (bool) {
+    //     return s.pythia[_pythia];
+    // }
 
-    function price(string memory _ticker) external view returns (uint) {
-        return s.ticker[this.converter(_ticker)];
-    }
+    // function price(string memory _ticker) external view returns (uint) {
+    //     return s.ticker[this.converter(_ticker)];
+    // }
 
-    function setEGCUSDTicker(string memory _ticker) external onlyOwner {
-        s.egcusd = this.converter(_ticker);
-    }
+    // function setEGCUSDTicker(string memory _ticker) external onlyOwner {
+    //     s.egcusd = this.converter(_ticker);
+    // }
 
     function setNairaUSDTicker(string memory _ticker) external onlyOwner {
         s.naira = this.converter(_ticker);
@@ -73,15 +73,15 @@ contract PriceOracleFacet {
         return (s.ticker[s.naira], s.ticker[s.egcusd]);
     }
 
-    function setPythia(address _pythia) external onlyOwner {
-        s.pythia[_pythia] = true;
-        emit PythiaAdded(_pythia, msg.sender, block.timestamp);
-    }
+    // function setPythia(address _pythia) external onlyOwner {
+    //     s.pythia[_pythia] = true;
+    //     emit PythiaAdded(_pythia, msg.sender, block.timestamp);
+    // }
 
-    function suspendPythia(address _pythia) external onlyOwner {
-        s.pythia[_pythia] = false;
-        emit PythiaSuspended(_pythia, msg.sender, block.timestamp);
-    }
+    // function suspendPythia(address _pythia) external onlyOwner {
+    //     s.pythia[_pythia] = false;
+    //     emit PythiaSuspended(_pythia, msg.sender, block.timestamp);
+    // }
 
     function converter(
         string memory _source

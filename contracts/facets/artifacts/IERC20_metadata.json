@@ -207,7 +207,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"smart contract/SwapCryptoLoanUpdate/contracts/facets/MembershipFacet.sol": "IERC20"
+			"smart contract/SwapCryptoLoanUpdate/contracts/facets/DealersFacet.sol": "IERC20"
 		},
 		"evmVersion": "paris",
 		"libraries": {},
@@ -222,19 +222,19 @@
 	},
 	"sources": {
 		"smart contract/SwapCryptoLoanUpdate/contracts/facets/AppStorage.sol": {
-			"keccak256": "0xd3e39882d3a299c8d13aeeee741f0fa80bc97f30316ad133ec3242975839a6b5",
+			"keccak256": "0x7d429e458ca9ee49ccd10689771dff4cb31160d4e0dc0e2c5b61830310a36b6f",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://1138965152a7b5fbc1f91ea5aef087d646a63e8fd03aa7e6908e6a88ca732e57",
-				"dweb:/ipfs/Qme8KAN2dqeR3JxGddGgMAonsA4j9KpGu3nTXRRBz4WD9Y"
+				"bzz-raw://ae565832a92e949203b8e9a8edcb248cac10aad5847d059a02ec4455e63e7ea7",
+				"dweb:/ipfs/Qmc52fxdsSzCx4VL4P1ouFNpDdcDgJUTF19p4nFrGiTH1t"
 			]
 		},
-		"smart contract/SwapCryptoLoanUpdate/contracts/facets/MembershipFacet.sol": {
-			"keccak256": "0x5c05034062b6a72d99f537e7c0ca6ad2b92398776424072fd5d1033ae8a0fa23",
+		"smart contract/SwapCryptoLoanUpdate/contracts/facets/DealersFacet.sol": {
+			"keccak256": "0x06e03925c810a39f102be6641ea09225e964ec777d2f9d0544c5c718419d3df2",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://6ab7142d0ac127632ad5eb574dc1d0b0545ebe58a33058cd68442ca1d050a1b8",
-				"dweb:/ipfs/QmdSrQcUGc8a43VjwEEG4GpdJq3c492Gz7x9Yf2tRLEF9u"
+				"bzz-raw://8b62b350f8cc087bab15ac0be14abd80d290e9467890555ca285d6df1b552b33",
+				"dweb:/ipfs/QmZT38JmotfHyHmScDjcJhWpGoo8nRHJXV9R6iF2NY2tix"
 			]
 		},
 		"smart contract/SwapCryptoLoanUpdate/contracts/interfaces/IDiamondCut.sol": {
@@ -270,11 +270,11 @@
 			]
 		},
 		"smart contract/SwapCryptoLoanUpdate/contracts/libraries/Utils.sol": {
-			"keccak256": "0x51585a2d33e40db40c0d1dd2cc744ee8160c74e69de1da6e49363ba25f1b8b19",
+			"keccak256": "0x74c6c42eb557adc690fbd83f3681478f67253cbf40ef9ffbb0ace1bb90ee68b5",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://14bfed26666e86e435e2d54822c1034189dc690027be6c7c7c209254f521f582",
-				"dweb:/ipfs/Qmda16qAxcd3Z4TWTxDZZ4Gs5bFA3wmvAWUFJ5iiskUYx3"
+				"bzz-raw://808d8d7113a24226a6041e659d3297ff936fd9e2e1d2a79199252be67c2b4340",
+				"dweb:/ipfs/QmaiHhRy8cWpfpBgnsrXSwohTVawo7qVou4C3hhyCUntGz"
 			]
 		}
 	},

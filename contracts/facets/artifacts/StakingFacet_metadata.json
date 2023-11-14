@@ -99,196 +99,16 @@
 				"type": "event"
 			},
 			{
-				"inputs": [
-					{
-						"internalType": "uint256",
-						"name": "amount",
-						"type": "uint256"
-					}
-				],
-				"name": "annually",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "user",
-						"type": "address"
-					}
-				],
-				"name": "calculateRoyalty",
+				"inputs": [],
+				"name": "totalStake",
 				"outputs": [
 					{
 						"internalType": "uint256",
-						"name": "_royalty",
+						"name": "",
 						"type": "uint256"
 					}
 				],
 				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "user",
-						"type": "address"
-					}
-				],
-				"name": "increaseTakeRoyaltyTime",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "user",
-						"type": "address"
-					}
-				],
-				"name": "increaseTakeRoyaltyTime2",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "uint256",
-						"name": "amount",
-						"type": "uint256"
-					}
-				],
-				"name": "monthly",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "user",
-						"type": "address"
-					}
-				],
-				"name": "resetTakeRoyaltyTime",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "user",
-						"type": "address"
-					}
-				],
-				"name": "royaltyStats",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "_dailyRoyalty",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "_totalStake",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "_totalStakeUSD",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "_nextRoyaltyTakePeriod",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "_lockPeriod",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "_totalRoyaltyTaken",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "_penalty",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "stakeConfig",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "_YEARLY_INTEREST_RATE",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "_DAYS_IN_A_YEAR",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "_egcusd",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "stakeState",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "_unStake",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "_totalPenalty",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "_totalStake",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "takeRoyalty",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "unstake",
-				"outputs": [],
-				"stateMutability": "nonpayable",
 				"type": "function"
 			}
 		],
@@ -320,19 +140,19 @@
 	},
 	"sources": {
 		"smart contract/SwapCryptoLoanUpdate/contracts/facets/AppStorage.sol": {
-			"keccak256": "0xd3e39882d3a299c8d13aeeee741f0fa80bc97f30316ad133ec3242975839a6b5",
+			"keccak256": "0x7d429e458ca9ee49ccd10689771dff4cb31160d4e0dc0e2c5b61830310a36b6f",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://1138965152a7b5fbc1f91ea5aef087d646a63e8fd03aa7e6908e6a88ca732e57",
-				"dweb:/ipfs/Qme8KAN2dqeR3JxGddGgMAonsA4j9KpGu3nTXRRBz4WD9Y"
+				"bzz-raw://ae565832a92e949203b8e9a8edcb248cac10aad5847d059a02ec4455e63e7ea7",
+				"dweb:/ipfs/Qmc52fxdsSzCx4VL4P1ouFNpDdcDgJUTF19p4nFrGiTH1t"
 			]
 		},
 		"smart contract/SwapCryptoLoanUpdate/contracts/facets/StakingFacet.sol": {
-			"keccak256": "0xd2f34a3c5fd89b47f0799792d665a7135bb023ca2db37aaf0e34942aedf9aedb",
+			"keccak256": "0x73a89410468ec0a77be57152f11d3a498de2a91b001722d1dc22a455b4c66523",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://e5a98ef48628526e9a224c357d83ec273b943c4ac51f444e05a1d7fbc0c905ce",
-				"dweb:/ipfs/QmQRJAGmpYuHi2bfxKJqstVsePs9mCJLAYJnsuQHPApZ86"
+				"bzz-raw://80e434977845cfd21276ffa6d9abf95289085f5294c048588efe0dc75ce7139b",
+				"dweb:/ipfs/QmXA7AFsq1qfFHZtQkxddhJTaSi3hTYjopQSLqJYs6peKM"
 			]
 		},
 		"smart contract/SwapCryptoLoanUpdate/contracts/interfaces/IDiamondCut.sol": {
@@ -368,11 +188,11 @@
 			]
 		},
 		"smart contract/SwapCryptoLoanUpdate/contracts/libraries/Utils.sol": {
-			"keccak256": "0x51585a2d33e40db40c0d1dd2cc744ee8160c74e69de1da6e49363ba25f1b8b19",
+			"keccak256": "0x74c6c42eb557adc690fbd83f3681478f67253cbf40ef9ffbb0ace1bb90ee68b5",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://14bfed26666e86e435e2d54822c1034189dc690027be6c7c7c209254f521f582",
-				"dweb:/ipfs/Qmda16qAxcd3Z4TWTxDZZ4Gs5bFA3wmvAWUFJ5iiskUYx3"
+				"bzz-raw://808d8d7113a24226a6041e659d3297ff936fd9e2e1d2a79199252be67c2b4340",
+				"dweb:/ipfs/QmaiHhRy8cWpfpBgnsrXSwohTVawo7qVou4C3hhyCUntGz"
 			]
 		}
 	},

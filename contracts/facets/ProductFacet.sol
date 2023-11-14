@@ -49,7 +49,7 @@ interface IERC20PRODUCTINTERFACE {
     function burnFrom(address account, uint256 amount) external;
 
     function totalStake() external view returns (uint256);
-
+    function isAMember(address user) external view returns (bool);
     function getStakingAndBuyingTokenPrices()
         external
         view
@@ -77,6 +77,14 @@ contract ProductFacet is ERC721, ERC721URIStorage {
         bool isApprove;
     }
     Product[] products;
+    enum VoteType{ YES, NO }
+
+        event Votted(
+        uint256 productID,
+        address user,
+        uint256 typeOfVote,
+        uint256 time
+    );
 
     event ProductCreated(
         string _title,
@@ -116,6 +124,7 @@ contract ProductFacet is ERC721, ERC721URIStorage {
     );
 
     event ProductApproved(uint256 _productID, uint256 time);
+    event ProcurementDeclined(uint256 _productID, uint256 time);
     event Sold(
         uint256 productID,
         uint qty,
@@ -152,6 +161,17 @@ contract ProductFacet is ERC721, ERC721URIStorage {
         address initiator,
         uint256 time
     );
+function isSystem() internal view returns (bool) {
+        GETADDRESSES getAddress = GETADDRESSES(address(this));
+        if (
+            LibDiamond.contractOwner() == _msgSender() ||
+            getAddress.isPythia(_msgSender())
+        ) {
+            return true;
+        }
+        return false;
+    }
+
 
     // function setupNFT(
     //     string memory _nftName,
@@ -196,7 +216,7 @@ contract ProductFacet is ERC721, ERC721URIStorage {
         return "EMN";
     }
 
-    // The following functions are overrides required by Solidity.
+    // // The following functions are overrides required by Solidity.
 
     function _burn(
         uint256 tokenId
@@ -210,37 +230,27 @@ contract ProductFacet is ERC721, ERC721URIStorage {
         return string(abi.encodePacked(_baseURI(), tokenId.toString()));
     }
 
-    function isSystem() internal view returns (bool) {
-        GETADDRESSES getAddress = GETADDRESSES(address(this));
-        if (
-            LibDiamond.contractOwner() == _msgSender() ||
-            getAddress.isPythia(_msgSender())
-        ) {
-            return true;
-        }
-        return false;
-    }
 
-    function checkProcurementLimit(uint _amount) internal view returns (bool) {
-        IERC20PRODUCTINTERFACE procurementLimit = IERC20PRODUCTINTERFACE(
-            address(this)
-        );
-        (uint256 nairaDollarPrice, uint256 egcDollarPrice) = procurementLimit
-            .getStakingAndBuyingTokenPrices();
-        uint256 totalStake = procurementLimit.totalStake();
-        uint256 totalStakedEGCInUSD = egcDollarPrice.multiplyDecimal(
-            totalStake
-        );
-        uint256 totalProcurementInUSD = nairaDollarPrice.multiplyDecimal(
-            s.totalProcurementAmount.add(_amount)
-        );
+    // function checkProcurementLimit(uint _amount) internal view returns (bool) {
+    //     IERC20PRODUCTINTERFACE procurementLimit = IERC20PRODUCTINTERFACE(
+    //         address(this)
+    //     );
+    //     (uint256 nairaDollarPrice, uint256 egcDollarPrice) = procurementLimit
+    //         .getStakingAndBuyingTokenPrices();
+    //     uint256 totalStake = procurementLimit.totalStake();
+    //     uint256 totalStakedEGCInUSD = egcDollarPrice.multiplyDecimal(
+    //         totalStake
+    //     );
+    //     uint256 totalProcurementInUSD = nairaDollarPrice.multiplyDecimal(
+    //         s.totalProcurementAmount.add(_amount)
+    //     );
 
-        if (totalProcurementInUSD > totalStakedEGCInUSD) {
-            return true;
-        }
+    //     if (totalProcurementInUSD > totalStakedEGCInUSD) {
+    //         return true;
+    //     }
 
-        return false;
-    }
+    //     return false;
+    // }
 
     // amount minting price // amount of minting price to send to procurer
 
@@ -275,7 +285,7 @@ contract ProductFacet is ERC721, ERC721URIStorage {
         });
         products.push(_product);
         uint newProductID = products.length - 1;
-
+        s.vottingPeriod[newProductID].add(2 days);
         emit ProductCreated(
             _title,
             _amount,
@@ -292,30 +302,30 @@ contract ProductFacet is ERC721, ERC721URIStorage {
         }
     }
 
-    function productState(
-        uint256 _productID
-    )
-        external
-        view
-        returns (
-            bool isBidding,
-            uint256 latestBid,
-            address _creator,
-            uint256 _amount,
-            uint256 _selling,
-            address eusd
-        )
-    {
-        Product memory p = products[_productID];
-        return (
-            p.isBidding,
-            p.latestBid,
-            p.creator,
-            p.amount,
-            p.selling,
-            s.eusdAddr
-        );
-    }
+    // function productState(
+    //     uint256 _productID
+    // )
+    //     external
+    //     view
+    //     returns (
+    //         bool isBidding,
+    //         uint256 latestBid,
+    //         address _creator,
+    //         uint256 _amount,
+    //         uint256 _selling,
+    //         address eusd
+    //     )
+    // {
+    //     Product memory p = products[_productID];
+    //     return (
+    //         p.isBidding,
+    //         p.latestBid,
+    //         p.creator,
+    //         p.amount,
+    //         p.selling,
+    //         s.eusdAddr
+    //     );
+    // }
 
     // function bid(uint256 _productID, uint256 _amount) external {
     //     Product storage p = products[_productID];
@@ -391,9 +401,37 @@ contract ProductFacet is ERC721, ERC721URIStorage {
             block.timestamp
         );
     }
+    function voteStats(uint256 _productID) external view returns(uint256 _noVotes, uint256 _yesVotes, uint256 _vottingPeriod) {
+        return(s.noVotes[_productID], s.yesVotes[_productID], s.vottingPeriod[_productID]);
+    }
 
+function resetVottingPeriod(uint256 _productID) external {
+s.vottingPeriod[_productID] = block.timestamp;
+}
+  function yes(uint256 _productID) external {
+    require(s.vottingPeriod[_productID] > block.timestamp, "Votting period is over!");
+    Product memory p = products[_productID];
+    require(!p.tradable, "Product is already approved");
+    require(s.isADealer[_msgSender()], "You're not a member");
+    require(s.hasVoted[_msgSender()][_productID], "Already voted!");
+    s.yesVotes[_productID] = s.yesVotes[_productID].add(1);
+    emit Votted(_productID, _msgSender(), uint256(VoteType.YES), block.timestamp);
+    }
+
+    function no(uint256 _productID) external {
+        Product memory p = products[_productID];
+        require(s.vottingPeriod[_productID] > block.timestamp, "Votting period is over!");
+        require(!p.tradable, "Product is already approved");
+        require(s.isADealer[_msgSender()], "You're not a member");
+        require(s.hasVoted[_msgSender()][_productID], "Already voted!");
+        s.noVotes[_productID] = s.noVotes[_productID].add(1);
+        emit Votted(_productID, _msgSender(), uint256(VoteType.NO), block.timestamp);
+    }
     function procurementAuthorized(uint256 _productID) external {
-        Product storage p = products[_productID];
+        require(block.timestamp >= s.vottingPeriod[_productID], "Votting period is not over yet!");
+
+        if(s.yesVotes[_productID] >= s.noVotes[_productID]){
+             Product storage p = products[_productID];
         uint256 total = p
             .amount
             .divideDecimal(uint256(Utils.DIVISOR_A))
@@ -401,10 +439,7 @@ contract ProductFacet is ERC721, ERC721URIStorage {
         require(isSystem(), "Access denied. You don't have access to upload!");
         require(!p.tradable, "Product is already approved");
         require(!p.isdirect, "Invalid product type.");
-        require(
-            !checkProcurementLimit(total),
-            "Procurement limit reached. Try increasing staking!"
-        );
+       
         p.tradable = true;
 
         // uint256 newProductSellingAmount = p.amount.multiplyDecimal(
@@ -416,6 +451,10 @@ contract ProductFacet is ERC721, ERC721URIStorage {
         require(send(p.creator, total, 0, false), "Unable to transfer money!");
 
         emit Approved(_productID, _msgSender(), p.amount, block.timestamp);
+        }else{
+            emit ProcurementDeclined(_productID, block.timestamp);
+        }
+       
     }
 
     // function getSelling(

@@ -69,4 +69,8 @@ struct AppStorage {
     mapping(address => uint256) deallerReferralCount;
     bytes naira;
     uint256 totalProcurementAmount;
+    mapping(uint256 => uint256) yesVotes;
+    mapping(uint256 => uint256) noVotes;
+    mapping(uint256 => uint256) vottingPeriod;
+    mapping(address => mapping(uint256 => bool)) hasVoted;
 }

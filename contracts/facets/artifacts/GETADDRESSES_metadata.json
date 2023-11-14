@@ -132,11 +132,11 @@
 			]
 		},
 		"smart contract/SwapCryptoLoanUpdate/contracts/facets/AppStorage.sol": {
-			"keccak256": "0x967b39e32c17e8e52c5b3d5069cd52f39cc61c8212e20cd5fce30357e458147b",
+			"keccak256": "0x7d429e458ca9ee49ccd10689771dff4cb31160d4e0dc0e2c5b61830310a36b6f",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://42493d81d17d27db3be2e157382823002d89da142e5cdc5b71f718c5fa31104b",
-				"dweb:/ipfs/QmUCa94XnjBmWyTo3yLxRrVxEGHatG9U6WzthYieG6r1LE"
+				"bzz-raw://ae565832a92e949203b8e9a8edcb248cac10aad5847d059a02ec4455e63e7ea7",
+				"dweb:/ipfs/Qmc52fxdsSzCx4VL4P1ouFNpDdcDgJUTF19p4nFrGiTH1t"
 			]
 		},
 		"smart contract/SwapCryptoLoanUpdate/contracts/facets/ERC721.sol": {
@@ -148,11 +148,11 @@
 			]
 		},
 		"smart contract/SwapCryptoLoanUpdate/contracts/facets/ProductFacet.sol": {
-			"keccak256": "0xecb2c56769f35d3f6809095ea61c24d53f6f0e4d57bde1c2a55d70abbce6b80a",
+			"keccak256": "0xf63a4db77a691c6ffc5fb93b2ea8500c9bd38fd30592e5985ef5f69f301fa99f",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://6987d051bdbffb90b15bde9b3d7aa999d758b5304c6ac792fe4c5396a9fa03d5",
-				"dweb:/ipfs/QmS2nFHXBdosGEVQHPGFUqKvrgPzymjJXJoJ8BkMiXFqkk"
+				"bzz-raw://d6c56051bb969b48751f01cad344b23ee6b984263730e7d8d26aa480dd01438f",
+				"dweb:/ipfs/QmY8aiPhZjjyMCRhDFWKrVMH7UFevBs44MTXJDWCPNuA2M"
 			]
 		},
 		"smart contract/SwapCryptoLoanUpdate/contracts/interfaces/IAccessControl.sol": {
@@ -220,11 +220,11 @@
 			]
 		},
 		"smart contract/SwapCryptoLoanUpdate/contracts/libraries/Utils.sol": {
-			"keccak256": "0x152da78e69a665ef52be349a522d825f469a4e2adf0c1028a6718675b139bd2a",
+			"keccak256": "0x74c6c42eb557adc690fbd83f3681478f67253cbf40ef9ffbb0ace1bb90ee68b5",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://e491f5cfd3c8bb8d6f5d3c445f09e1f04818b31e0bfc1df711321f819a5e4524",
-				"dweb:/ipfs/QmW6aJb4J1BT9fbx8YSDoduwYucbanVuJsuYEXJ6eGiLex"
+				"bzz-raw://808d8d7113a24226a6041e659d3297ff936fd9e2e1d2a79199252be67c2b4340",
+				"dweb:/ipfs/QmaiHhRy8cWpfpBgnsrXSwohTVawo7qVou4C3hhyCUntGz"
 			]
 		},
 		"smart contract/SwapCryptoLoanUpdate/contracts/math/Math.sol": {

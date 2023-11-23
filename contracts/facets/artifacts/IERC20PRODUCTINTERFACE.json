@@ -55,6 +55,7 @@
 			"burnFrom(address,uint256)": "79cc6790",
 			"getPlanPercentage(address)": "901afb30",
 			"getStakingAndBuyingTokenPrices()": "fc3a49e0",
+			"isAMember(address)": "5d672a62",
 			"mint(address,uint256)": "40c10f19",
 			"totalStake()": "8b0e9f3f",
 			"totalSupply()": "18160ddd",
@@ -180,6 +181,25 @@
 					"internalType": "uint256",
 					"name": "",
 					"type": "uint256"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "user",
+					"type": "address"
+				}
+			],
+			"name": "isAMember",
+			"outputs": [
+				{
+					"internalType": "bool",
+					"name": "",
+					"type": "bool"
 				}
 			],
 			"stateMutability": "view",

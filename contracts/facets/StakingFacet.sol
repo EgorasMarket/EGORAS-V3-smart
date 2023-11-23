@@ -86,15 +86,15 @@ contract StakingFacet {
         s.nextRoyaltyTakePeriod[_msgSender()] = block.timestamp.sub(2 days);
         IERC20STAKE ierc20 = IERC20STAKE(s.egcAddr);
         require(ierc20.transfer(_msgSender(), dueStake), "Sending faild");
-
+        s.member[_msgSender()] = false;
         emit Unstaked(dueStake, _msgSender(), block.timestamp);
     }
 
     function monthly(uint256 amount) external {
-        require(
-            s.member[_msgSender()],
-            "You're not a member, please subscribe to any membership plan and try again"
-        );
+        // require(
+        //     s.member[_msgSender()],
+        //     "You're not a member, please subscribe to any membership plan and try again"
+        // );
         require(
             block.timestamp >= s.lockPeriod[_msgSender()],
             "Wait until lock period is over!"
@@ -132,6 +132,7 @@ contract StakingFacet {
         s.dailyRoyalty[_msgSender()] = dailyInterest;
         s.lockPeriod[_msgSender()] = lockPeriod;
         s.nextRoyaltyTakePeriod[_msgSender()] = nextRoyaltyTakePeriod;
+        s.member[_msgSender()] = true;
         emit Stake(
             _msgSender(),
             amount,
@@ -143,10 +144,10 @@ contract StakingFacet {
     }
 
     function annually(uint256 amount) external {
-        require(
-            s.member[_msgSender()],
-            "You're not a member, please subscribe to any membership plan and try again"
-        );
+        // require(
+        //     s.member[_msgSender()],
+        //     "You're not a member, please subscribe to any membership plan and try again"
+        // );
         require(
             block.timestamp >= s.lockPeriod[_msgSender()],
             "Wait until lock period is over!"
@@ -183,6 +184,7 @@ contract StakingFacet {
         s.dailyRoyalty[_msgSender()] = dailyInterest;
         s.lockPeriod[_msgSender()] = lockPeriod;
         s.nextRoyaltyTakePeriod[_msgSender()] = nextRoyaltyTakePeriod;
+        s.member[_msgSender()] = true;
         emit Stake(
             _msgSender(),
             amount,

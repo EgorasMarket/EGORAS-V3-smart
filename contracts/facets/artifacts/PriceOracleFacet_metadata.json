@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.18+commit.87f61d96"
+		"version": "0.8.10+commit.fc410830"
 	},
 	"language": "Solidity",
 	"output": {
@@ -163,9 +163,9 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"smart contract/SwapCryptoLoanUpdate/contracts/facets/PriceOracleFacet.sol": "PriceOracleFacet"
+			"contracts/facets/PriceOracleFacet.sol": "PriceOracleFacet"
 		},
-		"evmVersion": "paris",
+		"evmVersion": "london",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"
@@ -177,15 +177,15 @@
 		"remappings": []
 	},
 	"sources": {
-		"smart contract/SwapCryptoLoanUpdate/contracts/facets/AppStorage.sol": {
-			"keccak256": "0x7d429e458ca9ee49ccd10689771dff4cb31160d4e0dc0e2c5b61830310a36b6f",
+		"contracts/facets/AppStorage.sol": {
+			"keccak256": "0x705e7a7d690d93fd82e486d413c45baae23cf7c5743a799ba721038ba9050bb0",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://ae565832a92e949203b8e9a8edcb248cac10aad5847d059a02ec4455e63e7ea7",
-				"dweb:/ipfs/Qmc52fxdsSzCx4VL4P1ouFNpDdcDgJUTF19p4nFrGiTH1t"
+				"bzz-raw://f4d139abac2e21c4568acd5271c03207b08e226635f632b6fe1fb570ec019aea",
+				"dweb:/ipfs/QmXThTTTfnJp3dT6uQp9fbNRrxAxR3nsFqhk8QSZxCtvWA"
 			]
 		},
-		"smart contract/SwapCryptoLoanUpdate/contracts/facets/PriceOracleFacet.sol": {
+		"contracts/facets/PriceOracleFacet.sol": {
 			"keccak256": "0x0b77d5c6b6e70b148f1f24162f59d4b240cbab326d900fa79b971238fa9fa684",
 			"license": "MIT",
 			"urls": [
@@ -193,7 +193,7 @@
 				"dweb:/ipfs/QmRwiohHit67UkGpm5sgfg7swDgykkHgh1Wfg3JbCvXw7Z"
 			]
 		},
-		"smart contract/SwapCryptoLoanUpdate/contracts/interfaces/IDiamondCut.sol": {
+		"contracts/interfaces/IDiamondCut.sol": {
 			"keccak256": "0x21afb9584ec8e432c2c17acd3700e4c99b2d2c5d941c899fd5997a65cc689d56",
 			"license": "MIT",
 			"urls": [
@@ -201,7 +201,7 @@
 				"dweb:/ipfs/QmNfhvg7Aud1yXTZqzXTGdUf38tpv63Pbbuo3KKrYoRFrj"
 			]
 		},
-		"smart contract/SwapCryptoLoanUpdate/contracts/libraries/LibDiamond.sol": {
+		"contracts/libraries/LibDiamond.sol": {
 			"keccak256": "0x4059248e993742cacdf0492134bbf0d504aab17f28299a706c9ca24b1a17fdf5",
 			"license": "MIT",
 			"urls": [

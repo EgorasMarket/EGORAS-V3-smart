@@ -53,11 +53,11 @@ module.exports = {
     },
     bscMainNet: {
       provider: () => new HDWalletProvider(
-        privateKeys,
+        mainPrivateKey,
         //'https://bscrpc.com'
          //`wss://bsc-ws-node.nariox.org:443`
-        'https://bsc-dataseed.binance.org'
-      //  'https://bsc-dataseed1.ninicoin.io/'
+       // 'https://bsc-dataseed.binance.org'
+        'https://bsc-dataseed1.ninicoin.io/'
      // 'https://bsc-dataseed1.defibit.io'
        //'https://bsc-dataseed.binance.org'
       // 'https://rpc.ankr.com/bsc'

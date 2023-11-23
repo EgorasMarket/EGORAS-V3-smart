@@ -14,6 +14,7 @@ const MartGPTToken = artifacts.require('MartGPTToken')
 const RewardFaucet = artifacts.require('RewardFaucet')
 const DealersFacet = artifacts.require('DealersFacet')
 const StakingFacet = artifacts.require('StakingFacet')
+const ConvertFacet = artifacts.require('ConvertFacet')
 
 
 const FacetCutAction = {
@@ -149,85 +150,8 @@ module.exports = function (deployer, network, accounts) {
 //   [ '0xb9aeb0575381482d35252c1d084f990fcf3cbe0a', 0, [ '0xf2fde38b', '0x8da5cb5b' ] ]
 // ];
 
-const deploy2 = [
-  [ 'DiamondCutFacet', 0, [ '0x1f931c1c' ] ],
-  [
-    'DiamondLoupeFacet',
-    0,
-    [
-      '0x7a0ed627',
-      '0xadfca15e',
-      '0x52ef6b2c',
-      '0xcdffacc6',
-      '0xaf8a2625'
-    ]
-  ],
-  [
-    'PriceOracleFacet',
-    0,
-    [ '0x267561c8', '0xfc3a49e0', '0x94a72f1c' ]
-  ],
-  [
-    'DealersFacet',
-    0,
-    [
-      '0xa61d6257',
-      '0x6b667b9b',
-      '0xf9f11391',
-      '0x901afb30',
-      '0x1355a306',
-      '0x89499f8d',
-      '0x235eb9f5',
-      '0x468c25a8',
-      '0xad830443'
-    ]
-  ],
-  [
-    'ProductFacet',
-    0,
-    [
-      '0x095ea7b3', '0x70a08231',
-      '0x081812fc', '0xe985e9c5',
-      '0x6352211e', '0x42842e0e',
-      '0xb88d4fde', '0xa22cb465',
-      '0x23b872dd', '0x01ffc9a7',
-      '0x18160ddd', '0x06fdde03',
-      '0x95d89b41', '0xc87b56dd',
-      '0x67a86045', '0x1607627e',
-      '0xa34e554f', '0x2b59e402',
-      '0x837cef1e', '0x2a379ea3',
-      '0xd1847537', '0x98968f15'
-    ]
-  ],
-  [
-    'StakingFacet',
-    0,
-    [
-      '0x2def6620',
-      '0x076f2129',
-      '0xcad44b33',
-      '0x2e2d3122',
-      '0x8b0e9f3f',
-      '0x0dedd016',
-      '0x8c09a2f9',
-      '0xd045bbee',
-      '0x04d5bcfd'
-    ]
-  ],
-  [
-    'PancakeSwapFacet',
-    0,
-    [
-      '0xcf1d14dc', '0x9f593c33',
-      '0x82382e88', '0x04c26712',
-      '0xe51f25c0', '0x9c48a3c3',
-      '0x4966c27e', '0x9f7414e9',
-      '0xd27fe916', '0xa8312b1d',
-      '0x9e269b68'
-    ]
-  ],
-  [ 'OwnershipFacet', 0, [ '0xf2fde38b', '0x8da5cb5b' ] ]
-];
+// const deploy2 = [['0x27d0fd6a1ff41db21ba24c66a90abc2e34053e0e', 0, ['0x1f931c1c']],['0xd691b24b8d80602715a2124b9e98bcbb3e45a788',0,['0x7a0ed627','0xadfca15e','0x52ef6b2c','0xcdffacc6','0xaf8a2625']],['0x8fff41232d586c160e760627b93a5ad9b92b0da0',0,['0x267561c8','0xfc3a49e0','0x94a72f1c']],['0xaadb2179b2ccba1129b782bb80908e2a1f107a33',0,['0xa61d6257','0x6b667b9b','0xf9f11391','0x901afb30','0x1355a306','0x89499f8d','0x235eb9f5','0x468c25a8','0xad830443']],['0x9fd3dedd790672ba64d78c4cc4ac4b733cbc4f90',0,['0x095ea7b3','0x70a08231','0x081812fc','0xe985e9c5','0x6352211e','0x42842e0e',
+// '0xb88d4fde','0xa22cb465','0x23b872dd','0x01ffc9a7','0x18160ddd','0x06fdde03','0x95d89b41','0xc87b56dd','0x67a86045','0x1607627e','0xa34e554f','0x2b59e402','0x837cef1e','0x2a379ea3','0xd1847537','0x98968f15']],['0x185c2eac7ee5076cda7248a1484a0b90abba08e3',0,['0x2def6620','0x076f2129','0xcad44b33','0x2e2d3122','0x8b0e9f3f','0x0dedd016','0x8c09a2f9','0xd045bbee','0x04d5bcfd']],['0x26d1f20959f645a85a22ae4c48d7335d990ef8a7',0,['0xcf1d14dc','0x9f593c33','0x82382e88','0x04c26712','0xe51f25c0','0x9c48a3c3','0x4966c27e','0x9f7414e9','0xd27fe916','0xa8312b1d','0x9e269b68']],['0xb9aeb0575381482d35252c1d084f990fcf3cbe0a',0,['0xf2fde38b','0x8da5cb5b']]];
 
 //  return deployer.deploy(EgorasV3, deploy, [accounts[0]])
 
@@ -238,7 +162,7 @@ const deploy2 = [
  deployer.deploy(PriceOracleFacet);
  deployer.deploy(ProductFacet);
  deployer.deploy(DealersFacet);
-//  deployer.deploy(SalaryFacet);
+  deployer.deploy(ConvertFacet);
  deployer.deploy(PancakeSwapFacet);
  deployer.deploy(DiamondCutFacet);
  deployer.deploy(DiamondLoupeFacet);
@@ -248,9 +172,9 @@ const deploy2 = [
       [DiamondCutFacet.address, FacetCutAction.Add, getSelectors(DiamondCutFacet)],
       [DiamondLoupeFacet.address, FacetCutAction.Add, getSelectors(DiamondLoupeFacet)],
       [PriceOracleFacet.address, FacetCutAction.Add, getSelectors(PriceOracleFacet)],
-      // [MembershipFacet.address, FacetCutAction.Add, getSelectors(MembershipFacet)],
+      //[MembershipFacet.address, FacetCutAction.Add, getSelectors(MembershipFacet)],
       [ProductFacet.address, FacetCutAction.Add, getSelectors(ProductFacet)],
-      // [SalaryFacet.address, FacetCutAction.Add, getSelectors(SalaryFacet)],
+       [ConvertFacet.address, FacetCutAction.Add, getSelectors(ConvertFacet)],
       [StakingFacet.address, FacetCutAction.Add, getSelectors(StakingFacet)],
       [DealersFacet.address, FacetCutAction.Add, getSelectors(DealersFacet)],
       [PancakeSwapFacet.address, FacetCutAction.Add, getSelectors(PancakeSwapFacet)],
@@ -263,13 +187,13 @@ const deploy2 = [
       [PriceOracleFacet.contractName, FacetCutAction.Add, getSelectors(PriceOracleFacet)],
       [DealersFacet.contractName, FacetCutAction.Add, getSelectors(DealersFacet)],
       [ProductFacet.contractName, FacetCutAction.Add, getSelectors(ProductFacet)],
-      // [SalaryFacet.contractName, FacetCutAction.Add, getSelectors(SalaryFacet)],
+       [ConvertFacet.contractName, FacetCutAction.Add, getSelectors(ConvertFacet)],
       [StakingFacet.contractName, FacetCutAction.Add, getSelectors(StakingFacet)],
       [PancakeSwapFacet.contractName, FacetCutAction.Add, getSelectors(PancakeSwapFacet)],
       [OwnershipFacet.contractName, FacetCutAction.Add, getSelectors(OwnershipFacet)],
     ]
 
-    console.log(diamondCut2);
+  console.log(diamondCut2);
 
     
 

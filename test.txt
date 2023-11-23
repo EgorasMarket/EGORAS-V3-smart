@@ -1,173 +1,102 @@
-1_initial_migration.js
-======================
+[
+  [ "0x27d0fd6a1ff41db21ba24c66a90abc2e34053e0e", 0, [ "0x1f931c1c" ] ],
+  [
+    "0xd691b24b8d80602715a2124b9e98bcbb3e45a788",
+    0,
+    [
+      "0x7a0ed627",
+      "0xadfca15e",
+      "0x52ef6b2c",
+      "0xcdffacc6",
+      "0xaf8a2625"
+    ]
+  ],
+  [
+    "0x8fff41232d586c160e760627b93a5ad9b92b0da0",
+    0,
+    [ "0x267561c8", "0xfc3a49e0", "0x94a72f1c" ]
+  ],
+  [
+    "0xaadb2179b2ccba1129b782bb80908e2a1f107a33",
+    0,
+    [
+      "0xa61d6257",
+      "0x6b667b9b",
+      "0xf9f11391",
+      "0x901afb30",
+      "0x1355a306",
+      "0x89499f8d",
+      "0x235eb9f5",
+      "0x468c25a8",
+      "0xad830443"
+    ]
+  ],
+  [
+    "0x72De2392e2CdaBc0A0Eb6Ab71405557aE46EF069",
+    0,
+    [
+      "0x095ea7b3", "0x70a08231",
+      "0x081812fc", "0xe985e9c5",
+      "0x6352211e", "0x42842e0e",
+      "0xb88d4fde", "0xa22cb465",
+      "0x23b872dd", "0x01ffc9a7",
+      "0x18160ddd", "0x06fdde03",
+      "0x95d89b41", "0xc87b56dd",
+      "0x67a86045", "0x1607627e",
+      "0xa34e554f", "0xa89c8c5e",
+      "0x837cef1e", "0x2a379ea3",
+      "0xd1847537", "0x98968f15",
+      "0x14455c61", "0x62cc01e7",
+      "0x1a995b73"
+    ]
+  ],
+  [
+    "0xecab86b52d65dda9c1659c44cbfde110b86adcd5",
+    0,
+    [
+      "0x2def6620",
+      "0x076f2129",
+      "0xcad44b33",
+      "0x2e2d3122",
+      "0x8b0e9f3f",
+      "0x0dedd016",
+      "0x8c09a2f9",
+      "0xd045bbee",
+      "0x04d5bcfd"
+    ]
+  ],
+  [
+    "0x26d1f20959f645a85a22ae4c48d7335d990ef8a7",
+    0,
+    [
+      "0xcf1d14dc", "0x9f593c33",
+      "0x82382e88", "0x04c26712",
+      "0xe51f25c0", "0x9c48a3c3",
+      "0x4966c27e", "0x9f7414e9",
+      "0xd27fe916", "0xa8312b1d",
+      "0x9e269b68"
+    ]
+  ],
+  [ "0xb9aeb0575381482d35252c1d084f990fcf3cbe0a", 0, [ "0xf2fde38b", "0x8da5cb5b" ] ]
+]
 
-   Deploying 'Migrations'
-   ----------------------
-   > transaction hash:    0x1a242ebaa3c3b8da2922cce8e6464f011bb07a0e0a1d795f30ade9c8590cd4a7
-   > Blocks: 6            Seconds: 18
-   > contract address:    0xe27d083f8c1432Db346F4527F66487c05c0278bf
-   > block number:        16722926
-   > block timestamp:     1649290233
-   > account:             0x2ec5E9470f25F6CA0A1A2fd7Ee1b8bE4E9a805A7
-   > balance:             0.27840298
-   > gas used:            284440 (0x45718)
-   > gas price:           5 gwei
-   > value sent:          0 ETH
-   > total cost:          0.0014222 ETH
 
-   Pausing for 1 confirmations...
-
-   -------------------------------
-   > confirmation number: 2 (block: 16722930)
-   ✓ Saving migration to chain.
-   > Saving migration to chain.
-   > Saving artifacts
-   -------------------------------------
-   > Total cost:           0.0014222 ETH
-
-
-2_egorasLoanDaoDiamond.js
-=========================
-
-   Deploying 'EgorasLoanFacet'
-   ---------------------------
-   > transaction hash:    0xaa23a7d1408536a92a4e9c2ddfcb36a1e08f26c56f055da0506b6c2a1236e1e6
-   > Blocks: 9            Seconds: 31
-   > contract address:    0x09A2CA805d28Af5e307a309c3a7b78916C9E4af1
-   > block number:        16722947
-   > block timestamp:     1649290296
-   > account:             0x2ec5E9470f25F6CA0A1A2fd7Ee1b8bE4E9a805A7
-   > balance:             0.25236136
-   > gas used:            5165784 (0x4ed2d8)
-   > gas price:           5 gwei
-   > value sent:          0 ETH
-   > total cost:          0.02582892 ETH
-
-   Pausing for 1 confirmations...
-
-   -------------------------------
-   > confirmation number: 2 (block: 16722952)
-
-   Deploying 'EgorasPriceOracleFacet'
-   ----------------------------------
-   > transaction hash:    0x02b4bc29e9d0afa98a4d1a11f7b43769d5574dbe09d5b7da385056fad19d09de
-   > Blocks: 11           Seconds: 33
-   > contract address:    0x21344b2383a9D7E1571524E628dc1037fF77767a
-   > block number:        16722959
-   > block timestamp:     1649290332
-   > account:             0x2ec5E9470f25F6CA0A1A2fd7Ee1b8bE4E9a805A7
-   > balance:             0.24684977
-   > gas used:            1102318 (0x10d1ee)
-   > gas price:           5 gwei
-   > value sent:          0 ETH
-   > total cost:          0.00551159 ETH
-
-   Pausing for 1 confirmations...
-
-   -------------------------------
-   > confirmation number: 2 (block: 16722969)
-
-   Deploying 'EgorasSwapFacet'
-   ---------------------------
-   > transaction hash:    0xd5112e5adecca563f428e926cbdf53f1b2881b7706a53abeee44b723c26a3225
-   > Blocks: 4            Seconds: 14
-   > contract address:    0x54Cfe0e6E2F80aa14B63cd85A2eDEDcB3FE92fE5
-   > block number:        16722974
-   > block timestamp:     1649290377
-   > account:             0x2ec5E9470f25F6CA0A1A2fd7Ee1b8bE4E9a805A7
-   > balance:             0.23846764
-   > gas used:            1676426 (0x19948a)
-   > gas price:           5 gwei
-   > value sent:          0 ETH
-   > total cost:          0.00838213 ETH
-
-   Pausing for 1 confirmations...
-
-   -------------------------------
-   > confirmation number: 2 (block: 16722978)
-
-   Deploying 'DiamondCutFacet'
-   ---------------------------
-   > transaction hash:    0x97135bd91bd0f10e6c3fc0b86e2af7e6b8aa9897de3d262f471af44c7e136c79
-   > Blocks: 5            Seconds: 15
-   > contract address:    0xe7d84011Ea287cB28D42001e58f658026678b24a
-   > block number:        16722985
-   > block timestamp:     1649290410
-   > account:             0x2ec5E9470f25F6CA0A1A2fd7Ee1b8bE4E9a805A7
-   > balance:             0.227893015
-   > gas used:            2114925 (0x20456d)
-   > gas price:           5 gwei
-   > value sent:          0 ETH
-   > total cost:          0.010574625 ETH
-
-   Pausing for 1 confirmations...
-
-   -------------------------------
-   > confirmation number: 2 (block: 16722990)
-
-   Deploying 'DiamondLoupeFacet'
-   -----------------------------
-   > transaction hash:    0x388aa78f179e883b8283aa0916566ebea9bd331757522b04328fe572e585bd2e
-   > Blocks: 6            Seconds: 17
-   > contract address:    0x72CfE4455f01A5C810b3742870AF09321eDbf885
-   > block number:        16722998
-   > block timestamp:     1649290449
-   > account:             0x2ec5E9470f25F6CA0A1A2fd7Ee1b8bE4E9a805A7
-   > balance:             0.222626695
-   > gas used:            1053264 (0x101250)
-   > gas price:           5 gwei
-   > value sent:          0 ETH
-   > total cost:          0.00526632 ETH
-
-   Pausing for 1 confirmations...
-
-   -------------------------------
-   > confirmation number: 2 (block: 16723003)
-
-   Deploying 'OwnershipFacet'
-   --------------------------
-   > transaction hash:    0x9cc3f3c8e71475da23ee9b44ae6a4a693cdf1fd1d37710c75d8e045496f63127
-   > Blocks: 6            Seconds: 20
-   > contract address:    0xB65a4E4Da411c77cf72D8D094c1588cD9fDA28f4
-   > block number:        16723007
-   > block timestamp:     1649290476
-   > account:             0x2ec5E9470f25F6CA0A1A2fd7Ee1b8bE4E9a805A7
-   > balance:             0.22123234
-   > gas used:            278871 (0x44157)
-   > gas price:           5 gwei
-   > value sent:          0 ETH
-   > total cost:          0.001394355 ETH
-
-   Pausing for 1 confirmations...
-
-   -------------------------------
-   > confirmation number: 1 (block: 16723014)
-
-   Deploying 'EgorasLoanDao'
-   -------------------------
-   > transaction hash:    0xcf75d899b9c7850d2e9c205ea30174052c7ccd88591fe0d8ebc9becc881cf883
-   > Blocks: 4            Seconds: 12
-   > contract address:    0x52205dE5D70FaCC1878d4F39Fbf8d9a6Fd7f103c
-   > block number:        16723023
-   > block timestamp:     1649290524
-   > account:             0x2ec5E9470f25F6CA0A1A2fd7Ee1b8bE4E9a805A7
-   > balance:             0.20474439
-   > gas used:            3297590 (0x325136)
-   > gas price:           5 gwei
-   > value sent:          0 ETH
-   > total cost:          0.01648795 ETH
-
-   Pausing for 1 confirmations...
-
-   -------------------------------
-   > confirmation number: 2 (block: 16723027)
-   ✓ Saving migration to chain.
-   > Saving migration to chain.
-   > Saving artifacts
-   -------------------------------------
-   > Total cost:          0.07344589 ETH
-
-Summary
-=======
-> Total deployments:   8
-> Final cost:          0.07486809 ETH
+[
+    "0x72De2392e2CdaBc0A0Eb6Ab71405557aE46EF069",
+    0,
+    [
+      "0x095ea7b3", "0x70a08231",
+      "0x081812fc", "0xe985e9c5",
+      "0x6352211e", "0x42842e0e",
+      "0xb88d4fde", "0xa22cb465",
+      "0x23b872dd", "0x01ffc9a7",
+      "0x18160ddd", "0x06fdde03",
+      "0x95d89b41", "0xc87b56dd",
+      "0x67a86045", "0x1607627e",
+      "0xa34e554f", "0xa89c8c5e",
+      "0x837cef1e", "0x2a379ea3",
+      "0xd1847537", "0x98968f15",
+      "0x14455c61", "0x62cc01e7",
+      "0x1a995b73"
+    ]
+  ]

@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.18+commit.87f61d96"
+		"version": "0.8.22+commit.4fc1097e"
 	},
 	"language": "Solidity",
 	"output": {
@@ -172,6 +172,31 @@
 				"inputs": [
 					{
 						"indexed": false,
+						"internalType": "uint256",
+						"name": "_productID",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "payer",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "_amount",
+						"type": "uint256"
+					}
+				],
+				"name": "DebtRepaid",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
 						"internalType": "string",
 						"name": "_title",
 						"type": "string"
@@ -246,6 +271,25 @@
 					}
 				],
 				"name": "NFTMinted",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "_productID",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "time",
+						"type": "uint256"
+					}
+				],
+				"name": "ProcurementDeclined",
 				"type": "event"
 			},
 			{
@@ -345,6 +389,31 @@
 					}
 				],
 				"name": "ProductCreated",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "_user",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "_amount",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "_time",
+						"type": "uint256"
+					}
+				],
+				"name": "RecordEvent",
 				"type": "event"
 			},
 			{
@@ -503,6 +572,37 @@
 				"type": "event"
 			},
 			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "productID",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "typeOfVote",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "time",
+						"type": "uint256"
+					}
+				],
+				"name": "Votted",
+				"type": "event"
+			},
+			{
 				"inputs": [
 					{
 						"internalType": "string",
@@ -589,6 +689,30 @@
 			{
 				"inputs": [
 					{
+						"internalType": "uint256",
+						"name": "_productID",
+						"type": "uint256"
+					}
+				],
+				"name": "getDebtStats",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "_productDebts",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_totalDebts",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
 						"internalType": "address",
 						"name": "owner",
 						"type": "address"
@@ -627,6 +751,19 @@
 				"inputs": [
 					{
 						"internalType": "uint256",
+						"name": "_productID",
+						"type": "uint256"
+					}
+				],
+				"name": "no",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
 						"name": "tokenId",
 						"type": "uint256"
 					}
@@ -640,6 +777,24 @@
 					}
 				],
 				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_productID",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_amount",
+						"type": "uint256"
+					}
+				],
+				"name": "payDebt",
+				"outputs": [],
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -674,6 +829,24 @@
 					}
 				],
 				"name": "purchase",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_user",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_amount",
+						"type": "uint256"
+					}
+				],
+				"name": "recordUserActivity",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -743,6 +916,24 @@
 					}
 				],
 				"name": "setApprovalForAll",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_eusd",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_egc",
+						"type": "address"
+					}
+				],
+				"name": "setTokenAddresses",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -856,6 +1047,48 @@
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_productID",
+						"type": "uint256"
+					}
+				],
+				"name": "voteStats",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "_noVotes",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_yesVotes",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_vottingPeriod",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_productID",
+						"type": "uint256"
+					}
+				],
+				"name": "yes",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
 			}
 		],
 		"devdoc": {
@@ -922,9 +1155,9 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"smart contract/SwapCryptoLoanUpdate/contracts/facets/ProductFacet.sol": "ProductFacet"
+			"contracts/facets/ProductFacet.sol": "ProductFacet"
 		},
-		"evmVersion": "paris",
+		"evmVersion": "london",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"
@@ -936,7 +1169,7 @@
 		"remappings": []
 	},
 	"sources": {
-		"smart contract/SwapCryptoLoanUpdate/contracts/access/AccessControl.sol": {
+		"contracts/access/AccessControl.sol": {
 			"keccak256": "0x0deab104728933be313ed8dad5c7659dba1574efb5ca03046319c3ec7b2b2371",
 			"license": "MIT",
 			"urls": [
@@ -944,7 +1177,7 @@
 				"dweb:/ipfs/QmUdbH14C9Bhjm8dyXPMiR6ytSoEJ32HBgV8w7B7cn9oLf"
 			]
 		},
-		"smart contract/SwapCryptoLoanUpdate/contracts/extensions/ERC721URIStorage.sol": {
+		"contracts/extensions/ERC721URIStorage.sol": {
 			"keccak256": "0xb86b456d1854cea3ea57b16efa31fac0a346df1989f4d5b55d89c7f14d6a7dda",
 			"license": "MIT",
 			"urls": [
@@ -952,7 +1185,7 @@
 				"dweb:/ipfs/QmQCSiaDjBz435np5smddfaLGr9YRwEmMBzTbVewh9TQPj"
 			]
 		},
-		"smart contract/SwapCryptoLoanUpdate/contracts/extensions/IERC721Metadata.sol": {
+		"contracts/extensions/IERC721Metadata.sol": {
 			"keccak256": "0x3f0264e17a1a99df85f5866f4ad9f7ec5e1cb4027a809ebf66b33e97e6218973",
 			"license": "MIT",
 			"urls": [
@@ -960,15 +1193,15 @@
 				"dweb:/ipfs/QmQWQQjv4F95Mpzdiz3o3kd1N5ehjetFxtoXoGPZCgDDc5"
 			]
 		},
-		"smart contract/SwapCryptoLoanUpdate/contracts/facets/AppStorage.sol": {
-			"keccak256": "0x7d429e458ca9ee49ccd10689771dff4cb31160d4e0dc0e2c5b61830310a36b6f",
+		"contracts/facets/AppStorage.sol": {
+			"keccak256": "0x705e7a7d690d93fd82e486d413c45baae23cf7c5743a799ba721038ba9050bb0",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://ae565832a92e949203b8e9a8edcb248cac10aad5847d059a02ec4455e63e7ea7",
-				"dweb:/ipfs/Qmc52fxdsSzCx4VL4P1ouFNpDdcDgJUTF19p4nFrGiTH1t"
+				"bzz-raw://f4d139abac2e21c4568acd5271c03207b08e226635f632b6fe1fb570ec019aea",
+				"dweb:/ipfs/QmXThTTTfnJp3dT6uQp9fbNRrxAxR3nsFqhk8QSZxCtvWA"
 			]
 		},
-		"smart contract/SwapCryptoLoanUpdate/contracts/facets/ERC721.sol": {
+		"contracts/facets/ERC721.sol": {
 			"keccak256": "0x89c174bf014d7b930a02e8f99f936bc4305fd25945d9cabb96187b6e733b5ff3",
 			"license": "MIT",
 			"urls": [
@@ -976,15 +1209,15 @@
 				"dweb:/ipfs/QmZKbdYy955TUp8yubmTz2tsLVQCR4Ry53TX3CkuUVDzge"
 			]
 		},
-		"smart contract/SwapCryptoLoanUpdate/contracts/facets/ProductFacet.sol": {
-			"keccak256": "0xf63a4db77a691c6ffc5fb93b2ea8500c9bd38fd30592e5985ef5f69f301fa99f",
+		"contracts/facets/ProductFacet.sol": {
+			"keccak256": "0x7899cbe717ff82c9eeae333cb375448ddf691470482bdb7252892b83ba17ab73",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://d6c56051bb969b48751f01cad344b23ee6b984263730e7d8d26aa480dd01438f",
-				"dweb:/ipfs/QmY8aiPhZjjyMCRhDFWKrVMH7UFevBs44MTXJDWCPNuA2M"
+				"bzz-raw://1c67cb369bce0fe2b6580eff9fa9c0e627e7efb93eae6835a480754c1e63c7c3",
+				"dweb:/ipfs/QmWqSQJMVadm7ycioG87vvMDu9c6CggVJnW4Bm5nP5RYua"
 			]
 		},
-		"smart contract/SwapCryptoLoanUpdate/contracts/interfaces/IAccessControl.sol": {
+		"contracts/interfaces/IAccessControl.sol": {
 			"keccak256": "0x8ffc72e44eb5edb07c5dccdab3be37674cf515abe115c5a2d19ca723612ee6e4",
 			"license": "MIT",
 			"urls": [
@@ -992,7 +1225,7 @@
 				"dweb:/ipfs/QmSBXQAgbLLqh94LhwAra2kDgHEmRAtaGH97oj3JqMQ6BD"
 			]
 		},
-		"smart contract/SwapCryptoLoanUpdate/contracts/interfaces/IDiamondCut.sol": {
+		"contracts/interfaces/IDiamondCut.sol": {
 			"keccak256": "0x21afb9584ec8e432c2c17acd3700e4c99b2d2c5d941c899fd5997a65cc689d56",
 			"license": "MIT",
 			"urls": [
@@ -1000,7 +1233,7 @@
 				"dweb:/ipfs/QmNfhvg7Aud1yXTZqzXTGdUf38tpv63Pbbuo3KKrYoRFrj"
 			]
 		},
-		"smart contract/SwapCryptoLoanUpdate/contracts/interfaces/IERC4906.sol": {
+		"contracts/interfaces/IERC4906.sol": {
 			"keccak256": "0xc89213f251a7d611119239e18e53ed27ce6ffb7f1fb3ea4f466dd4c690df7951",
 			"license": "MIT",
 			"urls": [
@@ -1008,7 +1241,7 @@
 				"dweb:/ipfs/QmajRX6Vg7Uv7i2oYWTLwWRB5fXQZVW9FqJc6MbBZUw6ZA"
 			]
 		},
-		"smart contract/SwapCryptoLoanUpdate/contracts/interfaces/IERC721.sol": {
+		"contracts/interfaces/IERC721.sol": {
 			"keccak256": "0x8e12f56d976426c71f8010313259686d701c4451c8ea9ea0d59f3d427125d312",
 			"license": "MIT",
 			"urls": [
@@ -1016,7 +1249,7 @@
 				"dweb:/ipfs/QmdwbQeBi97oDiy3rWJMenRRAYprg2LqTrN4xgRJ7VhGWY"
 			]
 		},
-		"smart contract/SwapCryptoLoanUpdate/contracts/interfaces/IERC721Receiver.sol": {
+		"contracts/interfaces/IERC721Receiver.sol": {
 			"keccak256": "0xa82b58eca1ee256be466e536706850163d2ec7821945abd6b4778cfb3bee37da",
 			"license": "MIT",
 			"urls": [
@@ -1024,7 +1257,7 @@
 				"dweb:/ipfs/QmYvPafLfoquiDMEj7CKHtvbgHu7TJNPSVPSCjrtjV8HjV"
 			]
 		},
-		"smart contract/SwapCryptoLoanUpdate/contracts/libraries/LibDiamond.sol": {
+		"contracts/libraries/LibDiamond.sol": {
 			"keccak256": "0x4059248e993742cacdf0492134bbf0d504aab17f28299a706c9ca24b1a17fdf5",
 			"license": "MIT",
 			"urls": [
@@ -1032,7 +1265,7 @@
 				"dweb:/ipfs/QmP8GdGLKnQUKN5n1TjVodVAvvFjcDkUgcKNn9vZK9ztL1"
 			]
 		},
-		"smart contract/SwapCryptoLoanUpdate/contracts/libraries/SafeDecimalMath.sol": {
+		"contracts/libraries/SafeDecimalMath.sol": {
 			"keccak256": "0x1cc5eadb868b1c7c2fd0d652e29178ea3af0ad2cfce0a147bf82c37b27b4e96c",
 			"license": "MIT",
 			"urls": [
@@ -1040,7 +1273,7 @@
 				"dweb:/ipfs/QmfGtnkfVqt8zYFU2272T5GXLT4wuw7mTdRWshTu4BL8sZ"
 			]
 		},
-		"smart contract/SwapCryptoLoanUpdate/contracts/libraries/SafeMath.sol": {
+		"contracts/libraries/SafeMath.sol": {
 			"keccak256": "0x32b3bc6a0c948063e8e21287584c180be2653c8d590a9537abd6aaa767885f3b",
 			"license": "MIT",
 			"urls": [
@@ -1048,15 +1281,15 @@
 				"dweb:/ipfs/QmYLztAGbmx96aSZwS4Bzsp8V12DEoerSYLLJpyJSTpazk"
 			]
 		},
-		"smart contract/SwapCryptoLoanUpdate/contracts/libraries/Utils.sol": {
-			"keccak256": "0x74c6c42eb557adc690fbd83f3681478f67253cbf40ef9ffbb0ace1bb90ee68b5",
+		"contracts/libraries/Utils.sol": {
+			"keccak256": "0xae2ccd3eeb90686009df986b48a4c19d83c8608b5a2e41374f2d1700f370a2ce",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://808d8d7113a24226a6041e659d3297ff936fd9e2e1d2a79199252be67c2b4340",
-				"dweb:/ipfs/QmaiHhRy8cWpfpBgnsrXSwohTVawo7qVou4C3hhyCUntGz"
+				"bzz-raw://921b6990d3a3fb1d3f66bff140522616651ba286b0d8038d780a4b9a6da57cc9",
+				"dweb:/ipfs/QmVLz8r1bbRd8k8HBzSz7TyNpUwemBsn4m1sjspcpfLKEg"
 			]
 		},
-		"smart contract/SwapCryptoLoanUpdate/contracts/math/Math.sol": {
+		"contracts/math/Math.sol": {
 			"keccak256": "0x9bb4173446228f52656c63eeb772bea871828e4e04279f62c71680d809a166b4",
 			"license": "MIT",
 			"urls": [
@@ -1064,7 +1297,7 @@
 				"dweb:/ipfs/QmTAcykW7zpK9QEQmMCV44vMHN87ntFvhBJLioP4yG7jJP"
 			]
 		},
-		"smart contract/SwapCryptoLoanUpdate/contracts/math/SignedMath.sol": {
+		"contracts/math/SignedMath.sol": {
 			"keccak256": "0xf92515413956f529d95977adc9b0567d583c6203fc31ab1c23824c35187e3ddc",
 			"license": "MIT",
 			"urls": [
@@ -1072,7 +1305,7 @@
 				"dweb:/ipfs/QmcEW85JRzvDkQggxiBBLVAasXWdkhEysqypj9EaB6H2g6"
 			]
 		},
-		"smart contract/SwapCryptoLoanUpdate/contracts/utils/Address.sol": {
+		"contracts/utils/Address.sol": {
 			"keccak256": "0x3101a95b16d10092faa4afb894b44af92a39ab1161edaf3e4d6b948ddeef6916",
 			"license": "MIT",
 			"urls": [
@@ -1080,7 +1313,7 @@
 				"dweb:/ipfs/QmfRG52srPNE3W3E5NT3j1s3yuoivqzYsEZYcn3KpvSYvs"
 			]
 		},
-		"smart contract/SwapCryptoLoanUpdate/contracts/utils/Context.sol": {
+		"contracts/utils/Context.sol": {
 			"keccak256": "0xe2e337e6dde9ef6b680e07338c493ebea1b5fd09b43424112868e9cc1706bca7",
 			"license": "MIT",
 			"urls": [
@@ -1088,7 +1321,7 @@
 				"dweb:/ipfs/QmRK2Y5Yc6BK7tGKkgsgn3aJEQGi5aakeSPZvS65PV8Xp3"
 			]
 		},
-		"smart contract/SwapCryptoLoanUpdate/contracts/utils/Counters.sol": {
+		"contracts/utils/Counters.sol": {
 			"keccak256": "0xf0018c2440fbe238dd3a8732fa8e17a0f9dce84d31451dc8a32f6d62b349c9f1",
 			"license": "MIT",
 			"urls": [
@@ -1096,7 +1329,7 @@
 				"dweb:/ipfs/QmezuXg5GK5oeA4F91EZhozBFekhq5TD966bHPH18cCqhu"
 			]
 		},
-		"smart contract/SwapCryptoLoanUpdate/contracts/utils/Strings.sol": {
+		"contracts/utils/Strings.sol": {
 			"keccak256": "0x63eabf50dde2f7308b99932fed33b7b66600b846e13b8dcc4ae5c01eb10d801e",
 			"license": "MIT",
 			"urls": [
@@ -1104,7 +1337,7 @@
 				"dweb:/ipfs/QmcMj2Nk3frxaPPteUzBo7tVYTtb3dAwJuEw3ctJFbMPEK"
 			]
 		},
-		"smart contract/SwapCryptoLoanUpdate/contracts/utils/introspection/ERC165.sol": {
+		"contracts/utils/introspection/ERC165.sol": {
 			"keccak256": "0x2d2ed0b388dfb21faeb22bae67e0ac9301c109702145310fcd5948f947b81ffe",
 			"license": "MIT",
 			"urls": [
@@ -1112,7 +1345,7 @@
 				"dweb:/ipfs/QmXcsbbQnJWNNuoEvG4rN57QE3hjJQakDA6EFr6AkDRdDh"
 			]
 		},
-		"smart contract/SwapCryptoLoanUpdate/contracts/utils/introspection/IERC165.sol": {
+		"contracts/utils/introspection/IERC165.sol": {
 			"keccak256": "0x447a5f3ddc18419d41ff92b3773fb86471b1db25773e07f877f548918a185bf1",
 			"license": "MIT",
 			"urls": [

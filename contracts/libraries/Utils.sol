@@ -41,6 +41,7 @@ library Utils {
     uint256 constant DEALER_REFERRAL_BONUS = 200000000000000000;
     uint256 constant DEALER_COLLECTOR_REFERRAL_BONUS = 800000000000000000;
     uint256 constant PROCUREMENT_PERCENTAGE = 700000000000000000;
+    uint256 constant PROCUREMENT_YEARLY_INTEREST = 12000000000000000000;
 
     function getDiff(uint256 start, uint256 end) public pure returns (uint256) {
         uint256 daysDiff = (end - start) /

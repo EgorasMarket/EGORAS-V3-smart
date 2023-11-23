@@ -49,7 +49,9 @@ interface IERC20PRODUCTINTERFACE {
     function burnFrom(address account, uint256 amount) external;
 
     function totalStake() external view returns (uint256);
+
     function isAMember(address user) external view returns (bool);
+
     function getStakingAndBuyingTokenPrices()
         external
         view
@@ -63,6 +65,8 @@ contract ProductFacet is ERC721, ERC721URIStorage {
     using SafeMath for uint256;
     using Strings for uint256;
     using SafeDecimalMath for uint256;
+    mapping(uint256 => uint256) debts;
+    uint256 private totalDebts;
     struct Product {
         uint256 id;
         string title;
@@ -77,9 +81,12 @@ contract ProductFacet is ERC721, ERC721URIStorage {
         bool isApprove;
     }
     Product[] products;
-    enum VoteType{ YES, NO }
+    enum VoteType {
+        YES,
+        NO
+    }
 
-        event Votted(
+    event Votted(
         uint256 productID,
         address user,
         uint256 typeOfVote,
@@ -154,6 +161,8 @@ contract ProductFacet is ERC721, ERC721URIStorage {
         uint discount,
         uint256 time
     );
+    event RecordEvent(address _user, uint256 _amount, uint256 _time);
+    event DebtRepaid(uint256 _productID, address payer, uint256 _amount);
     event ProcurementPriceUpdate(
         uint256 productID,
         uint selling,
@@ -161,7 +170,16 @@ contract ProductFacet is ERC721, ERC721URIStorage {
         address initiator,
         uint256 time
     );
-function isSystem() internal view returns (bool) {
+
+    modifier onlyOwner() {
+        require(
+            msg.sender == LibDiamond.contractOwner(),
+            "Access denied, Only owner is allowed!"
+        );
+        _;
+    }
+
+    function isSystem() internal view returns (bool) {
         GETADDRESSES getAddress = GETADDRESSES(address(this));
         if (
             LibDiamond.contractOwner() == _msgSender() ||
@@ -171,7 +189,6 @@ function isSystem() internal view returns (bool) {
         }
         return false;
     }
-
 
     // function setupNFT(
     //     string memory _nftName,
@@ -230,7 +247,6 @@ function isSystem() internal view returns (bool) {
         return string(abi.encodePacked(_baseURI(), tokenId.toString()));
     }
 
-
     // function checkProcurementLimit(uint _amount) internal view returns (bool) {
     //     IERC20PRODUCTINTERFACE procurementLimit = IERC20PRODUCTINTERFACE(
     //         address(this)
@@ -285,7 +301,7 @@ function isSystem() internal view returns (bool) {
         });
         products.push(_product);
         uint newProductID = products.length - 1;
-        s.vottingPeriod[newProductID].add(2 days);
+        s.vottingPeriod[newProductID] = block.timestamp.add(2 days);
         emit ProductCreated(
             _title,
             _amount,
@@ -401,60 +417,109 @@ function isSystem() internal view returns (bool) {
             block.timestamp
         );
     }
-    function voteStats(uint256 _productID) external view returns(uint256 _noVotes, uint256 _yesVotes, uint256 _vottingPeriod) {
-        return(s.noVotes[_productID], s.yesVotes[_productID], s.vottingPeriod[_productID]);
+
+    function voteStats(
+        uint256 _productID
+    )
+        external
+        view
+        returns (uint256 _noVotes, uint256 _yesVotes, uint256 _vottingPeriod)
+    {
+        return (
+            s.noVotes[_productID],
+            s.yesVotes[_productID],
+            s.vottingPeriod[_productID]
+        );
     }
 
-function resetVottingPeriod(uint256 _productID) external {
-s.vottingPeriod[_productID] = block.timestamp;
-}
-  function yes(uint256 _productID) external {
-    require(s.vottingPeriod[_productID] > block.timestamp, "Votting period is over!");
-    Product memory p = products[_productID];
-    require(!p.tradable, "Product is already approved");
-    require(s.isADealer[_msgSender()], "You're not a member");
-    require(s.hasVoted[_msgSender()][_productID], "Already voted!");
-    s.yesVotes[_productID] = s.yesVotes[_productID].add(1);
-    emit Votted(_productID, _msgSender(), uint256(VoteType.YES), block.timestamp);
+    function setTokenAddresses(address _eusd, address _egc) external onlyOwner {
+        s.egcAddr = _egc;
+        s.eusdAddr = _eusd;
+    }
+
+    function yes(uint256 _productID) external {
+        require(
+            s.vottingPeriod[_productID] > block.timestamp,
+            "Votting period is over!"
+        );
+        Product memory p = products[_productID];
+        require(!p.tradable, "Product is already approved");
+        require(
+            s.member[_msgSender()],
+            "You're not a staker, please stake and try again"
+        );
+        require(s.hasVoted[_msgSender()][_productID], "Already voted!");
+        s.yesVotes[_productID] = s.yesVotes[_productID].add(1);
+        emit Votted(
+            _productID,
+            _msgSender(),
+            uint256(VoteType.YES),
+            block.timestamp
+        );
     }
 
     function no(uint256 _productID) external {
         Product memory p = products[_productID];
-        require(s.vottingPeriod[_productID] > block.timestamp, "Votting period is over!");
+        require(
+            s.vottingPeriod[_productID] > block.timestamp,
+            "Votting period is over!"
+        );
         require(!p.tradable, "Product is already approved");
-        require(s.isADealer[_msgSender()], "You're not a member");
         require(s.hasVoted[_msgSender()][_productID], "Already voted!");
+        require(
+            s.member[_msgSender()],
+            "You're not a staker, please stake and try again"
+        );
         s.noVotes[_productID] = s.noVotes[_productID].add(1);
-        emit Votted(_productID, _msgSender(), uint256(VoteType.NO), block.timestamp);
+        emit Votted(
+            _productID,
+            _msgSender(),
+            uint256(VoteType.NO),
+            block.timestamp
+        );
     }
+
     function procurementAuthorized(uint256 _productID) external {
-        require(block.timestamp >= s.vottingPeriod[_productID], "Votting period is not over yet!");
+        require(
+            block.timestamp >= s.vottingPeriod[_productID],
+            "Votting period is not over yet!"
+        );
 
-        if(s.yesVotes[_productID] >= s.noVotes[_productID]){
-             Product storage p = products[_productID];
-        uint256 total = p
-            .amount
-            .divideDecimal(uint256(Utils.DIVISOR_A))
-            .multiplyDecimal(p.qty);
-        require(isSystem(), "Access denied. You don't have access to upload!");
-        require(!p.tradable, "Product is already approved");
-        require(!p.isdirect, "Invalid product type.");
-       
-        p.tradable = true;
+        if (s.yesVotes[_productID] >= s.noVotes[_productID]) {
+            Product storage p = products[_productID];
+            uint256 total = p
+                .amount
+                .divideDecimal(uint256(Utils.DIVISOR_A))
+                .multiplyDecimal(p.qty);
+            require(
+                isSystem(),
+                "Access denied. You don't have access to upload!"
+            );
+            require(!p.tradable, "Product is already approved");
+            require(!p.isdirect, "Invalid product type.");
 
-        // uint256 newProductSellingAmount = p.amount.multiplyDecimal(
-        //     Utils.SALE_PERCENTAGE
-        // );
-        // p.selling = p.amount.add(newProductSellingAmount);
-        _mintNft(_productID, p.qty);
-        s.totalProcurementAmount = s.totalProcurementAmount.add(p.amount);
-        require(send(p.creator, total, 0, false), "Unable to transfer money!");
+            p.tradable = true;
 
-        emit Approved(_productID, _msgSender(), p.amount, block.timestamp);
-        }else{
+            // uint256 newProductSellingAmount = p.amount.multiplyDecimal(
+            //     Utils.SALE_PERCENTAGE
+            // );
+            // p.selling = p.amount.add(newProductSellingAmount);
+            _mintNft(_productID, p.qty);
+            s.totalProcurementAmount = s.totalProcurementAmount.add(p.amount);
+            uint256 interest = p.amount.multiplyDecimal(
+                Utils.PROCUREMENT_YEARLY_INTEREST
+            );
+            debts[_productID] = debts[_productID].add(p.amount.add(interest));
+            totalDebts = totalDebts.add(p.amount.add(interest));
+            require(
+                send(p.creator, total, 0, false),
+                "Unable to transfer money!"
+            );
+
+            emit Approved(_productID, _msgSender(), p.amount, block.timestamp);
+        } else {
             emit ProcurementDeclined(_productID, block.timestamp);
         }
-       
     }
 
     // function getSelling(
@@ -501,6 +566,26 @@ s.vottingPeriod[_productID] = block.timestamp;
         );
     }
 
+    function getDebtStats(
+        uint256 _productID
+    ) external view returns (uint256 _productDebts, uint256 _totalDebts) {
+        return (debts[_productID], totalDebts);
+    }
+
+    function payDebt(uint256 _productID, uint _amount) external {
+        require(debts[_productID] >= _amount, "Can't over pay debt");
+        // GETADDRESSES getAddress = GETADDRESSES(address(this));
+        // (address egcAddr, address eusdAddr) = getAddress.getAddresses();
+        IERC20PRODUCTINTERFACE __ierc20 = IERC20PRODUCTINTERFACE(s.eusdAddr);
+        require(
+            __ierc20.allowance(_msgSender(), address(this)) >= _amount,
+            "Insufficient allowance!"
+        );
+        __ierc20.transferFrom(_msgSender(), address(this), _amount);
+        debts[_productID] = debts[_productID].sub(_amount);
+        emit DebtRepaid(_productID, _msgSender(), _amount);
+    }
+
     function giveDiscountIfIsADealer(
         address user,
         uint256 amount
@@ -509,6 +594,10 @@ s.vottingPeriod[_productID] = block.timestamp;
             address(this)
         );
         return amount.multiplyDecimal(getDiscount.getPlanPercentage(user));
+    }
+
+    function recordUserActivity(address _user, uint256 _amount) external {
+        emit RecordEvent(_user, _amount, block.timestamp);
     }
 
     // function buyDirectProduct(
@@ -599,9 +688,9 @@ s.vottingPeriod[_productID] = block.timestamp;
         uint qty,
         bool isBurn
     ) internal returns (bool) {
-        GETADDRESSES getAddress = GETADDRESSES(address(this));
-        (address egcAddr, address eusdAddr) = getAddress.getAddresses();
-        IERC20PRODUCTINTERFACE __ierc20 = IERC20PRODUCTINTERFACE(eusdAddr);
+        // GETADDRESSES getAddress = GETADDRESSES(address(this));
+        // (address egcAddr, address eusdAddr) = getAddress.getAddresses();
+        IERC20PRODUCTINTERFACE __ierc20 = IERC20PRODUCTINTERFACE(s.eusdAddr);
         if (isBurn) {
             require(
                 __ierc20.allowance(_msgSender(), address(this)) >=

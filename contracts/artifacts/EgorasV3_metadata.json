@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.18+commit.87f61d96"
+		"version": "0.8.22+commit.4fc1097e"
 	},
 	"language": "Solidity",
 	"output": {
@@ -46,6 +46,67 @@
 				"type": "constructor"
 			},
 			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"components": [
+							{
+								"internalType": "address",
+								"name": "facetAddress",
+								"type": "address"
+							},
+							{
+								"internalType": "enum IDiamondCut.FacetCutAction",
+								"name": "action",
+								"type": "uint8"
+							},
+							{
+								"internalType": "bytes4[]",
+								"name": "functionSelectors",
+								"type": "bytes4[]"
+							}
+						],
+						"indexed": false,
+						"internalType": "struct IDiamondCut.FacetCut[]",
+						"name": "_diamondCut",
+						"type": "tuple[]"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "_init",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "bytes",
+						"name": "_calldata",
+						"type": "bytes"
+					}
+				],
+				"name": "DiamondCut",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "previousOwner",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "OwnershipTransferred",
+				"type": "event"
+			},
+			{
 				"stateMutability": "payable",
 				"type": "fallback"
 			}
@@ -63,9 +124,9 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"smart contract/SwapCryptoLoanUpdate/contracts/EgorasV3.sol": "EgorasV3"
+			"contracts/EgorasV3.sol": "EgorasV3"
 		},
-		"evmVersion": "paris",
+		"evmVersion": "london",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"
@@ -77,7 +138,7 @@
 		"remappings": []
 	},
 	"sources": {
-		"smart contract/SwapCryptoLoanUpdate/contracts/EgorasV3.sol": {
+		"contracts/EgorasV3.sol": {
 			"keccak256": "0x40310e555508a4a22d39dc154bc935a4699089473c8a80efab84e84d316bacbf",
 			"license": "MIT",
 			"urls": [
@@ -85,7 +146,7 @@
 				"dweb:/ipfs/QmbUg2UT8C9CSN6P8mzwVjH4CRikXPiADDUE2AUVy5s3fe"
 			]
 		},
-		"smart contract/SwapCryptoLoanUpdate/contracts/interfaces/IDiamondCut.sol": {
+		"contracts/interfaces/IDiamondCut.sol": {
 			"keccak256": "0x21afb9584ec8e432c2c17acd3700e4c99b2d2c5d941c899fd5997a65cc689d56",
 			"license": "MIT",
 			"urls": [
@@ -93,7 +154,7 @@
 				"dweb:/ipfs/QmNfhvg7Aud1yXTZqzXTGdUf38tpv63Pbbuo3KKrYoRFrj"
 			]
 		},
-		"smart contract/SwapCryptoLoanUpdate/contracts/interfaces/IDiamondLoupe.sol": {
+		"contracts/interfaces/IDiamondLoupe.sol": {
 			"keccak256": "0x22651ae779776d5c818442cfd3d5675f7b36bac6530db30d77aef6e555a90fc2",
 			"license": "MIT",
 			"urls": [
@@ -101,7 +162,7 @@
 				"dweb:/ipfs/QmfTJRgEXtcUJC5oyzmauGeMQp83mkLjPeHF8oHQzG67Mr"
 			]
 		},
-		"smart contract/SwapCryptoLoanUpdate/contracts/interfaces/IERC165.sol": {
+		"contracts/interfaces/IERC165.sol": {
 			"keccak256": "0x1b9ce37b2234d093449a99c4b88054c6b7c150f6dfedbc6a593bb6578d0ded16",
 			"license": "MIT",
 			"urls": [
@@ -109,7 +170,7 @@
 				"dweb:/ipfs/QmNjomUhMUPrXhkdxhuuAuuDPpRtkG14MjKwcsCnJNUYkh"
 			]
 		},
-		"smart contract/SwapCryptoLoanUpdate/contracts/interfaces/IERC173.sol": {
+		"contracts/interfaces/IERC173.sol": {
 			"keccak256": "0x2c725fda85ada86c94ec21592a2057205897324886b769fea8b09b6472ae9528",
 			"license": "MIT",
 			"urls": [
@@ -117,7 +178,7 @@
 				"dweb:/ipfs/QmWPD5egogtk1QeAxufk7BvjiRtt9HMo2G7XM34ManDdcw"
 			]
 		},
-		"smart contract/SwapCryptoLoanUpdate/contracts/libraries/LibDiamond.sol": {
+		"contracts/libraries/LibDiamond.sol": {
 			"keccak256": "0x4059248e993742cacdf0492134bbf0d504aab17f28299a706c9ca24b1a17fdf5",
 			"license": "MIT",
 			"urls": [

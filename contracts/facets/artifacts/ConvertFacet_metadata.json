@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.22+commit.4fc1097e"
+		"version": "0.8.12+commit.f00d7308"
 	},
 	"language": "Solidity",
 	"output": {
@@ -89,6 +89,24 @@
 				],
 				"stateMutability": "nonpayable",
 				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_eusd",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_egc",
+						"type": "address"
+					}
+				],
+				"name": "setTokenAddressesForConvert",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
 			}
 		],
 		"devdoc": {
@@ -119,19 +137,19 @@
 	},
 	"sources": {
 		"contracts/facets/AppStorage.sol": {
-			"keccak256": "0x705e7a7d690d93fd82e486d413c45baae23cf7c5743a799ba721038ba9050bb0",
+			"keccak256": "0x1be2d6c49f7a41e03a085ab8bb52c14f3b334a5e605cf2301c6442c7346eac47",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://f4d139abac2e21c4568acd5271c03207b08e226635f632b6fe1fb570ec019aea",
-				"dweb:/ipfs/QmXThTTTfnJp3dT6uQp9fbNRrxAxR3nsFqhk8QSZxCtvWA"
+				"bzz-raw://d2c215b28759c8b7ca946da18125f5252862cb6488f2dc21b06febd933f317de",
+				"dweb:/ipfs/QmbGXJmTsqLBBsExhkNPRTFNrwL88oNw6yDudSvShkLVux"
 			]
 		},
 		"contracts/facets/ConvertFacet.sol": {
-			"keccak256": "0x04151c2929442b34ba1f9c5455774ea2c75625e4dd164ac6efca5edee7cb346f",
+			"keccak256": "0xc292d295722db5d55bfd0290e596d0e252cf39803af3e791d2ff25fcbf487fa5",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://7303fd5f83db27fc867a0e8f619009c6b8976f9da4e970a6b6de9f8e37a0f804",
-				"dweb:/ipfs/QmaZKcWz76WxtM9RUHtrQT8GjADukv6dm2jR9bBpUDtfhW"
+				"bzz-raw://88638946f1f9c9805c8ef3f4a87884230eb8c4d68dabe37ff1b95fba1e867370",
+				"dweb:/ipfs/QmbzNMkCUPEofvDL3JBdMrbCyaEEhdStQLJGivuNBqtrMH"
 			]
 		},
 		"contracts/interfaces/IDiamondCut.sol": {

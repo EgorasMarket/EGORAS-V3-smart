@@ -14,7 +14,11 @@ const MartGPTToken = artifacts.require('MartGPTToken')
 const RewardFaucet = artifacts.require('RewardFaucet')
 const DealersFacet = artifacts.require('DealersFacet')
 const StakingFacet = artifacts.require('StakingFacet')
+const StakingFacetStable = artifacts.require('StakingFacetStable')
 const ConvertFacet = artifacts.require('ConvertFacet')
+const DrawFundsFacet = artifacts.require('DrawFundsFacet')
+const StakingFacetNew = artifacts.require('StakingFacetNew')
+const ExFacet = artifacts.require('ExFacet')
 
 
 const FacetCutAction = {
@@ -30,7 +34,7 @@ function getSelectors (contract) {
   const selectors = contract.abi.reduce((acc, val) => {
     if (val.type === 'function') {
       acc.push(val.signature)
-     // console.log(val.signature, val.name);
+      console.log(val.signature, val.name);
      
       return acc
     } else {
@@ -41,6 +45,8 @@ function getSelectors (contract) {
 }
 
 module.exports = function (deployer, network, accounts) { 
+  
+  //return  deployer.deploy(PriceOracleFacet);
   //return deployer.deploy(MartGPTToken, "MartGPT Token","MA","0xb9bfBE13137A78ED3392866C479378a4f7595ef6","0xD195dCC364Beeedd3117e331a17e3A6863D1Aa43", "100000000000000000000000000000","100000000000000000000")
 //return deployer.deploy(RewardFaucet);
   
@@ -157,40 +163,56 @@ module.exports = function (deployer, network, accounts) {
 
  
 
- deployer.deploy(StakingFacet)
-//  deployer.deploy(MembershipFacet);
+//  deployer.deploy(StakingFacet)
+// deployer.deploy(StakingFacetStable);
  deployer.deploy(PriceOracleFacet);
- deployer.deploy(ProductFacet);
- deployer.deploy(DealersFacet);
-  deployer.deploy(ConvertFacet);
- deployer.deploy(PancakeSwapFacet);
- deployer.deploy(DiamondCutFacet);
- deployer.deploy(DiamondLoupeFacet);
+//  deployer.deploy(ProductFacet);
+//  deployer.deploy(DealersFacet);
+//   deployer.deploy(ConvertFacet);
+//  deployer.deploy(PancakeSwapFacet);
+//  deployer.deploy(DiamondCutFacet);
+  deployer.deploy(StakingFacetNew);
+ deployer.deploy(ExFacet);
 
   deployer.deploy(OwnershipFacet).then(() => {
     const diamondCut = [
-      [DiamondCutFacet.address, FacetCutAction.Add, getSelectors(DiamondCutFacet)],
-      [DiamondLoupeFacet.address, FacetCutAction.Add, getSelectors(DiamondLoupeFacet)],
-      [PriceOracleFacet.address, FacetCutAction.Add, getSelectors(PriceOracleFacet)],
+      // [DiamondCutFacet.address, FacetCutAction.Add, getSelectors(DiamondCutFacet)],
+      // [DiamondLoupeFacet.address, FacetCutAction.Add, getSelectors(DiamondLoupeFacet)],
+      // [PriceOracleFacet.address, FacetCutAction.Add, getSelectors(PriceOracleFacet)],
       //[MembershipFacet.address, FacetCutAction.Add, getSelectors(MembershipFacet)],
-      [ProductFacet.address, FacetCutAction.Add, getSelectors(ProductFacet)],
-       [ConvertFacet.address, FacetCutAction.Add, getSelectors(ConvertFacet)],
-      [StakingFacet.address, FacetCutAction.Add, getSelectors(StakingFacet)],
-      [DealersFacet.address, FacetCutAction.Add, getSelectors(DealersFacet)],
-      [PancakeSwapFacet.address, FacetCutAction.Add, getSelectors(PancakeSwapFacet)],
+      
+      // [StakingFacetStable.address, FacetCutAction.Add, getSelectors(StakingFacetStable)],
+      // [DrawFundsFacet.address, FacetCutAction.Add, getSelectors(DrawFundsFacet)],
+      
+      // [ProductFacet.address, FacetCutAction.Add, getSelectors(ProductFacet)],
+      //  [ConvertFacet.address, FacetCutAction.Add, getSelectors(ConvertFacet)],
+      // [StakingFacet.address, FacetCutAction.Add, getSelectors(StakingFacet)],
+      // [DealersFacet.address, FacetCutAction.Add, getSelectors(DealersFacet)],
+      // [PancakeSwapFacet.address, FacetCutAction.Add, getSelectors(PancakeSwapFacet)],
+      [PriceOracleFacet.address, FacetCutAction.Add, getSelectors(PriceOracleFacet)],
+      [ExFacet.address, FacetCutAction.Add, getSelectors(ExFacet)],
+      [ExFacet.address, FacetCutAction.Add, getSelectors(StakingFacetNew)],
       [OwnershipFacet.address, FacetCutAction.Add, getSelectors(OwnershipFacet)],
+
     ]
 
        const diamondCut2 = [
-      [DiamondCutFacet.contractName, FacetCutAction.Add, getSelectors(DiamondCutFacet)],
-      [DiamondLoupeFacet.contractName, FacetCutAction.Add, getSelectors(DiamondLoupeFacet)],
+      // [DiamondCutFacet.contractName, FacetCutAction.Add, getSelectors(DiamondCutFacet)],
+      // [DiamondLoupeFacet.contractName, FacetCutAction.Add, getSelectors(DiamondLoupeFacet)],
+      // [PriceOracleFacet.contractName, FacetCutAction.Add, getSelectors(PriceOracleFacet)],
+      // [DealersFacet.contractName, FacetCutAction.Add, getSelectors(DealersFacet)],
+      // [ProductFacet.contractName, FacetCutAction.Add, getSelectors(ProductFacet)],
+      //  [ConvertFacet.contractName, FacetCutAction.Add, getSelectors(ConvertFacet)],
+      // [StakingFacet.contractName, FacetCutAction.Add, getSelectors(StakingFacet)],
+      // [StakingFacetStable.contractName, FacetCutAction.Add, getSelectors(StakingFacetStable)],
+      // [DrawFundsFacet.contractName, FacetCutAction.Add, getSelectors(DrawFundsFacet)],
       [PriceOracleFacet.contractName, FacetCutAction.Add, getSelectors(PriceOracleFacet)],
-      [DealersFacet.contractName, FacetCutAction.Add, getSelectors(DealersFacet)],
-      [ProductFacet.contractName, FacetCutAction.Add, getSelectors(ProductFacet)],
-       [ConvertFacet.contractName, FacetCutAction.Add, getSelectors(ConvertFacet)],
-      [StakingFacet.contractName, FacetCutAction.Add, getSelectors(StakingFacet)],
-      [PancakeSwapFacet.contractName, FacetCutAction.Add, getSelectors(PancakeSwapFacet)],
+      [ExFacet.contractName, FacetCutAction.Add, getSelectors(ExFacet)],
+      [StakingFacetNew.contractName, FacetCutAction.Add, getSelectors(StakingFacetNew)],
       [OwnershipFacet.contractName, FacetCutAction.Add, getSelectors(OwnershipFacet)],
+      
+      // [PancakeSwapFacet.contractName, FacetCutAction.Add, getSelectors(PancakeSwapFacet)],
+      // [OwnershipFacet.contractName, FacetCutAction.Add, getSelectors(OwnershipFacet)],
     ]
 
   console.log(diamondCut2);

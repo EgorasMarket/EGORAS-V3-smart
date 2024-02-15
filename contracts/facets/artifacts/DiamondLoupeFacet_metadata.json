@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.18+commit.87f61d96"
+		"version": "0.8.22+commit.4fc1097e"
 	},
 	"language": "Solidity",
 	"output": {
@@ -155,9 +155,9 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"smart contract/SwapCryptoLoanUpdate/contracts/facets/DiamondLoupeFacet.sol": "DiamondLoupeFacet"
+			"contracts/facets/DiamondLoupeFacet.sol": "DiamondLoupeFacet"
 		},
-		"evmVersion": "paris",
+		"evmVersion": "london",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"
@@ -169,7 +169,7 @@
 		"remappings": []
 	},
 	"sources": {
-		"smart contract/SwapCryptoLoanUpdate/contracts/facets/DiamondLoupeFacet.sol": {
+		"contracts/facets/DiamondLoupeFacet.sol": {
 			"keccak256": "0x6e753a34c2645f0da70ca0031b360c0da721180049fb8b677ca47624d6e29841",
 			"license": "MIT",
 			"urls": [
@@ -177,7 +177,7 @@
 				"dweb:/ipfs/QmRmMf6uBENDih83fBGNYRScrchkFgrYgKjZU5WUZSw8x2"
 			]
 		},
-		"smart contract/SwapCryptoLoanUpdate/contracts/interfaces/IDiamondCut.sol": {
+		"contracts/interfaces/IDiamondCut.sol": {
 			"keccak256": "0x21afb9584ec8e432c2c17acd3700e4c99b2d2c5d941c899fd5997a65cc689d56",
 			"license": "MIT",
 			"urls": [
@@ -185,7 +185,7 @@
 				"dweb:/ipfs/QmNfhvg7Aud1yXTZqzXTGdUf38tpv63Pbbuo3KKrYoRFrj"
 			]
 		},
-		"smart contract/SwapCryptoLoanUpdate/contracts/interfaces/IDiamondLoupe.sol": {
+		"contracts/interfaces/IDiamondLoupe.sol": {
 			"keccak256": "0x22651ae779776d5c818442cfd3d5675f7b36bac6530db30d77aef6e555a90fc2",
 			"license": "MIT",
 			"urls": [
@@ -193,7 +193,7 @@
 				"dweb:/ipfs/QmfTJRgEXtcUJC5oyzmauGeMQp83mkLjPeHF8oHQzG67Mr"
 			]
 		},
-		"smart contract/SwapCryptoLoanUpdate/contracts/interfaces/IERC165.sol": {
+		"contracts/interfaces/IERC165.sol": {
 			"keccak256": "0x1b9ce37b2234d093449a99c4b88054c6b7c150f6dfedbc6a593bb6578d0ded16",
 			"license": "MIT",
 			"urls": [
@@ -201,7 +201,7 @@
 				"dweb:/ipfs/QmNjomUhMUPrXhkdxhuuAuuDPpRtkG14MjKwcsCnJNUYkh"
 			]
 		},
-		"smart contract/SwapCryptoLoanUpdate/contracts/libraries/LibDiamond.sol": {
+		"contracts/libraries/LibDiamond.sol": {
 			"keccak256": "0x4059248e993742cacdf0492134bbf0d504aab17f28299a706c9ca24b1a17fdf5",
 			"license": "MIT",
 			"urls": [

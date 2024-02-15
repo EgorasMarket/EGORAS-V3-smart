@@ -193,6 +193,37 @@
 				"type": "function"
 			},
 			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_egcAddr",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_yearlyInterest",
+						"type": "uint256"
+					}
+				],
+				"name": "setStakeConfig",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_eusdAddr",
+						"type": "address"
+					}
+				],
+				"name": "setStakeRoyaltyAddress",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
 				"inputs": [],
 				"name": "stakeConfig",
 				"outputs": [
@@ -210,6 +241,16 @@
 						"internalType": "uint256",
 						"name": "_egcusd",
 						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_yearlyInterest",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "_egcAddr",
+						"type": "address"
 					}
 				],
 				"stateMutability": "view",
@@ -281,7 +322,7 @@
 		"compilationTarget": {
 			"contracts/facets/StakingFacet.sol": "StakingFacet"
 		},
-		"evmVersion": "london",
+		"evmVersion": "shanghai",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"
@@ -294,19 +335,19 @@
 	},
 	"sources": {
 		"contracts/facets/AppStorage.sol": {
-			"keccak256": "0x705e7a7d690d93fd82e486d413c45baae23cf7c5743a799ba721038ba9050bb0",
+			"keccak256": "0xc69e23860e52d2d6c8fce5fef440f0376864e0a682c36ed298de4dd79318d600",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://f4d139abac2e21c4568acd5271c03207b08e226635f632b6fe1fb570ec019aea",
-				"dweb:/ipfs/QmXThTTTfnJp3dT6uQp9fbNRrxAxR3nsFqhk8QSZxCtvWA"
+				"bzz-raw://276590d523f430a7cc905929ed95af721840592f790f73eef82f4604c147509d",
+				"dweb:/ipfs/QmbDYVV8TUVwVQJ7Dx2DNDWCsKvxhcKaXumPQnvtcXvuLF"
 			]
 		},
 		"contracts/facets/StakingFacet.sol": {
-			"keccak256": "0xeb53467237485770b9dbf0a498681cc4f66c9489b8b826bb45f8d99d79ad5985",
+			"keccak256": "0xa2637ae5bf740eab3b4fd4a228feb913df69f2c0184514662443e920b1aa042a",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://78863da8d3cf603de03ce9cf1ef3f6ab227490b72fcfacf18e9976c373d0817e",
-				"dweb:/ipfs/QmTaaovoTcyw3Pc5nQMs26EhQfx9TB69UHKxYfhspHZHAE"
+				"bzz-raw://8cdea6415910db2ed19069c1c1e1f59ac71124054c40a9b21511eb2a7c9b95d1",
+				"dweb:/ipfs/QmPqaeYC6qoMhCrBE6mZzfSakFCsfJsnsJZPyUbWjXYfPz"
 			]
 		},
 		"contracts/interfaces/IDiamondCut.sol": {

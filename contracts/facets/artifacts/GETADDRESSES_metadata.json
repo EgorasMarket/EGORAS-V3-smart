@@ -132,11 +132,11 @@
 			]
 		},
 		"contracts/facets/AppStorage.sol": {
-			"keccak256": "0x705e7a7d690d93fd82e486d413c45baae23cf7c5743a799ba721038ba9050bb0",
+			"keccak256": "0xc69e23860e52d2d6c8fce5fef440f0376864e0a682c36ed298de4dd79318d600",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://f4d139abac2e21c4568acd5271c03207b08e226635f632b6fe1fb570ec019aea",
-				"dweb:/ipfs/QmXThTTTfnJp3dT6uQp9fbNRrxAxR3nsFqhk8QSZxCtvWA"
+				"bzz-raw://276590d523f430a7cc905929ed95af721840592f790f73eef82f4604c147509d",
+				"dweb:/ipfs/QmbDYVV8TUVwVQJ7Dx2DNDWCsKvxhcKaXumPQnvtcXvuLF"
 			]
 		},
 		"contracts/facets/ERC721.sol": {
@@ -148,11 +148,11 @@
 			]
 		},
 		"contracts/facets/ProductFacet.sol": {
-			"keccak256": "0x7899cbe717ff82c9eeae333cb375448ddf691470482bdb7252892b83ba17ab73",
+			"keccak256": "0x549c81400229cda76efc2f52a16bacd17f5709b6877b0729906c12e57938c4c1",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://1c67cb369bce0fe2b6580eff9fa9c0e627e7efb93eae6835a480754c1e63c7c3",
-				"dweb:/ipfs/QmWqSQJMVadm7ycioG87vvMDu9c6CggVJnW4Bm5nP5RYua"
+				"bzz-raw://a14e0e50179de957d57e59c461eb2f6fd2067fd068d405f1aec7218f85576be4",
+				"dweb:/ipfs/Qmei9SguoNF7EDqCa3Sqxxvh468phMakQh9Gk3XYpT82kx"
 			]
 		},
 		"contracts/interfaces/IAccessControl.sol": {

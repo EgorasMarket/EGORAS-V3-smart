@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.10+commit.fc410830"
+		"version": "0.8.22+commit.4fc1097e"
 	},
 	"language": "Solidity",
 	"output": {
@@ -139,12 +139,120 @@
 			{
 				"inputs": [
 					{
+						"internalType": "address",
+						"name": "_pythia",
+						"type": "address"
+					}
+				],
+				"name": "isPythia",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "_ticker",
+						"type": "string"
+					}
+				],
+				"name": "price",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "_ticker",
+						"type": "string"
+					}
+				],
+				"name": "setEGCUSDTicker",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
 						"internalType": "string",
 						"name": "_ticker",
 						"type": "string"
 					}
 				],
 				"name": "setNairaUSDTicker",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_pythia",
+						"type": "address"
+					}
+				],
+				"name": "setPythia",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "_ticker",
+						"type": "string"
+					}
+				],
+				"name": "setStakingTokenTicker",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_pythia",
+						"type": "address"
+					}
+				],
+				"name": "suspendPythia",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256[]",
+						"name": "_prices",
+						"type": "uint256[]"
+					},
+					{
+						"internalType": "string[]",
+						"name": "_tickers",
+						"type": "string[]"
+					}
+				],
+				"name": "updateTickerPrices",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -165,7 +273,7 @@
 		"compilationTarget": {
 			"contracts/facets/PriceOracleFacet.sol": "PriceOracleFacet"
 		},
-		"evmVersion": "london",
+		"evmVersion": "shanghai",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"
@@ -178,19 +286,19 @@
 	},
 	"sources": {
 		"contracts/facets/AppStorage.sol": {
-			"keccak256": "0x705e7a7d690d93fd82e486d413c45baae23cf7c5743a799ba721038ba9050bb0",
+			"keccak256": "0x953dc8659257181ad2aeb7635aeef077bc0ce7e0b37aa5ccc64abff4434c8b7a",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://f4d139abac2e21c4568acd5271c03207b08e226635f632b6fe1fb570ec019aea",
-				"dweb:/ipfs/QmXThTTTfnJp3dT6uQp9fbNRrxAxR3nsFqhk8QSZxCtvWA"
+				"bzz-raw://e2041b2db290c4e65296b909bf4746ec3dc9a2137c99e40c741cc57761faddee",
+				"dweb:/ipfs/QmRZbeSwPEWZahJMyPg9R9M4p7qMiSHTzKtBNiiEa2qH5s"
 			]
 		},
 		"contracts/facets/PriceOracleFacet.sol": {
-			"keccak256": "0x0b77d5c6b6e70b148f1f24162f59d4b240cbab326d900fa79b971238fa9fa684",
+			"keccak256": "0xb87d1f2c1f63338c2989fcaf6f26695c51b9e53b1e5ff6f5c2357377ff960d36",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://2593f23ee189584a4bc1cee99b425fa4da1aacd07e48361c95723c7db04e152d",
-				"dweb:/ipfs/QmRwiohHit67UkGpm5sgfg7swDgykkHgh1Wfg3JbCvXw7Z"
+				"bzz-raw://c405330a7a735de694722f8ae1f337153a091719d5e52acbe48b82972040af82",
+				"dweb:/ipfs/QmcXAAKPS6gMn4LxzCFXjYBPUS3Nq9bCvYjWdXqYmy9VqB"
 			]
 		},
 		"contracts/interfaces/IDiamondCut.sol": {

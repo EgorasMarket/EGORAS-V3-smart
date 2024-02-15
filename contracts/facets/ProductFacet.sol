@@ -77,6 +77,7 @@ contract ProductFacet is ERC721, ERC721URIStorage {
         address creator;
         bool tradable;
         uint qty;
+        uint staticQty;
         bool isdirect;
         bool isApprove;
     }
@@ -90,6 +91,7 @@ contract ProductFacet is ERC721, ERC721URIStorage {
         uint256 productID,
         address user,
         uint256 typeOfVote,
+        uint256 amount,
         uint256 time
     );
 
@@ -162,11 +164,15 @@ contract ProductFacet is ERC721, ERC721URIStorage {
         uint256 time
     );
     event RecordEvent(address _user, uint256 _amount, uint256 _time);
-    event DebtRepaid(uint256 _productID, address payer, uint256 _amount);
+    event DebtRepaid(
+        uint256 _productID,
+        address payer,
+        uint256 _amount,
+        uint256 _token
+    );
     event ProcurementPriceUpdate(
         uint256 productID,
         uint selling,
-        uint procurementPrice,
         address initiator,
         uint256 time
     );
@@ -198,7 +204,7 @@ contract ProductFacet is ERC721, ERC721URIStorage {
     // }
 
     function _baseURI() internal pure override returns (string memory) {
-        return "https://egoras-v3-staging.egoras.com/product/nft/product/by/";
+        return "https://nft.egoxify.com/product/nft/klaytn/";
     }
 
     function safeMint(string memory uri, uint _productID) internal {
@@ -223,14 +229,14 @@ contract ProductFacet is ERC721, ERC721URIStorage {
      * @dev See {IERC721Metadata-name}.
      */
     function name() public view virtual override returns (string memory) {
-        return "Egoras Market NFT";
+        return "Egoxify NFT";
     }
 
     /**
      * @dev See {IERC721Metadata-symbol}.
      */
     function symbol() public view virtual override returns (string memory) {
-        return "EMN";
+        return "EYN";
     }
 
     // // The following functions are overrides required by Solidity.
@@ -296,6 +302,7 @@ contract ProductFacet is ERC721, ERC721URIStorage {
             creator: _msgSender(),
             tradable: false,
             qty: _qty,
+            staticQty: _qty,
             isdirect: false,
             isApprove: false
         });
@@ -403,16 +410,13 @@ contract ProductFacet is ERC721, ERC721URIStorage {
     // }
     function updateProcurementPrice(
         uint256 _productID,
-        uint256 _sellingPrice,
-        uint256 _procurementPrice
-    ) external {
+        uint256 _sellingPrice
+    ) external onlyOwner {
         Product storage p = products[_productID];
-        p.amount = _procurementPrice;
         p.selling = _sellingPrice;
         emit ProcurementPriceUpdate(
             _productID,
             _sellingPrice,
-            _procurementPrice,
             _msgSender(),
             block.timestamp
         );
@@ -437,7 +441,7 @@ contract ProductFacet is ERC721, ERC721URIStorage {
         s.eusdAddr = _eusd;
     }
 
-    function yes(uint256 _productID) external {
+    function YesVote(uint256 _productID) external {
         require(
             s.vottingPeriod[_productID] > block.timestamp,
             "Votting period is over!"
@@ -448,36 +452,57 @@ contract ProductFacet is ERC721, ERC721URIStorage {
             s.member[_msgSender()],
             "You're not a staker, please stake and try again"
         );
-        require(s.hasVoted[_msgSender()][_productID], "Already voted!");
-        s.yesVotes[_productID] = s.yesVotes[_productID].add(1);
+        require(
+            s.hasVoted[_msgSender()][_productID] == false,
+            "Already voted!"
+        );
+        s.yesVotes[_productID] = s.yesVotes[_productID].add(
+            s.userTotalStake[_msgSender()]
+        );
+        s.hasVoted[_msgSender()][_productID] = true;
         emit Votted(
             _productID,
             _msgSender(),
             uint256(VoteType.YES),
+            s.userTotalStake[_msgSender()],
             block.timestamp
         );
     }
 
-    function no(uint256 _productID) external {
+    function NoVote(uint256 _productID) external {
         Product memory p = products[_productID];
         require(
             s.vottingPeriod[_productID] > block.timestamp,
             "Votting period is over!"
         );
         require(!p.tradable, "Product is already approved");
-        require(s.hasVoted[_msgSender()][_productID], "Already voted!");
+        require(
+            s.hasVoted[_msgSender()][_productID] == false,
+            "Already voted!"
+        );
         require(
             s.member[_msgSender()],
             "You're not a staker, please stake and try again"
         );
-        s.noVotes[_productID] = s.noVotes[_productID].add(1);
+        s.noVotes[_productID] = s.noVotes[_productID].add(
+            s.userTotalStake[_msgSender()]
+        );
+        s.hasVoted[_msgSender()][_productID] = true;
         emit Votted(
             _productID,
             _msgSender(),
             uint256(VoteType.NO),
+            s.userTotalStake[_msgSender()],
             block.timestamp
         );
     }
+
+    // function getProductStats(
+    //     uint256 _productID
+    // ) external view returns (uint256 _sellingAmount, bool _hasVoted) {
+    //     Product memory p = products[_productID];
+    //     return (p.selling, s.hasVoted[_msgSender()][_productID]);
+    // }
 
     function procurementAuthorized(uint256 _productID) external {
         require(
@@ -491,10 +516,10 @@ contract ProductFacet is ERC721, ERC721URIStorage {
                 .amount
                 .divideDecimal(uint256(Utils.DIVISOR_A))
                 .multiplyDecimal(p.qty);
-            require(
-                isSystem(),
-                "Access denied. You don't have access to upload!"
-            );
+            // require(
+            //     isSystem(),
+            //     "Access denied. You don't have access to upload!"
+            // );
             require(!p.tradable, "Product is already approved");
             require(!p.isdirect, "Invalid product type.");
 
@@ -506,9 +531,7 @@ contract ProductFacet is ERC721, ERC721URIStorage {
             // p.selling = p.amount.add(newProductSellingAmount);
             _mintNft(_productID, p.qty);
             s.totalProcurementAmount = s.totalProcurementAmount.add(p.amount);
-            uint256 interest = p.amount.multiplyDecimal(
-                Utils.PROCUREMENT_YEARLY_INTEREST
-            );
+            uint256 interest = p.amount.multiplyDecimal(s.yearlyInterest);
             debts[_productID] = debts[_productID].add(p.amount.add(interest));
             totalDebts = totalDebts.add(p.amount.add(interest));
             require(
@@ -529,12 +552,9 @@ contract ProductFacet is ERC721, ERC721URIStorage {
     //     return (p.selling);
     // }
 
-    // function isSelling(
-    //     uint256 _productID
-    // ) external view returns (bool _isSelling) {
-    //     Product memory p = products[_productID];
-    //     return (p.tradable);
-    // }
+    function resetVottingTime(uint256 _productID) external onlyOwner {
+        s.vottingPeriod[_productID] = block.timestamp;
+    }
 
     function purchase(address user, uint256 _productID, uint qty) external {
         GETADDRESSES setRecord = GETADDRESSES(address(this));
@@ -572,18 +592,26 @@ contract ProductFacet is ERC721, ERC721URIStorage {
         return (debts[_productID], totalDebts);
     }
 
-    function payDebt(uint256 _productID, uint _amount) external {
-        require(debts[_productID] >= _amount, "Can't over pay debt");
+    function payDebt(uint256 _productID, uint tokenId) external {
+        Product storage p = products[_productID];
+        require(debts[_productID] > 0, "Debt already paid");
+
+        uint amountToBePaid = debts[_productID].divideDecimal(
+            p.staticQty.divideDecimal(Utils.DIVISOR_A)
+        );
         // GETADDRESSES getAddress = GETADDRESSES(address(this));
         // (address egcAddr, address eusdAddr) = getAddress.getAddresses();
+
         IERC20PRODUCTINTERFACE __ierc20 = IERC20PRODUCTINTERFACE(s.eusdAddr);
         require(
-            __ierc20.allowance(_msgSender(), address(this)) >= _amount,
+            __ierc20.allowance(_msgSender(), address(this)) >= amountToBePaid,
             "Insufficient allowance!"
         );
-        __ierc20.transferFrom(_msgSender(), address(this), _amount);
-        debts[_productID] = debts[_productID].sub(_amount);
-        emit DebtRepaid(_productID, _msgSender(), _amount);
+        __ierc20.burnFrom(_msgSender(), amountToBePaid);
+        _burn(tokenId);
+        debts[_productID] = debts[_productID].sub(amountToBePaid);
+        p.staticQty = p.staticQty.sub(1);
+        emit DebtRepaid(_productID, _msgSender(), amountToBePaid, tokenId);
     }
 
     function giveDiscountIfIsADealer(

@@ -1,0 +1,372 @@
+{
+	"compiler": {
+		"version": "0.8.22+commit.4fc1097e"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "time",
+						"type": "uint256"
+					}
+				],
+				"name": "RoyaltyStable",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "plan",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "dailyRoyalty",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "totalRoyalty",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "time",
+						"type": "uint256"
+					}
+				],
+				"name": "StakeStable",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "dueStake",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "time",
+						"type": "uint256"
+					}
+				],
+				"name": "UnstakedStable",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "annuallyStable",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					}
+				],
+				"name": "calculateRoyaltyStable",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "_royalty",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "monthlyStable",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					}
+				],
+				"name": "royaltyStatsStable",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "_dailyRoyalty",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_totalStake",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_totalStakeUSD",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_nextRoyaltyTakePeriod",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_lockPeriod",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_totalRoyaltyTaken",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_penalty",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_eusdAddr",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_yearlyInterest",
+						"type": "uint256"
+					}
+				],
+				"name": "setStakeConfigStable",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "stakeConfigStable",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "_YEARLY_INTEREST_RATE",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_DAYS_IN_A_YEAR",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_yearlyInterest",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "stakeStateStable",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "_unStake",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_totalPenalty",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_totalStake",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "takeRoyaltyStable",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "totalStakeStable",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "unstakeStable",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/facets/StakingFacetStable.sol": "StakingFacetStable"
+		},
+		"evmVersion": "london",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/facets/AppStorage.sol": {
+			"keccak256": "0xc69e23860e52d2d6c8fce5fef440f0376864e0a682c36ed298de4dd79318d600",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://276590d523f430a7cc905929ed95af721840592f790f73eef82f4604c147509d",
+				"dweb:/ipfs/QmbDYVV8TUVwVQJ7Dx2DNDWCsKvxhcKaXumPQnvtcXvuLF"
+			]
+		},
+		"contracts/facets/StakingFacetStable.sol": {
+			"keccak256": "0xb3f873eeaedc461435ca427adb29409ff01eafd9b7e2dd0e7c2c0f95d1856816",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://7e646adf5fe2f6cf00dde6600fb773406b66e7bbe8ee8da34b10b123ea6e2459",
+				"dweb:/ipfs/QmVbo5byazWxQtmsJKN8AWDE6yna446pMfwxXedgeGUYGX"
+			]
+		},
+		"contracts/interfaces/IDiamondCut.sol": {
+			"keccak256": "0x21afb9584ec8e432c2c17acd3700e4c99b2d2c5d941c899fd5997a65cc689d56",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://a128bfc29cfc74fbfcb1bba3363c88df9521b5de7fc53b9c11fddd9389224abd",
+				"dweb:/ipfs/QmNfhvg7Aud1yXTZqzXTGdUf38tpv63Pbbuo3KKrYoRFrj"
+			]
+		},
+		"contracts/libraries/LibDiamond.sol": {
+			"keccak256": "0x4059248e993742cacdf0492134bbf0d504aab17f28299a706c9ca24b1a17fdf5",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://2940793983c72f0b2cfbe3dae334e0f327f89b1db096647df0494ca7e87f2757",
+				"dweb:/ipfs/QmP8GdGLKnQUKN5n1TjVodVAvvFjcDkUgcKNn9vZK9ztL1"
+			]
+		},
+		"contracts/libraries/SafeDecimalMath.sol": {
+			"keccak256": "0x1cc5eadb868b1c7c2fd0d652e29178ea3af0ad2cfce0a147bf82c37b27b4e96c",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://2c39bba0e670e811b987f1744c18bf69927b3b72a82b83c1e154d4eb0a7e685a",
+				"dweb:/ipfs/QmfGtnkfVqt8zYFU2272T5GXLT4wuw7mTdRWshTu4BL8sZ"
+			]
+		},
+		"contracts/libraries/SafeMath.sol": {
+			"keccak256": "0x32b3bc6a0c948063e8e21287584c180be2653c8d590a9537abd6aaa767885f3b",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://37a515286727d38a84d2a4acb3fa0b527ae130b7af8bfe321203d20dae5f7f1d",
+				"dweb:/ipfs/QmYLztAGbmx96aSZwS4Bzsp8V12DEoerSYLLJpyJSTpazk"
+			]
+		},
+		"contracts/libraries/Utils.sol": {
+			"keccak256": "0xae2ccd3eeb90686009df986b48a4c19d83c8608b5a2e41374f2d1700f370a2ce",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://921b6990d3a3fb1d3f66bff140522616651ba286b0d8038d780a4b9a6da57cc9",
+				"dweb:/ipfs/QmVLz8r1bbRd8k8HBzSz7TyNpUwemBsn4m1sjspcpfLKEg"
+			]
+		}
+	},
+	"version": 1
+}

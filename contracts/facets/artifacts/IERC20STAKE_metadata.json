@@ -194,7 +194,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"contracts/facets/StakingFacet.sol": "IERC20STAKE"
+			"contracts/facets/StakingFaceNew.sol": "IERC20STAKE"
 		},
 		"evmVersion": "london",
 		"libraries": {},
@@ -209,19 +209,19 @@
 	},
 	"sources": {
 		"contracts/facets/AppStorage.sol": {
-			"keccak256": "0x705e7a7d690d93fd82e486d413c45baae23cf7c5743a799ba721038ba9050bb0",
+			"keccak256": "0x953dc8659257181ad2aeb7635aeef077bc0ce7e0b37aa5ccc64abff4434c8b7a",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://f4d139abac2e21c4568acd5271c03207b08e226635f632b6fe1fb570ec019aea",
-				"dweb:/ipfs/QmXThTTTfnJp3dT6uQp9fbNRrxAxR3nsFqhk8QSZxCtvWA"
+				"bzz-raw://e2041b2db290c4e65296b909bf4746ec3dc9a2137c99e40c741cc57761faddee",
+				"dweb:/ipfs/QmRZbeSwPEWZahJMyPg9R9M4p7qMiSHTzKtBNiiEa2qH5s"
 			]
 		},
-		"contracts/facets/StakingFacet.sol": {
-			"keccak256": "0xeb53467237485770b9dbf0a498681cc4f66c9489b8b826bb45f8d99d79ad5985",
+		"contracts/facets/StakingFaceNew.sol": {
+			"keccak256": "0x352efffd6363212ea31b39fbd0239a0dc9805b8e4e17186fe16024dc05bbb212",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://78863da8d3cf603de03ce9cf1ef3f6ab227490b72fcfacf18e9976c373d0817e",
-				"dweb:/ipfs/QmTaaovoTcyw3Pc5nQMs26EhQfx9TB69UHKxYfhspHZHAE"
+				"bzz-raw://87c039aa67531bbfd18e38fec31337c6de7b3e6317e506f929da2778194fa3ed",
+				"dweb:/ipfs/QmUN6gd9ecXk6fE24kaSa3duVUncRPfx7PRoJhwrkm1hT1"
 			]
 		},
 		"contracts/interfaces/IDiamondCut.sol": {

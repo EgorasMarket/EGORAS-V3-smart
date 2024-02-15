@@ -50,6 +50,14 @@ contract ConvertFacet {
         address user
     );
 
+    modifier onlyOwner() {
+        require(
+            msg.sender == LibDiamond.contractOwner(),
+            "Access denied, Only owner is allowed!"
+        );
+        _;
+    }
+
     function _msgSender() internal view virtual returns (address) {
         return msg.sender;
     }
@@ -91,5 +99,13 @@ contract ConvertFacet {
         emit Converted(amount, inegc, block.timestamp, false, _msgSender());
 
         return true;
+    }
+
+    function setTokenAddressesForConvert(
+        address _eusd,
+        address _egc
+    ) external onlyOwner {
+        s.egcAddr = _egc;
+        s.eusdAddr = _eusd;
     }
 }

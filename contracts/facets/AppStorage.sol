@@ -73,4 +73,27 @@ struct AppStorage {
     mapping(uint256 => uint256) noVotes;
     mapping(uint256 => uint256) vottingPeriod;
     mapping(address => mapping(uint256 => bool)) hasVoted;
+    uint256 yearlyInterest;
+    mapping(address => uint256) userTotalStakeStable;
+    mapping(uint256 => uint256) stakingPlanStable;
+    mapping(address => uint256) userTotalStakeUsdStable;
+    mapping(address => uint256) dailyRoyaltyStable;
+    mapping(address => uint256) lockPeriodStable;
+    mapping(address => uint256) nextRoyaltyTakePeriodStable;
+    mapping(address => uint256) totalRoyaltyTakenStable;
+    uint totalPenaltyStakeStable;
+    uint totalStakeStable;
+    uint totalUnStakeStable;
+    mapping(address => uint256) userTotalStakeNew;
+    mapping(uint256 => uint256) stakingPlanNew;
+    mapping(address => uint256) userTotalStakeEgaxNew;
+    mapping(address => uint256) dailyRoyaltyNew;
+    mapping(address => uint256) lockPeriodNew;
+    mapping(address => uint256) nextRoyaltyTakePeriodNew;
+    mapping(address => uint256) totalRoyaltyTakenNew;
+    uint totalPenaltyStakeNew;
+    uint totalStakeNew;
+    uint totalUnStakeNew;
+    address royaltyAddr;
+    bytes stakeTokenPrice;
 }

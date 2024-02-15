@@ -122,7 +122,7 @@ contract StakingFacet {
         );
         s.userTotalStakeUsd[_msgSender()] = userCurrentTotal;
         uint256 yearlyRoyalty = userCurrentTotal.multiplyDecimal(
-            Utils.YEARLY_INTEREST_RATE
+            s.yearlyInterest
         );
         uint256 dailyInterest = yearlyRoyalty.divideDecimal(
             Utils.DAYS_IN_A_YEAR
@@ -154,6 +154,7 @@ contract StakingFacet {
         );
         require(amount > 0, "invalid amount");
         uint256 inusd = s.ticker[s.egcusd].multiplyDecimal(amount);
+
         require(
             inusd >= s.stakingPlan[uint256(Stakinglan.ANNUALLY)],
             "Please increase your staking amount."
@@ -174,7 +175,7 @@ contract StakingFacet {
         );
         s.userTotalStakeUsd[_msgSender()] = userCurrentTotal;
         uint256 yearlyRoyalty = userCurrentTotal.multiplyDecimal(
-            Utils.YEARLY_INTEREST_RATE
+            s.yearlyInterest
         );
         uint256 dailyInterest = yearlyRoyalty.divideDecimal(
             Utils.DAYS_IN_A_YEAR
@@ -240,13 +241,17 @@ contract StakingFacet {
         returns (
             uint256 _YEARLY_INTEREST_RATE,
             uint256 _DAYS_IN_A_YEAR,
-            uint256 _egcusd
+            uint256 _egcusd,
+            uint256 _yearlyInterest,
+            address _egcAddr
         )
     {
         return (
             Utils.YEARLY_INTEREST_RATE,
             Utils.DAYS_IN_A_YEAR,
-            s.ticker[s.egcusd]
+            s.ticker[s.egcusd],
+            s.yearlyInterest,
+            s.egcAddr
         );
     }
 
@@ -310,5 +315,17 @@ contract StakingFacet {
         );
 
         return rolyalty;
+    }
+
+    function setStakeConfig(
+        address _egcAddr,
+        uint256 _yearlyInterest
+    ) external onlyOwner {
+        s.egcAddr = _egcAddr;
+        s.yearlyInterest = _yearlyInterest;
+    }
+
+    function setStakeRoyaltyAddress(address _eusdAddr) external onlyOwner {
+        s.eusdAddr = _eusdAddr;
     }
 }

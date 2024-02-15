@@ -1,0 +1,191 @@
+{
+	"compiler": {
+		"version": "0.8.22+commit.4fc1097e"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"components": [
+							{
+								"internalType": "address",
+								"name": "facetAddress",
+								"type": "address"
+							},
+							{
+								"internalType": "enum IDiamondCut.FacetCutAction",
+								"name": "action",
+								"type": "uint8"
+							},
+							{
+								"internalType": "bytes4[]",
+								"name": "functionSelectors",
+								"type": "bytes4[]"
+							}
+						],
+						"internalType": "struct IDiamondCut.FacetCut[]",
+						"name": "_diamondCut",
+						"type": "tuple[]"
+					},
+					{
+						"components": [
+							{
+								"internalType": "address",
+								"name": "owner",
+								"type": "address"
+							}
+						],
+						"internalType": "struct EGOXIFY.EGOXIFYArgs",
+						"name": "_args",
+						"type": "tuple"
+					}
+				],
+				"stateMutability": "payable",
+				"type": "constructor"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"components": [
+							{
+								"internalType": "address",
+								"name": "facetAddress",
+								"type": "address"
+							},
+							{
+								"internalType": "enum IDiamondCut.FacetCutAction",
+								"name": "action",
+								"type": "uint8"
+							},
+							{
+								"internalType": "bytes4[]",
+								"name": "functionSelectors",
+								"type": "bytes4[]"
+							}
+						],
+						"indexed": false,
+						"internalType": "struct IDiamondCut.FacetCut[]",
+						"name": "_diamondCut",
+						"type": "tuple[]"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "_init",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "bytes",
+						"name": "_calldata",
+						"type": "bytes"
+					}
+				],
+				"name": "DiamondCut",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "previousOwner",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "OwnershipTransferred",
+				"type": "event"
+			},
+			{
+				"stateMutability": "payable",
+				"type": "fallback"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/EGOXIFY.sol": "EGOXIFY"
+		},
+		"evmVersion": "london",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/EGOXIFY.sol": {
+			"keccak256": "0xd4e25fbdb9617eef2fd1530fa4b47449f4e5ae744d3e37a4bd67df36b2e9dfdd",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://2c47f6e46d8a18202fd90479f7700eb92ff461d87bee5520f3e15ccd277d2ba9",
+				"dweb:/ipfs/QmauqUo3FLdqYsWCC7YxkGVLN78CX8JqWoDrmvUHCJ82td"
+			]
+		},
+		"contracts/interfaces/IDiamondCut.sol": {
+			"keccak256": "0x21afb9584ec8e432c2c17acd3700e4c99b2d2c5d941c899fd5997a65cc689d56",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://a128bfc29cfc74fbfcb1bba3363c88df9521b5de7fc53b9c11fddd9389224abd",
+				"dweb:/ipfs/QmNfhvg7Aud1yXTZqzXTGdUf38tpv63Pbbuo3KKrYoRFrj"
+			]
+		},
+		"contracts/interfaces/IDiamondLoupe.sol": {
+			"keccak256": "0x22651ae779776d5c818442cfd3d5675f7b36bac6530db30d77aef6e555a90fc2",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://0646a9b4be9b4beee561f593f873180c1381a39b153ff6601a6caa40d06882b0",
+				"dweb:/ipfs/QmfTJRgEXtcUJC5oyzmauGeMQp83mkLjPeHF8oHQzG67Mr"
+			]
+		},
+		"contracts/interfaces/IERC165.sol": {
+			"keccak256": "0x1b9ce37b2234d093449a99c4b88054c6b7c150f6dfedbc6a593bb6578d0ded16",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://f5debf7f7183c510fd1b24955a1e9f71d3062518a0f15fb22c067c5433e8c1d0",
+				"dweb:/ipfs/QmNjomUhMUPrXhkdxhuuAuuDPpRtkG14MjKwcsCnJNUYkh"
+			]
+		},
+		"contracts/interfaces/IERC173.sol": {
+			"keccak256": "0x2c725fda85ada86c94ec21592a2057205897324886b769fea8b09b6472ae9528",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://cd6a482c886e15fa7ae60bfd01486a68c48b0034e730a25347465158e2237cb7",
+				"dweb:/ipfs/QmWPD5egogtk1QeAxufk7BvjiRtt9HMo2G7XM34ManDdcw"
+			]
+		},
+		"contracts/libraries/LibDiamond.sol": {
+			"keccak256": "0x4059248e993742cacdf0492134bbf0d504aab17f28299a706c9ca24b1a17fdf5",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://2940793983c72f0b2cfbe3dae334e0f327f89b1db096647df0494ca7e87f2757",
+				"dweb:/ipfs/QmP8GdGLKnQUKN5n1TjVodVAvvFjcDkUgcKNn9vZK9ztL1"
+			]
+		}
+	},
+	"version": 1
+}
